@@ -1,0 +1,20 @@
+{
+  "name": "decipher-game",
+  "version": "1.0.0",
+  "description": "\"Le Cipher\" is a quick game that tests your deciphering knowledge by presenting you with random sentences of varying difficulties encoded in different patterns. This project is a test to see how to build an application using JavaScript, Java, and Python together.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenYoss/decipher-game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BenYoss/decipher-game/issues"
+  },
+  "homepage": "https://github.com/BenYoss/decipher-game#readme"
+}
