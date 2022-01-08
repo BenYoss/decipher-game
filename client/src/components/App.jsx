@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/app.scss';
+import Cipher from './Cipher';
 
 export default function App() {
   return (
@@ -9,7 +10,7 @@ export default function App() {
       </div>
       <div id="body-container">
         <div id="ciphered-body">
-          <h1 className="sample">sample text</h1>
+          <Cipher />
         </div>
         <div id="input-body">
           <h1 className="sample">sample text</h1>
