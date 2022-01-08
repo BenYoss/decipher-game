@@ -9,16 +9,27 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js|\.jsx$/,
+        test: /\.(js|jsx)$/,
         loader: 'babel-loader',
-        exclude: '/node_modules',
+        exclude: /node_modules/,
         options: {
           presets: ['@babel/preset-env', '@babel/preset-react'],
         },
       }, {
-        test: /\.scss|\.sass$/,
-        exclude: '/node_modules',
-        use: ['style-loader', 'sass-loader', 'css-loader'],
+        test: /\.s[ac]ss$/i,
+        use: [
+          'style-loader',
+          'css-loader',
+          // since sass-loader updated to ^v8.00
+          {
+            loader: 'sass-loader',
+            options: {
+              sassOptions: {
+                indentWidth: 4,
+                includePaths: ['absolute/path/a', 'absolute/path/b'],
+              },
+            },
+          }],
       },
     ],
   },
