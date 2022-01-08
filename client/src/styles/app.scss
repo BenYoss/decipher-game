@@ -1,0 +1,19 @@
+$bkgColor: #CA74FF;
+$outterText: white;
+
+body {
+    background-color: $bkgColor;
+    padding: 0px 4vw 0px 4vw;
+}
+
+#header-container {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    border-radius: 20% round;
+}
+
+#header {
+    font-size: large;
+}
+
