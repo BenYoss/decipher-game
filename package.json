@@ -4,17 +4,33 @@
   "description": "\"Le Cipher\" is a quick game that tests your deciphering knowledge by presenting you with random sentences of varying difficulties encoded in different patterns. This project is a test to see how to build an application using JavaScript, Java, and Python together.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --watch --mode=development",
+    "build": "webpack --mode=production"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/BenYoss/decipher-game.git"
-  },
+  "repository": "git+https://github.com/BenYoss/decipher-game.git",
   "keywords": [],
-  "author": "",
+  "author": "benyoss <benyoss4@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/BenYoss/decipher-game/issues"
   },
-  "homepage": "https://github.com/BenYoss/decipher-game#readme"
+  "homepage": "https://github.com/BenYoss/decipher-game#readme",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15",
+    "sequelize": "^6.12.5",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.7",
+    "@babel/preset-env": "^7.16.7",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.5.1",
+    "sass-loader": "^12.4.0",
+    "style-loader": "^3.3.1"
+  }
 }
