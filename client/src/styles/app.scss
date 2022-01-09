@@ -18,25 +18,70 @@ body {
 
 #header {
     font-size: large;
+    font-family: sans-serif;
 }
 
 // selectors for the component "Cipher".
 
 #cipher-cluster {
-    margin-top: 20px;
+    margin-top: 80px;
     width: auto;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content:flex-start;
-    margin: 6px;
 }
 
 #cipher-word {
-    background-color: white;
     margin-top: 5vw;
+    background-color: white;
     margin-right: 1vw;
     border-radius: 2vw 2vw 2vw 2vw;
     padding: 2px 2vw 2px 2vw;
     font-size: 2.5vw;
+    font-family: sans-serif;
+}
+
+#cipher-input-container {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+form {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#standard-btn {
+    background-color: black;
+    padding: 1vw 2vw 1vw 2vw;
+    border-radius: 2vw 2vw 2vw 2vw;
+    border: none;
+    font-size: 2vw;
+    font-weight: bold;
+    font-family: sans-serif;
+    color: white;
+}
+
+#standard-btn:hover {
+    background-color: white;
+    padding: 1vw 2vw 1vw 2vw;
+    border-radius: 2vw 2vw 2vw 2vw;
+    border: none;
+    font-size: 2vw;
+    font-weight: bold;
+    font-family: sans-serif;
+    color: black;
+}
+
+textarea {  
+    border: none;
+    margin: 1vw 3vw 1vw 3vw;
+    background-color: white;
 }

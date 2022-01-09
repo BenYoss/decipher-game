@@ -1,6 +1,7 @@
 import React from 'react';
-import '../styles/app.scss';
 import Cipher from './Cipher';
+import Input from './Input';
+import '../styles/app.scss';
 
 export default function App() {
   return (
@@ -13,7 +14,7 @@ export default function App() {
           <Cipher />
         </div>
         <div id="input-body">
-          <h1 className="sample">sample text</h1>
+          <Input />
         </div>
       </div>
     </div>
