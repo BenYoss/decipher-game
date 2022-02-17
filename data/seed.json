@@ -3,19 +3,31 @@
         "id": "1",
         "levelType": 1,
         "text": "The earth is hollow.",
-        "dateIssued": "Mon Feb 07 2022"
+        "dateIssued": "Thu Feb 17 2022"
     },
     {
         "id": "2",
         "levelType": 2,
         "text": "When a bird chirps, how does it sound?",
-        "dateIssued": "Sat Feb 12 2022"
+        "dateIssued": "Thu Feb 17 2022"
     },
     {
         "id": "3",
         "levelType": 3,
         "text": "Historically, a bird has a sharp beak.",
-        "dateIssued": "Sat Feb 12 2022"
+        "dateIssued": "Thu Feb 17 2022"
+    },
+    {
+        "id": "3",
+        "levelType": 6,
+        "text": "You cannot build Rome in a day.",
+        "dateIssued": "Thu Feb 17 2022"
+    },
+    {
+        "id": "3",
+        "levelType": 7,
+        "text": "It is hard to build a house alone. But with helping hands you could build a city.",
+        "dateIssued": "Thu Feb 17 2022"
     },
     {
         "id": "4",
