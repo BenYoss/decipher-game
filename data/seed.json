@@ -1,32 +1,38 @@
 [
     {
         "id": "1",
-        "levelType": "1",
+        "levelType": 1,
         "text": "The earth is hollow.",
         "dateIssued": "Mon Feb 07 2022"
     },
     {
         "id": "2",
-        "levelType": "2",
-        "text": "When a bird falls, does it make a squak?",
-        "dateIssued": "Mon Feb 07 2022"
+        "levelType": 2,
+        "text": "When a bird chirps, how does it sound?",
+        "dateIssued": "Sat Feb 12 2022"
     },
     {
         "id": "3",
-        "levelType": "3",
-        "text": "Can you could make it around the world in 50 days?",
-        "dateIssued": "Mon Feb 07 2022"
+        "levelType": 3,
+        "text": "Historically, a bird has a sharp beak.",
+        "dateIssued": "Sat Feb 12 2022"
     },
     {
         "id": "4",
-        "levelType": "4",
-        "text": "Woah, that makes no sense! How can something be like that?",
-        "dateIssued": "Mon Feb 07 2022"
+        "levelType": 4,
+        "text": "Never make a mountain out of a mole-hill, unless you have to.",
+        "dateIssued": "Sat Feb 12 2022"
+    },
+    {
+        "id": "6",
+        "levelType": 5,
+        "text": "Having a big textbook with many papers makes a confusing day.",
+        "dateIssued": "Sat Feb 12 2022"
     },
     {
         "id": "5",
-        "levelType": "1",
-        "text": "My friend's name is Bob, and he has this down.",
-        "dateIssued": "Tues Feb 08 2022"
+        "levelType": 1,
+        "text": "An eye for an eye can burn a bridge.",
+        "dateIssued": "Sat Feb 12 2022"
     }
 ]
