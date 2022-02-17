@@ -1,7 +1,8 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import { mutate } from '../helpers/helpers';
 
-export default function Cipher({ text }) {
+export default function Cipher({ text, level }) {
   let body = text;
   if (text) {
     for (let i = 0; i < text.length; i += 1) {
@@ -10,6 +11,7 @@ export default function Cipher({ text }) {
       }
     }
   }
+  body = mutate(text, level);
   const bodyArray = body.split(' ');
   return (
     <div id="cipher-cluster">
@@ -33,4 +35,5 @@ export default function Cipher({ text }) {
 
 Cipher.propTypes = {
   text: propTypes.string.isRequired,
+  level: propTypes.number.isRequired,
 };
