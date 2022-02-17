@@ -113,6 +113,30 @@ textarea {
   font-size: 2vw;
 }
 
+#level-container-normal {
+  background-color: rgb(179, 213, 27);
+  position: fixed;
+  column-gap: 5px;
+  padding: 0 30px 0 30px;
+  margin-left: 20vw;
+  gap: 2px 2px 2px 2px;
+}
+#level-container-difficult {
+  background-color: rgb(224, 143, 21);
+  position: fixed;
+  column-gap: 5px;
+  padding: 0 30px 0 30px;
+  margin-left: 20vw;
+  gap: 2px 2px 2px 2px;
+}
+#level-container-hard {
+  background-color: rgb(224, 51, 21);
+  position: fixed;
+  column-gap: 5px;
+  padding: 0 30px 0 30px;
+  margin-left: 20vw;
+  gap: 2px 2px 2px 2px;
+}
 #level-container {
   background-color: green;
   position: fixed;
@@ -143,7 +167,7 @@ textarea {
 #health-container {
   display: flex;
   justify-content: space-between;
-  flex-direction:row;
+  flex-direction: row;
   margin-left: 18vw;
   row-gap: 20px;
   width: 12%;
@@ -164,22 +188,22 @@ textarea {
 }
 
 #gameover-container {
-    position: absolute;
-    left: 40%;
-    top: 30%;
-    text-align: center;
-    vertical-align: middle;
-    width: 20vw;
-    height: 15vw;
-    background-color: white;
-    transform:scale(2);
+  position: absolute;
+  left: 40%;
+  top: 30%;
+  text-align: center;
+  vertical-align: middle;
+  width: 20vw;
+  height: 15vw;
+  background-color: white;
+  transform: scale(2);
 }
 
 #gameover-header {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 #gameover-text {
-    color:rgb(40, 44, 52);
+  color: rgb(40, 44, 52);
 }
