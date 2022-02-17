@@ -18,7 +18,7 @@ export default function App() {
   function calculateText() {
     let levelData = { text: '' };
     for (const sentence of seedData) {
-      if (sentence.levelType === `${level}` && sentence.dateIssued === new Date().toDateString()) {
+      if (sentence.levelType === level && sentence.dateIssued === new Date().toDateString()) {
         levelData = sentence;
       }
     }
@@ -43,7 +43,7 @@ export default function App() {
       {gameover && (<Gameover level={level} percent={percent} />)}
       <div id="body-container-pc">
         <div id="ciphered-body">
-          <Cipher text={text} gameover={gameover} />
+          <Cipher text={text} gameover={gameover} level={level} />
         </div>
         <div id="input-body">
           <Input
