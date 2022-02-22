@@ -11,6 +11,7 @@ export default function Cipher({ text, level }) {
       }
     }
   }
+
   body = mutate(text, level);
   const bodyArray = body.split(' ');
   return (
