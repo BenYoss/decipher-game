@@ -1,6 +1,12 @@
 /* eslint-disable consistent-return */
 const alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
+/**
+ * @func FlipLetters flips a random letter in string.
+ * @param {*} text
+ * @param {*} letter
+ * @returns
+ */
 export function flipLetters(text, letter) {
   const regex = new RegExp(letter, 'g');
   let result;
@@ -13,6 +19,11 @@ export function flipLetters(text, letter) {
   return result;
 }
 
+/**
+ * @func reverseText reverses the text of a string.
+ * @param {*} text
+ * @returns
+ */
 export function reverseText(text) {
   return text.split('').reverse().join('');
 }
@@ -26,6 +37,13 @@ export function addMoreText(text, letter, amount) {
   return text.replace(regex, scrambler.join(''));
 }
 
+/**
+ * @func mutate is the main function that chooses a function
+ * above randomly to mutate base string.
+ * @param {*} text
+ * @param {*} cycleCount
+ * @returns
+ */
 export function mutate(text, cycleCount) {
   let newtext = text;
   if (cycleCount > 0) {
@@ -43,6 +61,7 @@ export function mutate(text, cycleCount) {
     }
     return mutate(newtext, cycleCount - 1);
   }
+  // Base-case for function
   if (cycleCount === 0) {
     return newtext;
   }
