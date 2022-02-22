@@ -2,36 +2,36 @@
     {
         "id": "1",
         "levelType": 1,
-        "text": "The earth is hollow.",
-        "dateIssued": "Thu Feb 17 2022"
+        "text": "The Earth is round.",
+        "dateIssued": "Tue Feb 21 2022"
     },
     {
         "id": "2",
         "levelType": 2,
         "text": "When a bird chirps, how does it sound?",
-        "dateIssued": "Thu Feb 17 2022"
+        "dateIssued": "Tue Feb 21 2022"
     },
     {
         "id": "3",
         "levelType": 3,
         "text": "Historically, a bird has a sharp beak.",
-        "dateIssued": "Thu Feb 17 2022"
+        "dateIssued": "Tue Feb 21 2022"
     },
     {
         "id": "3",
         "levelType": 6,
         "text": "You cannot build Rome in a day.",
-        "dateIssued": "Thu Feb 17 2022"
+        "dateIssued": "Fri Feb 18 2022"
     },
     {
         "id": "3",
-        "levelType": 7,
+        "levelType": 4,
         "text": "It is hard to build a house alone. But with helping hands you could build a city.",
-        "dateIssued": "Thu Feb 17 2022"
+        "dateIssued": "Fri Feb 18 2022"
     },
     {
         "id": "4",
-        "levelType": 4,
+        "levelType": 5,
         "text": "Never make a mountain out of a mole-hill, unless you have to.",
         "dateIssued": "Sat Feb 12 2022"
     },
@@ -39,7 +39,7 @@
         "id": "6",
         "levelType": 5,
         "text": "Having a big textbook with many papers makes a confusing day.",
-        "dateIssued": "Sat Feb 12 2022"
+        "dateIssued": "Fri Feb 12 2022"
     },
     {
         "id": "5",
