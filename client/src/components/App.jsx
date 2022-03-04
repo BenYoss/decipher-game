@@ -14,6 +14,7 @@ export default function App() {
   const [gameover, setGameover] = useState(false);
   const [percent, setPercent] = useState(100);
   const [health, setHealth] = useState([{ open: true }, { open: true }, { open: true }]);
+  const [mutation, setMutation] = useState(null);
 
   function calculateText() {
     let levelData = { text: '' };
@@ -23,6 +24,8 @@ export default function App() {
       }
     }
     setText(levelData.text);
+    console.log(levelData);
+    setMutation(levelData.mutation);
   }
 
   useEffect(() => {
@@ -43,7 +46,7 @@ export default function App() {
       {gameover && (<Gameover level={level} percent={percent} />)}
       <div id="body-container-pc">
         <div id="ciphered-body">
-          <Cipher text={text} gameover={gameover} level={level} />
+          <Cipher text={text} gameover={gameover} level={level} mutation={mutation} />
         </div>
         <div id="input-body">
           <Input
