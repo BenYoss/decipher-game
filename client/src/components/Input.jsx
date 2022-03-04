@@ -23,6 +23,11 @@ export default function Input({
                 document.getElementsByTagName('textarea')[0].style.border = 'black';
                 document.getElementsByTagName('textarea')[0].value = '';
               }, 1000);
+              document.getElementById('standard-btn').disabled = true;
+              document.getElementById('standard-btn').style.backgroundColor = 'gray';
+              document.getElementById('standard-btn').style.border = 'rgb(181, 181, 181)';
+              document.getElementById('standard-btn').style.color = 'white';
+              document.getElementById('standard-btn').textContent = '🔒';
             } else {
               document.getElementsByTagName('textarea')[0].style.color = 'red';
               document.getElementsByTagName('textarea')[0].style.border = 'red';
