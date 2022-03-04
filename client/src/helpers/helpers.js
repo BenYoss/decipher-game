@@ -1,5 +1,7 @@
 /* eslint-disable consistent-return */
-const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+
+// ALPHABET DATA REFERENCE
+// const alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
 /**
  * @func FlipLetters flips a random letter in string.
@@ -7,14 +9,18 @@ const alphabet = 'abcdefghijklmnopqrstuvwxyz';
  * @param {*} letter
  * @returns
  */
-export function flipLetters(text, letter) {
+export function flipLetters(text, letter, replacement) {
   const regex = new RegExp(letter, 'g');
   let result;
   if (letter && letter === letter.toUpperCase()) {
-    result = text.replace(regex, alphabet[Math.floor(Math.random()
-      * alphabet.length - 1)].toUpperCase());
+    // Randomizes text ⬇⬇⬇
+    // result = text.replace(regex, alphabet[Math.floor(Math.random()
+    //   * alphabet.length - 1)].toUpperCase());
+    result = text.replace(regex, replacement.toUpperCase());
   } else {
-    result = text.replace(regex, alphabet[Math.floor(Math.random() * alphabet.length - 1)]);
+    result = text.replace(regex, replacement);
+    // Randomizes text ⬇⬇⬇
+    // result = text.replace(regex, alphabet[Math.floor(Math.random() * alphabet.length - 1)]);
   }
   return result;
 }
@@ -28,11 +34,13 @@ export function reverseText(text) {
   return text.split('').reverse().join('');
 }
 
-export function addMoreText(text, letter, amount) {
+export function addMoreText(text, letter, amount, replacement) {
   const regex = new RegExp(letter, 'g');
   const scrambler = [];
   for (let i = 0; i < amount; i += 1) {
-    scrambler.push(alphabet[Math.floor(Math.random() * alphabet.length - 1)]);
+    // Randomizes the text ⬇⬇⬇
+    // scrambler.push(alphabet[Math.floor(Math.random() * alphabet.length - 1)]);
+    scrambler.push(replacement);
   }
   return text.replace(regex, scrambler.join(''));
 }
