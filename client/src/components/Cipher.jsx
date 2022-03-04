@@ -1,8 +1,8 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import { mutate } from '../helpers/helpers';
+import { flipLetters, reverseText, addMoreText } from '../helpers/helpers';
 
-export default function Cipher({ text, level }) {
+export default function Cipher({ text, mutation }) {
   let body = text;
   if (text) {
     for (let i = 0; i < text.length; i += 1) {
@@ -11,8 +11,19 @@ export default function Cipher({ text, level }) {
       }
     }
   }
-
-  body = mutate(text, level);
+  if (mutation) {
+    if (mutation.includes('s-')) {
+      const mutationVals = mutation.split('-');
+      body = flipLetters(text, mutationVals[1][0], mutationVals[1][1]);
+    }
+    if (mutation.includes('r-')) {
+      body = reverseText(text);
+    }
+    if (mutation.includes('a-')) {
+      const mutationVals = mutation.split('-');
+      body = addMoreText(text, mutationVals[1][0], mutationVals[1][1], mutationVals[1][2]);
+    }
+  }
   const bodyArray = body.split(' ');
   return (
     <div id="cipher-cluster">
@@ -26,7 +37,7 @@ export default function Cipher({ text, level }) {
         ))) : (
           <div id="no-cipher">
             <h4>Congrats!</h4>
-            <h6>You have completed all of the available ciphers for today!</h6>
+            <h6>You have completed todays Cipher!</h6>
             <h6>Stay tuned for more ciphers tomorrow!</h6>
           </div>
       )}
@@ -36,5 +47,5 @@ export default function Cipher({ text, level }) {
 
 Cipher.propTypes = {
   text: propTypes.string.isRequired,
-  level: propTypes.number.isRequired,
+  mutation: propTypes.string.isRequired,
 };
