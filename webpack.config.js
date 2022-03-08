@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './client/src/Index.jsx',
+  entry: ['regenerator-runtime/runtime.js', './client/src/Index.jsx'],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, './client/dist'),
