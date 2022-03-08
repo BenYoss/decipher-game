@@ -1,6 +1,12 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import { motion } from 'framer-motion';
 import { flipLetters, reverseText, addMoreText } from '../helpers/helpers';
+
+const modalAnimation = {
+  x: 0,
+  opacity: '100%',
+};
 
 export default function Cipher({ text, mutation }) {
   let body = text;
@@ -28,12 +34,12 @@ export default function Cipher({ text, mutation }) {
   return (
     <div id="cipher-cluster">
       {text.length ? (
-        bodyArray.map((word) => (
-          <div id="cipher-word">
+        bodyArray.map((word, i) => (
+          <motion.div id="cipher-word" initial={{ x: -200, opacity: '0%' }} animate={modalAnimation} transition={{ duration: (i + 1) / 10 }}>
             <h4 id="cipher-text">
               {word}
             </h4>
-          </div>
+          </motion.div>
         ))) : (
           <div id="no-cipher">
             <h4>Congrats!</h4>
