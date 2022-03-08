@@ -1,10 +1,16 @@
 /* eslint-disable react/require-default-props */
 import React from 'react';
+import { motion } from 'framer-motion';
 import propTypes from 'prop-types';
+
+const modalAnimation = {
+  scale: 2,
+  opacity: '100%',
+};
 
 export default function Gameover({ level, percent }) {
   return (
-    <div id="gameover-container">
+    <motion.div id="gameover-container" animate={modalAnimation} initial={{ opacity: '0%' }} transition={{ duration: 0.5 }}>
       <div id="gameover-header">
         <h2 id="gameover-text">GAME OVER</h2>
       </div>
@@ -20,7 +26,7 @@ export default function Gameover({ level, percent }) {
           % in this challenge.
         </h4>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

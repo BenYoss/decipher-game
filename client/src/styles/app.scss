@@ -1,4 +1,4 @@
-$bkgColor: #ca74ff;
+$bkgColor: #1b4a17;
 $outterText: white;
 
 body {
@@ -160,7 +160,7 @@ textarea {
 #no-cipher {
   font-weight: bold;
   font-size: 60px;
-  color: #79439b;
+  color: #136f38;
   text-align: center;
 }
 
@@ -197,6 +197,7 @@ textarea {
   height: 15vw;
   background-color: white;
   transform: scale(2);
+  border-radius: 0.5vw 0.5vw 0.5vw 0.5vw;
 }
 
 #gameover-header {
@@ -206,4 +207,8 @@ textarea {
 
 #gameover-text {
   color: rgb(40, 44, 52);
+}
+
+#htp-bg {
+  background-color: rgb(44, 44, 44);
 }

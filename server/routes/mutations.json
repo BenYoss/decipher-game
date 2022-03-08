@@ -1,0 +1,14 @@
+[
+    {
+        "minLevel": 1,
+        "mutation": "s-"
+    },
+    {
+        "minLevel": 3,
+        "mutation": "r-"
+    },
+    {
+        "minLevel": 3,
+        "mutation": "a-"
+    }
+]

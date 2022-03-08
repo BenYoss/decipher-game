@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import propTypes from 'prop-types';
 
 export default function Input({
-  text, setLevel, level, health, setHealth, setGameover, setPercent, percent,
+  text, setLevel, level, health, setHealth, setGameover, setPercent, percent, setVictory,
 }) {
   const [val, useVal] = useState('');
   return (
@@ -23,6 +23,12 @@ export default function Input({
                 document.getElementsByTagName('textarea')[0].style.border = 'black';
                 document.getElementsByTagName('textarea')[0].value = '';
               }, 1000);
+              document.getElementById('standard-btn').disabled = true;
+              document.getElementById('standard-btn').style.backgroundColor = 'gray';
+              document.getElementById('standard-btn').style.border = 'rgb(181, 181, 181)';
+              document.getElementById('standard-btn').style.color = 'white';
+              document.getElementById('standard-btn').textContent = '🔒';
+              setVictory(true);
             } else {
               document.getElementsByTagName('textarea')[0].style.color = 'red';
               document.getElementsByTagName('textarea')[0].style.border = 'red';
@@ -69,4 +75,5 @@ Input.propTypes = {
   setGameover: propTypes.func.isRequired,
   setPercent: propTypes.func.isRequired,
   percent: propTypes.number.isRequired,
+  setVictory: propTypes.func.isRequired,
 };
