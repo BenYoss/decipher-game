@@ -61,10 +61,21 @@ export default function App() {
       <>
         <Howtoplay setSkipped={setSkipped} />
         <div id="htp-bg" />
+        <div id="modal-bg" />
       </>
       )}
-      {gameover && (<Gameover level={level} percent={percent} />)}
-      {victory && (<Victory level={level} percent={percent} />)}
+      {gameover && (
+      <>
+        <Gameover level={level} percent={percent} />
+        <div id="modal-bg" />
+      </>
+      )}
+      {victory && (
+      <>
+        <Victory level={level} percent={percent} />
+        <div id="modal-bg" />
+      </>
+      )}
       <div id="body-container-pc">
         <div id="ciphered-body">
           {skipped && <Cipher text={text} gameover={gameover} level={level} mutation={mutation} />}
