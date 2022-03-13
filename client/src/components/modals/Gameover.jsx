@@ -2,13 +2,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import propTypes from 'prop-types';
+import { updateCookies } from '../../helpers/helpers';
 
 const modalAnimation = {
   scale: 2,
   opacity: '100%',
 };
 
-export default function Gameover({ level, percent }) {
+export default function Gameover({ percent, finalTime }) {
+  updateCookies(finalTime);
   return (
     <motion.div id="gameover-container" animate={modalAnimation} initial={{ opacity: '0%' }} transition={{ duration: 0.5 }}>
       <div id="gameover-header">
@@ -17,8 +19,8 @@ export default function Gameover({ level, percent }) {
       <div id="gameover-body">
         <h4 id="gameover-text">You were close, but not close enough!</h4>
         <h3 id="gameover-level">
-          Level:
-          {level}
+          Time:
+          {finalTime && finalTime}
         </h3>
         <h4 id="gameover-text2">
           Compared to other users, you are in the top
@@ -31,6 +33,6 @@ export default function Gameover({ level, percent }) {
 }
 
 Gameover.propTypes = {
-  level: propTypes.string.isRequired,
   percent: propTypes.number.isRequired,
+  finalTime: propTypes.string.isRequired,
 };

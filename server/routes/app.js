@@ -46,6 +46,7 @@ const makeMutationPrint = (text, level) => {
 const buildCipherEntry = (textData) => {
   const entryObject = {};
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const seeded = seed;
 
   entryObject.id = `${Number(seed[seed.length - 1].id) + 1 || 1}`;
   entryObject.dateIssued = new Date().toDateString();
@@ -63,7 +64,23 @@ const buildCipherEntry = (textData) => {
       break;
     }
   }
-  return entryObject;
+  let bool = true;
+  for (let j = 0; j < seeded.length; j += 1) {
+    if (entryObject.text === seeded[j].text) {
+      bool = false;
+      const startpoint = textData.indexOf(entryObject.text);
+      const endpoint = startpoint + entryObject.text.length - 1;
+      textData.splice(endpoint.text, 1);
+      // recursively iterates until a unique string is met.
+      return buildCipherEntry(textData);
+    }
+  }
+
+  if (bool) {
+    // base case for function to return cipher instance.
+    return entryObject;
+  }
+  return null;
 };
 
 /**
@@ -106,7 +123,12 @@ const readFile = async (file) => fsPromise.readFile(file, 'utf-8', (err) => {
   }
 }).then((data) => {
   const cipher = buildCipherEntry(data.split('\n'));
-  return saveCipher(cipher);
+  if (cipher) {
+    return saveCipher(cipher);
+  }
+  // prints an error if no idiom is found in list.
+  console.error('MissingIdiomException: Idiom list is empty, please refill.');
+  return null;
 });
 
 app.get('/addcipher', (req, res) => {

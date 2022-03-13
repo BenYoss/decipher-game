@@ -2,18 +2,27 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import propTypes from 'prop-types';
+import { updateCookies } from '../../helpers/helpers';
 
 const modalAnimation = {
   scale: 2,
 };
 
-export default function Victory({ level, percent }) {
+export default function Victory({ percent, time }) {
   let text = '';
-  const time = 0;
-
-  if (time === 0) {
+  const times = time.split(':');
+  const sec = Number(times[2]);
+  if (sec < 5) {
     text = 'Wow! Inhuman solving speed!';
+  } else if (sec < 7) {
+    text = 'Pretty fast!';
+  } else if (sec < 10) {
+    text = 'Average time!';
+  } else if (sec < 15) {
+    text = 'Pretty slow';
   }
+  updateCookies(time);
+
   return (
     <motion.div id="gameover-container" animate={modalAnimation} transition={{ duration: 0.5 }}>
       <div id="gameover-header">
@@ -22,8 +31,8 @@ export default function Victory({ level, percent }) {
       <div id="gameover-body">
         <h4 id="gameover-text">{text}</h4>
         <h3 id="gameover-level">
-          Level:
-          {level}
+          Time:
+          {time && time}
         </h3>
         <h4 id="gameover-text2">
           Compared to other users, you are in the top
@@ -36,6 +45,6 @@ export default function Victory({ level, percent }) {
 }
 
 Victory.propTypes = {
-  level: propTypes.string.isRequired,
   percent: propTypes.number.isRequired,
+  time: propTypes.string.isRequired,
 };
