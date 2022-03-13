@@ -9,6 +9,7 @@ import Health from './Health';
 import Gameover from './modals/Gameover';
 import Victory from './modals/Victory';
 import Howtoplay from './modals/Howtoplay';
+import Timer from './Timer';
 import '../styles/app.scss';
 import 'regenerator-runtime/runtime';
 
@@ -21,6 +22,7 @@ export default function App() {
   const [health, setHealth] = useState([{ open: true }, { open: true }, { open: true }]);
   const [mutation, setMutation] = useState(null);
   const [skipped, setSkipped] = useState(false);
+  const [finalTime, setFinalTime] = useState('00:00:00:00');
 
   async function calculateText() {
     let levelData = { text: '' };
@@ -50,6 +52,13 @@ export default function App() {
     <div id="container">
       <div id="health-body">
         <Health healthbar={health} />
+        {skipped && (
+        <Timer
+          setFinalTime={setFinalTime}
+          gameover={gameover}
+          victory={victory}
+        />
+        )}
       </div>
       <div id="header-container">
         <h4 id="header">Lacipher</h4>
@@ -66,13 +75,13 @@ export default function App() {
       )}
       {gameover && (
       <>
-        <Gameover level={level} percent={percent} />
+        <Gameover level={level} percent={percent} finalTime={finalTime} />
         <div id="modal-bg" />
       </>
       )}
       {victory && (
       <>
-        <Victory level={level} percent={percent} />
+        <Victory level={level} percent={percent} time={finalTime} />
         <div id="modal-bg" />
       </>
       )}

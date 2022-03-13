@@ -1,4 +1,5 @@
 /* eslint-disable consistent-return */
+import axios from 'axios';
 
 // ALPHABET DATA REFERENCE
 // const alphabet = 'abcdefghijklmnopqrstuvwxyz';
@@ -73,4 +74,42 @@ export function mutate(text, cycleCount) {
   if (cycleCount === 0) {
     return newtext;
   }
+}
+
+let hour = 0;
+let min = 0;
+let sec = 0;
+let mil = 0;
+let counter;
+export function countDown(time) {
+  if (!counter) {
+    counter = setInterval(() => {
+      mil += 1;
+      if (mil === 60) {
+        mil = 0;
+        sec += 1;
+      }
+      if (sec === 60) {
+        sec = 0;
+        min += 1;
+      }
+      if (min === 60) {
+        min = 0;
+        hour += 1;
+      }
+      const hourStr = hour > 9 ? hour : `0${hour}`;
+      const minStr = min > 9 ? min : `0${min}`;
+      const secStr = sec > 9 ? sec : `0${sec}`;
+      const milStr = mil > 9 ? mil : `0${mil}`;
+      time(`${hourStr}:${minStr}:${secStr}:${milStr}`);
+    }, 18);
+  }
+}
+
+export function stopCount() {
+  clearInterval(counter);
+}
+
+export async function updateCookies(time) {
+  await axios.post('/setcookie', { time });
 }
