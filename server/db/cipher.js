@@ -2,9 +2,10 @@ const mongoose = require('mongoose');
 
 // Generates a new schema for the Cipher model.
 const schema = new mongoose.Schema({
-  date_issued: Date,
+  date_issued: String,
   text: String,
   level_type: String,
+  mutation: String,
 });
 
 // Creates a new Cipher entity in the mongo DB
@@ -15,10 +16,15 @@ const Cipher = mongoose.model('Cipher', schema);
  * @param {*} cipher is the newly generated cipher instance created in the server app.js file.
  */
 const addCipher = async (cipher) => {
-  const foundDupe = await Cipher.findOne({ where: cipher.text }).catch((err) => console.error(err));
+  const foundDupe = await Cipher.findOne({ text: cipher.text }).catch((err) => console.error(err));
 
-  const newCipher = new Cipher(cipher);
-  if (!foundDupe.length) {
+  const newCipher = new Cipher({
+    date_issued: cipher.dateIssued,
+    text: cipher.text,
+    level_type: cipher.levelType,
+    mutation: cipher.mutation,
+  });
+  if (!foundDupe) {
     await newCipher.save();
   }
 };
@@ -37,7 +43,7 @@ const getCipher = async (date, all = false) => {
     const ciphers = await Cipher.find().catch((err) => console.error(err));
     return ciphers;
   }
-  const todayCipher = await Cipher.findOne({ where: date }).catch((err) => console.error(err));
+  const todayCipher = await Cipher.findOne({ date_issed: date }).catch((err) => console.error(err));
 
   return todayCipher;
 };
