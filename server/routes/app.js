@@ -1,8 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 const { Router } = require('express');
-const fs = require('fs');
 const fsPromise = require('fs').promises;
-const seed = require('../../data/seed.json');
+const { addCipher, getCipher } = require('../db/cipher');
 const mutations = require('./mutations.json');
 
 const app = Router();
@@ -14,6 +13,7 @@ const makeMutationPrint = (text, level) => {
   let resultStr = '';
 
   // For categorizing mutations based on level.
+  // TODO: make mutation method iteratively make multiple mutations based on level type.
   for (let i = 0; i < mutations.length; i += 1) {
     if (level >= mutations[i].minLevel) {
       resultStr = resultStr.concat(mutations[i].mutation);
@@ -43,12 +43,12 @@ const makeMutationPrint = (text, level) => {
  * @param {*} textData is the incoming text fetched from the ciphers.txt doc.
  * @returns cipher object
  */
-const buildCipherEntry = (textData) => {
+const buildCipherEntry = (textData, dbCiphers) => {
   const entryObject = {};
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const seeded = seed;
+  const seeded = dbCiphers;
 
-  entryObject.id = `${Number(seed[seed.length - 1].id) + 1 || 1}`;
+  entryObject.id = `${Number(dbCiphers[dbCiphers.length - 1] ? dbCiphers[dbCiphers.length - 1].id : 0) + 1 || 1}`;
   entryObject.dateIssued = new Date().toDateString();
 
   days.forEach((day, i) => {
@@ -72,7 +72,7 @@ const buildCipherEntry = (textData) => {
       const endpoint = startpoint + entryObject.text.length - 1;
       textData.splice(endpoint.text, 1);
       // recursively iterates until a unique string is met.
-      return buildCipherEntry(textData);
+      return buildCipherEntry(textData, dbCiphers);
     }
   }
 
@@ -88,8 +88,8 @@ const buildCipherEntry = (textData) => {
  * @param {*} cipher is the completed cipher object.
  * @returns cipher object after saved.
  */
-const saveCipher = async (cipher) => {
-  const seeded = seed;
+const saveCipher = async (cipher, dbCiphers) => {
+  const seeded = dbCiphers;
   let bool = true;
 
   // For checking if the text already exists in cipher.json
@@ -101,12 +101,8 @@ const saveCipher = async (cipher) => {
 
   // If cipher text is unique, it gets added to the JSON file!
   if (bool) {
-    seeded.push(cipher);
+    addCipher(cipher);
   }
-
-  await fs.writeFile('data/seed.json', JSON.stringify(seeded), (err) => {
-    if (err) console.error(err);
-  });
 
   return cipher;
 };
@@ -117,14 +113,14 @@ const saveCipher = async (cipher) => {
  * @returns cipher object once it's saved into the JSON file.
  */
 
-const readFile = async (file) => fsPromise.readFile(file, 'utf-8', (err) => {
+const readFile = async (file, dbCiphers) => fsPromise.readFile(file, 'utf-8', (err) => {
   if (err) {
     console.error(err);
   }
 }).then((data) => {
-  const cipher = buildCipherEntry(data.split('\n'));
+  const cipher = buildCipherEntry(data.split('\n'), dbCiphers);
   if (cipher) {
-    return saveCipher(cipher);
+    return saveCipher(cipher, dbCiphers);
   }
   // prints an error if no idiom is found in list.
   console.error('MissingIdiomException: Idiom list is empty, please refill.');
@@ -132,9 +128,26 @@ const readFile = async (file) => fsPromise.readFile(file, 'utf-8', (err) => {
 });
 
 app.get('/addcipher', (req, res) => {
-  readFile('data/ciphers.txt').then((data) => {
-    res.send(data);
-  });
+  getCipher('', true)
+    .then((ciphers) => {
+      readFile('data/ciphers.txt', ciphers).then((data) => {
+        res.send(data);
+      });
+    });
+});
+
+app.get('/getcipher', (req, res) => {
+  if (req.query.dateIssued) {
+    getCipher(req.query.dateIssued)
+      .then((cipher) => {
+        res.send(cipher);
+      });
+  } else {
+    getCipher('', true)
+      .then((ciphers) => {
+        res.send(ciphers);
+      });
+  }
 });
 
 module.exports = app;
