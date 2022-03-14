@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import propTypes from 'prop-types';
 
 export default function Input({
-  text, setLevel, level, health, setHealth, setGameover, setPercent, percent, setVictory,
+  text, level, health, setHealth, setGameover, setPercent, percent, setVictory,
 }) {
   const [val, useVal] = useState('');
   return (
@@ -16,7 +16,6 @@ export default function Input({
             if (val === text) {
               document.getElementsByTagName('textarea')[0].style.color = 'lime';
               document.getElementsByTagName('textarea')[0].style.border = 'lime';
-              setLevel(level + 1);
               setPercent(percent / level);
               setTimeout(() => {
                 document.getElementsByTagName('textarea')[0].style.color = 'black';
@@ -68,7 +67,6 @@ export default function Input({
 
 Input.propTypes = {
   text: propTypes.string.isRequired,
-  setLevel: propTypes.func.isRequired,
   level: propTypes.string.isRequired,
   health: propTypes.element.isRequired,
   setHealth: propTypes.func.isRequired,
