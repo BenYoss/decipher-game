@@ -21,7 +21,18 @@ textarea {
   height: 200px;
   min-width: 100%;
   background-color: white;
-  font-size: 2vw;
+  font-size: 4vh;
+  font-weight: bold;
+}
+
+#cipher-input-container {
+  position: fixed;
+  bottom: 0;
+  // width: 100vw;
+  right: 0;
+  left: 0;
+  top: 90vw;
+  background-color: rgb(40, 44, 52);
 }
 
 // Core selectors (selectors impacting default markups)
