@@ -4,7 +4,7 @@ import axios from 'axios';
 import Cipher from './Cipher';
 import Input from './Input';
 import Level from './Level';
-import seedData from '../../../data/seed.json';
+import { getCiphersFromDB } from '../helpers/helpers';
 import Health from './Health';
 import Gameover from './modals/Gameover';
 import Victory from './modals/Victory';
@@ -26,27 +26,28 @@ export default function App() {
 
   async function calculateText() {
     let levelData = { text: '' };
-    if (!seedData.length) {
+    const { data: ciphers } = await getCiphersFromDB().catch((err) => console.error(err));
+    if (!ciphers.length) {
       const { data } = await axios.get('/addcipher');
       levelData = data;
     }
-    for (const sentence of seedData) {
-      if (sentence.dateIssued === new Date().toDateString()) {
+    ciphers.forEach((sentence) => {
+      if (sentence.date_issued === new Date().toDateString()) {
         levelData = sentence;
       }
-    }
+    });
     if (!levelData.text.length) {
       const { data } = await axios.get('/addcipher');
       levelData = data;
     }
     setText(levelData.text);
-    setLevel(levelData.levelType);
+    setLevel(levelData.level_type);
     setMutation(levelData.mutation);
   }
 
   useEffect(() => {
     calculateText();
-  }, [level]);
+  }, []);
 
   return (
     <div id="container">

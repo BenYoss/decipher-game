@@ -85,7 +85,7 @@ export function countDown(time) {
   if (!counter) {
     counter = setInterval(() => {
       mil += 1;
-      if (mil === 60) {
+      if (mil === 100) {
         mil = 0;
         sec += 1;
       }
@@ -102,7 +102,7 @@ export function countDown(time) {
       const secStr = sec > 9 ? sec : `0${sec}`;
       const milStr = mil > 9 ? mil : `0${mil}`;
       time(`${hourStr}:${minStr}:${secStr}:${milStr}`);
-    }, 18);
+    }, 10);
   }
 }
 
@@ -112,4 +112,9 @@ export function stopCount() {
 
 export async function updateCookies(time) {
   await axios.post('/setcookie', { time });
+}
+
+export async function getCiphersFromDB() {
+  const result = await axios.get('/getcipher');
+  return result;
 }
