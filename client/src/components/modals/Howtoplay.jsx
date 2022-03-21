@@ -44,9 +44,9 @@ export default function Howtoplay({ setSkipped }) {
         <h2 id="gameover-text">How to Play</h2>
       </div>
       <div id="gameover-body">
-        <h4 id="gameover-text">I cipher is an encypted pattern of text. Try to solve this cipher</h4>
+        <h4 id="gameover-text">A cipher is an encypted pattern of text. Try to solve this cipher...</h4>
         <h4 id="gameover-text">
-          if you get it wrong 3 times, GAME OVER!
+          If you get it wrong 3 times, GAME OVER!
         </h4>
         <motion.button
           id="standard-btn"
