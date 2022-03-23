@@ -51,15 +51,21 @@ export default function App() {
 
   return (
     <div id="container">
-      <div id="health-body">
-        <Health healthbar={health} />
-        {skipped && (
-        <Timer
-          setFinalTime={setFinalTime}
-          gameover={gameover}
-          victory={victory}
-        />
-        )}
+      <div id="nav-body">
+        <div id="timer-bo">
+          {skipped && (
+          <Timer
+            setFinalTime={setFinalTime}
+            gameover={gameover}
+            victory={victory}
+          />
+          )}
+        </div>
+        <div id="health-body">
+
+          <Health healthbar={health} />
+        </div>
+
       </div>
       <div id="header-container">
         <h4 id="header">Lacipher</h4>
