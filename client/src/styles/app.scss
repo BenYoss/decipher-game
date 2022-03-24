@@ -10,8 +10,6 @@ $colorHard: #fff;
 
 body {
   background: border-box $bkgColor2;
-  background-repeat: no-repeat;
-  background-size: auto auto;
   user-select: none;
   align-items: flex-start;
 }
@@ -252,7 +250,7 @@ form {
 }
 
 #gameover-container {
-  position: absolute;
+  position: fixed;
   left: 30%;
   top: 30%;
   text-align: center;
