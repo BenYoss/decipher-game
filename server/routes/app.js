@@ -61,6 +61,11 @@ const buildCipherEntry = (textData, dbCiphers) => {
     if (textData[i].length < 100 / entryObject.levelType) {
       entryObject.text = textData[i];
       entryObject.mutation = makeMutationPrint(entryObject.text, entryObject.levelType);
+      let j = 1;
+      while (j < entryObject.levelType) {
+        entryObject.mutation += `|${makeMutationPrint(entryObject.text, entryObject.levelType)}`;
+        j += 1;
+      }
       break;
     }
   }
