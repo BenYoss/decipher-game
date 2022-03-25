@@ -22,7 +22,7 @@ export default function App() {
   const [health, setHealth] = useState([{ open: true }, { open: true }, { open: true }]);
   const [mutation, setMutation] = useState(null);
   const [skipped, setSkipped] = useState(false);
-  const [finalTime, setFinalTime] = useState('00:00:00:00');
+  const [finalTime, setFinalTime] = useState(false);
 
   async function calculateText() {
     let levelData = { text: '' };
@@ -80,13 +80,13 @@ export default function App() {
         <div id="modal-bg" />
       </>
       )}
-      {gameover && (
+      {gameover && finalTime && (
       <>
         <Gameover level={level} percent={percent} finalTime={finalTime} />
         <div id="modal-bg" />
       </>
       )}
-      {victory && (
+      {victory && finalTime && (
       <>
         <Victory level={level} percent={percent} time={finalTime} />
         <div id="modal-bg" />

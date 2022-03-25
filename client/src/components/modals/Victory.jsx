@@ -34,7 +34,7 @@ export default function Victory({ percent, time }) {
           Time:
           {time && time}
         </h3>
-        <h4 id="gameover-text2">
+        <h4 id="gameover-text">
           Compared to other users, you are in the top
           {` ${percent}`}
           % in this challenge.
