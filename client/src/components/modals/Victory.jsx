@@ -30,10 +30,9 @@ export default function Victory({ percent, time }) {
       </div>
       <div id="gameover-body">
         <h4 id="gameover-text">{text}</h4>
-        <h3 id="gameover-level">
-          Time:
-          {time && time}
-        </h3>
+        <h4 id="gameover-level">
+          {`Time:  ${time && time}`}
+        </h4>
         <h4 id="gameover-text">
           Compared to other users, you are in the top
           {` ${percent}`}
