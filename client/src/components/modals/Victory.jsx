@@ -6,6 +6,7 @@ import { updateCookies } from '../../helpers/helpers';
 
 const modalAnimation = {
   scale: 2,
+  opacity: '100%',
 };
 
 export default function Victory({ percent, time }) {
@@ -24,7 +25,7 @@ export default function Victory({ percent, time }) {
   updateCookies(time);
 
   return (
-    <motion.div id="gameover-container" animate={modalAnimation} transition={{ duration: 0.5 }}>
+    <motion.div id="gameover-container" animate={modalAnimation} initial={{ opacity: '0%' }} transition={{ duration: 0.5 }}>
       <div id="gameover-header">
         <h2 id="gameover-text">Correct!</h2>
       </div>

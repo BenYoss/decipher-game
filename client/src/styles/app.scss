@@ -17,9 +17,9 @@ body {
 
 textarea {
   border: none;
-  margin: 5vw 1vw 1vw 0vw;
+  margin: 5vw 0vw 1vw 0vw;
   height: 120px;
-  min-width: 99vw;
+  min-width: fit-content;
   background-color: white;
   font-size: 4vh;
   font-weight: bold;
@@ -211,8 +211,8 @@ form {
 
 #health-container {
   position: absolute;
-  top: 53%;
-  margin-left: 10vw;
+  top: 59%;
+  margin-left:10vw;
   margin-top: 6vw;
   row-gap: 20px;
   max-width: 14%;

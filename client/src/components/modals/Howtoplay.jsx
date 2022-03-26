@@ -5,6 +5,7 @@ import propTypes from 'prop-types';
 
 const modalAnimation = {
   scale: 2,
+  opacity: '100%',
 };
 
 // Variant 1:
@@ -39,12 +40,12 @@ const leaveAnimation = {
 export default function Howtoplay({ setSkipped }) {
   const [hover, onHover] = useState(false);
   return (
-    <motion.div id="gameover-container" animate={modalAnimation} transition={{ duration: 0.5 }}>
+    <motion.div id="gameover-container" animate={modalAnimation} initial={{ opacity: '0%' }} transition={{ duration: 0.5 }}>
       <div id="gameover-header">
         <h2 id="gameover-text">How to Play</h2>
       </div>
       <div id="gameover-body">
-        <h4 id="gameover-text">A cipher is an encypted pattern of text. Try to solve this cipher...</h4>
+        <h4 id="gameover-text">A cipher is an encrypted pattern of text. Try to solve this cipher...</h4>
         <h4 id="gameover-text">
           If you get it wrong 3 times, GAME OVER!
         </h4>

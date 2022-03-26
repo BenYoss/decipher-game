@@ -51,7 +51,7 @@ export default function Cipher({ text, mutation }) {
     <div id="cipher-cluster">
       {text.length ? (
         bodyArray.map((word, i) => (
-          <motion.div id="cipher-word" initial={{ x: -200, opacity: '0%' }} animate={modalAnimation} transition={{ duration: (i + 1) / 10 }}>
+          <motion.div id="cipher-word" initial={{ x: -200, opacity: '0%' }} animate={modalAnimation} transition={{ duration: (i + 3) / 10 }}>
             <h4 id="cipher-text">
               {word}
             </h4>
