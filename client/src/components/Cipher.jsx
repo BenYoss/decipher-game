@@ -18,24 +18,40 @@ export default function Cipher({ text, mutation }) {
     }
   }
   if (mutation) {
-    if (mutation.includes('s-')) {
-      const mutationVals = mutation.split('-');
+    const mutations = mutation.split('|');
+    if (mutations[0].includes('s-')) {
+      const mutationVals = mutations[0].split('-');
       body = flipLetters(text, mutationVals[1][0], mutationVals[1][1]);
     }
-    if (mutation.includes('r-')) {
+    if (mutations[0].includes('r-')) {
       body = reverseText(text);
     }
-    if (mutation.includes('a-')) {
-      const mutationVals = mutation.split('-');
+    if (mutations[0].includes('a-')) {
+      const mutationVals = mutations[0].split('-');
       body = addMoreText(text, mutationVals[1][0], mutationVals[1][1], mutationVals[1][2]);
     }
+    mutations.forEach((mutate, i) => {
+      if (mutations[i + 1]) {
+        if (mutations[i + 1].includes('s-')) {
+          const mutationVals = mutations[i + 1].split('-');
+          body = flipLetters(body, mutationVals[1][0], mutationVals[1][1]);
+        }
+        if (mutations[i + 1].includes('r-')) {
+          body = reverseText(body);
+        }
+        if (mutations[i + 1].includes('a-')) {
+          const mutationVals = mutations[i + 1].split('-');
+          body = addMoreText(body, mutationVals[1][0], mutationVals[1][1], mutationVals[1][2]);
+        }
+      }
+    });
   }
   const bodyArray = body.split(' ');
   return (
     <div id="cipher-cluster">
       {text.length ? (
         bodyArray.map((word, i) => (
-          <motion.div id="cipher-word" initial={{ x: -200, opacity: '0%' }} animate={modalAnimation} transition={{ duration: (i + 1) / 10 }}>
+          <motion.div id="cipher-word" initial={{ x: -200, opacity: '0%' }} animate={modalAnimation} transition={{ duration: (i + 3) / 10 }}>
             <h4 id="cipher-text">
               {word}
             </h4>

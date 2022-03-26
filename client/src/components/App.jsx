@@ -22,7 +22,7 @@ export default function App() {
   const [health, setHealth] = useState([{ open: true }, { open: true }, { open: true }]);
   const [mutation, setMutation] = useState(null);
   const [skipped, setSkipped] = useState(false);
-  const [finalTime, setFinalTime] = useState('00:00:00:00');
+  const [finalTime, setFinalTime] = useState(false);
 
   async function calculateText() {
     let levelData = { text: '' };
@@ -51,15 +51,21 @@ export default function App() {
 
   return (
     <div id="container">
-      <div id="health-body">
-        <Health healthbar={health} />
-        {skipped && (
-        <Timer
-          setFinalTime={setFinalTime}
-          gameover={gameover}
-          victory={victory}
-        />
-        )}
+      <div id="nav-body">
+        <div id="timer-bo">
+          {skipped && (
+          <Timer
+            setFinalTime={setFinalTime}
+            gameover={gameover}
+            victory={victory}
+          />
+          )}
+        </div>
+        <div id="health-body">
+
+          <Health healthbar={health} />
+        </div>
+
       </div>
       <div id="header-container">
         <h4 id="header">Lacipher</h4>
@@ -74,13 +80,13 @@ export default function App() {
         <div id="modal-bg" />
       </>
       )}
-      {gameover && (
+      {gameover && finalTime && (
       <>
         <Gameover level={level} percent={percent} finalTime={finalTime} />
         <div id="modal-bg" />
       </>
       )}
-      {victory && (
+      {victory && finalTime && (
       <>
         <Victory level={level} percent={percent} time={finalTime} />
         <div id="modal-bg" />

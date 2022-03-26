@@ -6,6 +6,7 @@ import { updateCookies } from '../../helpers/helpers';
 
 const modalAnimation = {
   scale: 2,
+  opacity: '100%',
 };
 
 export default function Victory({ percent, time }) {
@@ -24,17 +25,16 @@ export default function Victory({ percent, time }) {
   updateCookies(time);
 
   return (
-    <motion.div id="gameover-container" animate={modalAnimation} transition={{ duration: 0.5 }}>
+    <motion.div id="gameover-container" animate={modalAnimation} initial={{ opacity: '0%' }} transition={{ duration: 0.5 }}>
       <div id="gameover-header">
         <h2 id="gameover-text">Correct!</h2>
       </div>
       <div id="gameover-body">
         <h4 id="gameover-text">{text}</h4>
-        <h3 id="gameover-level">
-          Time:
-          {time && time}
-        </h3>
-        <h4 id="gameover-text2">
+        <h4 id="gameover-level">
+          {`Time:  ${time && time}`}
+        </h4>
+        <h4 id="gameover-text">
           Compared to other users, you are in the top
           {` ${percent}`}
           % in this challenge.
