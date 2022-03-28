@@ -30,15 +30,15 @@ export default function Victory({ percent, time }) {
         <h2 id="gameover-text">Correct!</h2>
       </div>
       <div id="gameover-body">
-        <h4 id="gameover-text">{text}</h4>
-        <h4 id="gameover-level">
+        <span id="gameover-text">{text}</span>
+        <span id="gameover-level">
           {`Time:  ${time && time}`}
-        </h4>
-        <h4 id="gameover-text">
+        </span>
+        <span id="gameover-text">
           Compared to other users, you are in the top
           {` ${percent}`}
           % in this challenge.
-        </h4>
+        </span>
       </div>
     </motion.div>
   );

@@ -1,10 +1,11 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-restricted-syntax */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cipher from './Cipher';
 import Input from './Input';
 import Level from './Level';
-import { getCiphersFromDB } from '../helpers/helpers';
+import { getCiphersFromDB, getCookies } from '../helpers/helpers';
 import Health from './Health';
 import Gameover from './modals/Gameover';
 import Victory from './modals/Victory';
@@ -23,6 +24,8 @@ export default function App() {
   const [mutation, setMutation] = useState(null);
   const [skipped, setSkipped] = useState(false);
   const [finalTime, setFinalTime] = useState(false);
+  const [cookies, setCookies] = useState(null);
+  const [played, setPlayed] = useState(false);
 
   async function calculateText() {
     let levelData = { text: '' };
@@ -47,6 +50,12 @@ export default function App() {
 
   useEffect(() => {
     calculateText();
+    if (!cookies) {
+      getCookies()
+        .then((data) => {
+          setCookies(data.data.userData);
+        });
+    }
   }, []);
 
   return (
@@ -75,9 +84,23 @@ export default function App() {
       </div>
       {!skipped && (
       <>
-        <Howtoplay setSkipped={setSkipped} />
-        <div id="htp-bg" />
-        <div id="modal-bg" />
+        <Howtoplay
+          setSkipped={setSkipped}
+          cookieData={cookies}
+          played={played}
+          setPlayed={setPlayed}
+        />
+        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+        <div
+          id="htp-bg"
+        />
+        <div
+          id="modal-bg"
+          onClick={() => setSkipped(true)}
+          tabIndex="0"
+          label="modal"
+          role="button"
+        />
       </>
       )}
       {gameover && finalTime && (

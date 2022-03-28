@@ -76,11 +76,18 @@ export function mutate(text, cycleCount) {
   }
 }
 
+// time incrementors.
 let hour = 0;
 let min = 0;
 let sec = 0;
 let mil = 0;
 let counter;
+
+/**
+ * @func CountDown is a timer algorithm that acts as a stopwatch
+ * counting up from miliseconds to hours.
+ * @param {*} time stateful component method that updates the timer state in the App component.
+ */
 export function countDown(time) {
   if (!counter) {
     counter = setInterval(() => {
@@ -112,6 +119,11 @@ export function stopCount() {
 
 export async function updateCookies(time) {
   await axios.post('/setcookie', { time });
+}
+
+export async function getCookies() {
+  const cookieData = await axios.get('/getcookie');
+  return cookieData;
 }
 
 export async function getCiphersFromDB() {

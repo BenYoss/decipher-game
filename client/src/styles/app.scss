@@ -80,6 +80,9 @@ form {
   justify-content: flex-start;
   margin-left: 15%;
   user-select: none;
+  overflow: scroll;
+  max-height: 60%;
+  z-index: 0;
 }
 
 #cipher-word {
@@ -119,6 +122,9 @@ form {
 }
 #standard-btn {
   // background-color: black;
+  background-color: black;
+  color: white;
+  cursor:pointer;
   padding: 1vw 2vw 1vw 2vw;
   border-radius: 3vw 3vw 3vw 3vw;
   border: none;
@@ -133,6 +139,9 @@ form {
 
 #standard-btn:hover {
   // background-color: white;
+  background-color: black;
+  color: white;
+  cursor:pointer;
   padding: 1vw 2vw 1vw 2vw;
   border-radius: 2vw 2vw 2vw 2vw;
   border: none;
@@ -157,6 +166,7 @@ form {
   top: -10px;
   gap: 2px 2px 2px 2px;
   height: 160px;
+  z-index: 1;
 }
 
 #level-container-normal {
@@ -282,6 +292,7 @@ form {
 #gameover-text {
   color: rgb(40, 44, 52);
   font-size: 3vw;
+  margin-bottom: 20%;
 }
 
 #htp-bg {
@@ -374,6 +385,8 @@ form {
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: flex-start;
+    overflow: hidden;
+    max-height: none;
   }
   
   #cipher-word {
@@ -422,18 +435,28 @@ form {
     font-weight: bold;
     width: 200px;
     height: 70px;
+    background-color: black;
+    color: white;
     font-family: sans-serif;
     // color: white;
+    cursor:pointer;
   }
 
   #input-btn-container {
     display: flex;
     justify-content: center;
+    position: relative;
+    left: 0%;
+    top: 85%;
+    margin-top: 10%;
+    overflow: hidden;
     transform: scale(1);
   }
   
   #standard-btn:hover {
     // background-color: white;
+    background-color: black;
+    color: white;
     padding: 1vw 2vw 1vw 2vw;
     border-radius: 2vw 2vw 2vw 2vw;
     border: none;

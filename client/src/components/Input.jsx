@@ -7,13 +7,11 @@ export default function Input({
 }) {
   const hoverAnimation = {
     scale: 1.1,
-    backgroundColor: ['hsl(0, 61%, 0%)', 'hsl(180, 61%, 100%)'],
-    color: ['hsl(180, 61%, 100%)', 'hsl(0, 61%, 0%)'],
+    boxShadow: '0px 0px 8px hsl(120, 61%, 50%)',
   };
   const leaveAnimation = {
     scale: 1.0,
-    backgroundColor: ['hsl(180, 61%, 100%)', 'hsl(0, 61%, 0%)'],
-    color: ['hsl(0, 61%, 0%)', 'hsl(180, 61%, 100%)'],
+    boxShadow: '0px 0px 0px hsl(120, 61%, 50%)',
   };
   const [hover, onHover] = useState(false);
   const [val, useVal] = useState('');

@@ -17,15 +17,15 @@ export default function Gameover({ percent, finalTime }) {
         <h2 id="gameover-text">GAME OVER</h2>
       </div>
       <div id="gameover-body">
-        <h4 id="gameover-text">You were close, but not close enough!</h4>
-        <h5 id="gameover-level">
+        <span id="gameover-text">You were close, but not close enough!</span>
+        <span id="gameover-level">
           {`Time:  ${finalTime && finalTime}`}
-        </h5>
-        <h4 id="gameover-text">
+        </span>
+        <span id="gameover-text">
           Compared to other users, you are in the top
           {` ${percent}`}
           % in this challenge.
-        </h4>
+        </span>
       </div>
     </motion.div>
   );

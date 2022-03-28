@@ -8,6 +8,12 @@ app.get('/setcookie', (req, res) => {
   res.send('cookie saved!');
 });
 
+// for getting cookies from server to save user data.
+app.get('/getcookie', (req, res) => {
+  const cookie = req.cookies;
+  res.send(cookie);
+});
+
 app.post('/setcookie', (req, res) => {
   if (!req.cookies.userData) {
     req.cookies.userData = { timeHistory: [] };
