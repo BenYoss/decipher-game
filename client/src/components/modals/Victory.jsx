@@ -13,13 +13,14 @@ export default function Victory({ percent, time }) {
   let text = '';
   const times = time.split(':');
   const sec = Number(times[2]);
-  if (sec < 5) {
+  const min = Number(times[1]);
+  if (sec < 30) {
     text = 'Wow! Inhuman solving speed!';
-  } else if (sec < 7) {
+  } else if (min < 2) {
     text = 'Pretty fast!';
-  } else if (sec < 10) {
+  } else if (min < 5) {
     text = 'Average time!';
-  } else if (sec < 15) {
+  } else if (min < 10) {
     text = 'Pretty slow';
   }
   updateCookies(time);
@@ -32,9 +33,13 @@ export default function Victory({ percent, time }) {
       <hr />
       <div id="gameover-body">
         <span id="gameover-text">{text}</span>
-        <span id="gameover-level">
-          {`Time:  ${time && time}`}
-        </span>
+        <section id="gameover-text">
+          <br />
+          <b id="gameover-time">Time:</b>
+          <p id="gameover-time">
+            <b>{time && time}</b>
+          </p>
+        </section>
         <span id="gameover-text">
           Compared to other users, you are in the top
           {` ${percent}`}
