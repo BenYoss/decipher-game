@@ -85,16 +85,38 @@ form {
   z-index: 0;
 }
 
-#cipher-word {
-  margin-top: 5vw;
+@mixin cipher-style() {
   background-color: white;
-  margin-right: 1vw;
   border-radius: 3vh 3vh 3vh 3vh;
   padding: 2px 2.5vh 2px 2.5vh;
   font-size: 3vh;
   font-family: sans-serif;
   border: 2px solid black;
   user-select: none;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 0.2em 0;
+  padding: 0;
+}
+
+#cipher-word {
+  @include cipher-style();
+  margin-top: 5vw;
+  margin-right: 1vw;
+}
+
+#played-modal-cipher {
+  @include cipher-style();
+  transform: scale(0.5);
+  margin-top: -1vh;
+  font-size: 2.5vh;
+  margin-bottom: -1.5vh;
+  padding: 0px 0px 0px 0px;
 }
 // ---------------------------( TESTING )----------------------------------------------
 #test {
@@ -273,7 +295,7 @@ form {
   text-align: center;
   vertical-align: middle;
   width: 40vw;
-  height: 50vw;
+  height: 54vw;
   background-color: white;
   transform: scale(2);
   border-radius: 0.5vw 0.5vw 0.5vw 0.5vw;
@@ -292,7 +314,7 @@ form {
 #gameover-text {
   color: rgb(40, 44, 52);
   font-size: 3vw;
-  margin-bottom: 20%;
+  margin-bottom: 2%;
 }
 
 #htp-bg {
@@ -380,7 +402,7 @@ form {
   
   #cipher-cluster {
     margin-top: 80px;
-    width: 70%;
+    width: 60%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -389,15 +411,28 @@ form {
     max-height: none;
   }
   
-  #cipher-word {
-    margin-top: 5vw;
+  @mixin cipher-style() {
     background-color: white;
-    margin-right: 1vw;
-    border-radius: 2vw 2vw 2vw 2vw;
-    padding: 2px 2vw 2px 2vw;
-    font-size: 1.8vw;
+    border-radius: 3vh 3vh 3vh 3vh;
+    padding: 2px 2.5vh 2px 2.5vh;
+    font-size: 3vh;
     font-family: sans-serif;
     border: 2px solid black;
+    user-select: none;
+  }
+  
+  #cipher-word {
+    @include cipher-style();
+    margin-top: 5vw;
+    margin-right: 1vw;
+  }
+  
+  #played-modal-cipher {
+    @include cipher-style();
+    transform: scale(0.5);
+    margin-top: -1vh;
+    margin-bottom: -1.5vh;
+    padding: 0px 0px 0px 0px;
   }
   
   #cipher-input-container {

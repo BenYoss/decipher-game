@@ -16,6 +16,7 @@ export default function Gameover({ percent, finalTime }) {
       <div id="gameover-header">
         <h2 id="gameover-text">GAME OVER</h2>
       </div>
+      <hr />
       <div id="gameover-body">
         <span id="gameover-text">You were close, but not close enough!</span>
         <span id="gameover-level">

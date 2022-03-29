@@ -14,25 +14,20 @@ const makeMutationPrint = (text, level) => {
 
   // For categorizing mutations based on level.
   // TODO: make mutation method iteratively make multiple mutations based on level type.
-  for (let i = 0; i < mutations.length; i += 1) {
-    if (level >= mutations[i].minLevel) {
-      resultStr = resultStr.concat(mutations[i].mutation);
+  const i = Math.floor(Math.random() * 3);
+  if (level >= mutations[i].minLevel) {
+    resultStr = resultStr.concat(mutations[i].mutation);
 
-      // Determines a random char from idiom to use in mutation.
-      if (i === 0) {
-        const randomTextChar = text[Math.floor(Math.random() * text.length - 1)];
-        const randomChar = alphabet[Math.floor(Math.random() * alphabet.length - 1)];
-        resultStr = resultStr.concat(randomTextChar + randomChar);
-      }
-      if (i === 2) {
-        const randomAmount = Math.floor(Math.random() * 3);
-        const randomTextChar = text[Math.floor(Math.random() * text.length - 1)];
-        const randomChar = alphabet[Math.floor(Math.random() * alphabet.length - 1)];
-        resultStr = resultStr.concat(`${randomTextChar}${randomAmount}${randomChar}`);
-      }
-
-      // break statement once mutation is created.
-      break;
+    // Determines a random char from idiom to use in mutation.
+    if (i < 2) {
+      const randomTextChar = text[Math.floor(Math.random() * text.length - 1)];
+      const randomChar = alphabet[Math.floor(Math.random() * alphabet.length - 1)];
+      resultStr = resultStr.concat(randomTextChar + randomChar);
+    } else {
+      const randomAmount = Math.floor(Math.random() * 3);
+      const randomTextChar = text[Math.floor(Math.random() * text.length - 1)];
+      const randomChar = alphabet[Math.floor(Math.random() * alphabet.length - 1)];
+      resultStr = resultStr.concat(`${randomTextChar}${randomAmount}${randomChar}`);
     }
   }
   return resultStr;

@@ -37,7 +37,7 @@ const leaveAnimation = {
  */
 let currentGame;
 export default function Howtoplay({
-  setSkipped, cookieData, played, setPlayed,
+  setSkipped, cookieData, played, setPlayed, text,
 }) {
   let gamesPlayed;
   if (cookieData) {
@@ -51,7 +51,6 @@ export default function Howtoplay({
       });
     }
   }
-
   return (
     <motion.div
       id="gameover-container"
@@ -64,11 +63,16 @@ export default function Howtoplay({
           <div id="gameover-header">
             <h2 id="gameover-text">How to Play</h2>
           </div>
+          <hr />
           <div id="gameover-body">
-            <span id="gameover-text">A cipher is an encrypted pattern of text. Try to solve this cipher...</span>
-            <span id="gameover-text">
-              If you get it wrong 3 times, GAME OVER!
-            </span>
+            <p id="gameover-text">A cipher is an encrypted pattern of text. Try to solve this cipher...</p>
+            <p id="gameover-text">
+              If you get it wrong 3 times
+              {' '}
+              <b>GAME OVER!</b>
+            </p>
+            <br />
+            <hr />
             <motion.button
               id="standard-btn"
               type="button"
@@ -90,27 +94,32 @@ export default function Howtoplay({
             <h2 id="gameover-text">Cipher Completed!</h2>
           </div>
           <div id="gameover-body">
-            <span id="gameover-text">
+            <p id="gameover-text">
               Looks like you already completed today&apos;s cipher.
-            </span>
+            </p>
+            <p id="played-modal-cipher">
+              <b>{text}</b>
+            </p>
+          </div>
+          <div id="gameover-body">
             <section>
               {
                 currentGame
              && (
-             <section>
-               <span id="gameover-text">Time:</span>
-               <span id="gameover-text">
-                 {currentGame.time}
-               </span>
+             <section id="gameover-text">
+               <b id="gameover-time">Time:</b>
+               <p id="gameover-time">
+                 <b>{currentGame.time}</b>
+               </p>
              </section>
              )
               }
             </section>
             <section>
-              <span id="gameover-text">
+              <p id="gameover-text">
                 Wait until tomorrow to play
                 again!
-              </span>
+              </p>
             </section>
           </div>
 

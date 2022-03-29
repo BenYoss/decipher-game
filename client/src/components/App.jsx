@@ -82,30 +82,37 @@ export default function App() {
           <Level level={level} />
         </div>
       </div>
-      {!skipped && (
+      {!skipped && text && (
       <>
         <Howtoplay
           setSkipped={setSkipped}
           cookieData={cookies}
           played={played}
           setPlayed={setPlayed}
+          text={text}
         />
         {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
         <div
           id="htp-bg"
         />
-        <div
-          id="modal-bg"
-          onClick={() => setSkipped(true)}
-          tabIndex="0"
-          label="modal"
-          role="button"
-        />
+        {!played ? (
+          <div
+            id="modal-bg"
+            onClick={() => setSkipped(true)}
+            tabIndex="0"
+            label="modal"
+            role="button"
+          />
+        ) : (
+          <div
+            id="modal-bg"
+          />
+        )}
       </>
       )}
       {gameover && finalTime && (
       <>
-        <Gameover level={level} percent={percent} finalTime={finalTime} />
+        <Gameover level={level} percent={percent} finalTime={finalTime} text={text} />
         <div id="modal-bg" />
       </>
       )}

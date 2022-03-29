@@ -29,6 +29,7 @@ export default function Victory({ percent, time }) {
       <div id="gameover-header">
         <h2 id="gameover-text">Correct!</h2>
       </div>
+      <hr />
       <div id="gameover-body">
         <span id="gameover-text">{text}</span>
         <span id="gameover-level">
