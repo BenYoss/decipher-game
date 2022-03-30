@@ -1,5 +1,5 @@
 /* eslint-disable react/require-default-props */
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import propTypes from 'prop-types';
 
@@ -19,8 +19,6 @@ const modalAnimation = {
 //   backgroundColor: ['hsl(127, 61%, 12%)', 'hsl(0, 61%, 0%)'],
 //   color: 'hsl(180, 61%, 100%)',
 // };
-
-// variant 2
 
 const hoverAnimation = {
   scale: 1.1,
@@ -93,6 +91,7 @@ export default function Howtoplay({
           <div id="gameover-header">
             <h2 id="gameover-text">Cipher Completed!</h2>
           </div>
+          <hr />
           <div id="gameover-body">
             <p id="gameover-text">
               Looks like you already completed today&apos;s cipher.
@@ -115,6 +114,7 @@ export default function Howtoplay({
              )
               }
             </section>
+            <hr />
             <section>
               <p id="gameover-text">
                 Wait until tomorrow to play
@@ -132,4 +132,7 @@ export default function Howtoplay({
 Howtoplay.propTypes = {
   setSkipped: propTypes.bool.isRequired,
   cookieData: propTypes.element.isRequired,
+  played: propTypes.bool.isRequired,
+  setPlayed: propTypes.func.isRequired,
+  text: propTypes.string.isRequired,
 };
