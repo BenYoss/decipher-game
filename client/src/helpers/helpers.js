@@ -11,18 +11,21 @@ import axios from 'axios';
  * @returns
  */
 export function flipLetters(text, letter, replacement) {
-  const regex = new RegExp(letter, 'g');
+  let regexCase;
   let result;
-  if (letter && letter === letter.toUpperCase()) {
-    // Randomizes text ⬇⬇⬇
-    // result = text.replace(regex, alphabet[Math.floor(Math.random()
-    //   * alphabet.length - 1)].toUpperCase());
-    result = text.replace(regex, replacement.toUpperCase());
+  if (letter === letter.toUpperCase()) {
+    regexCase = new RegExp(letter.toLowerCase(), 'g');
   } else {
-    result = text.replace(regex, replacement);
-    // Randomizes text ⬇⬇⬇
-    // result = text.replace(regex, alphabet[Math.floor(Math.random() * alphabet.length - 1)]);
+    regexCase = new RegExp(letter.toUpperCase(), 'g');
   }
+  const regex = new RegExp(letter, 'g');
+  // Randomizes text ⬇⬇⬇
+  // result = text.replace(regex, alphabet[Math.floor(Math.random()
+  //   * alphabet.length - 1)].toUpperCase());
+  result = text.replace(regex, replacement);
+  result = result.replace(regexCase, replacement.toUpperCase());
+  // Randomizes text ⬇⬇⬇
+  // result = text.replace(regex, alphabet[Math.floor(Math.random() * alphabet.length - 1)]);
   return result;
 }
 

@@ -56,11 +56,10 @@ form {
 
 #cipher-input-container {
   position: absolute;
-  bottom: -2vw;
-  // width: 100vw;
+  bottom: 0;
   right: 0;
   left: 0;
-  top: 55vh;
+  top: 54vh;
   padding-top: 20px;
   background-color: rgb(40, 44, 52);
 }
@@ -115,7 +114,7 @@ hr {
   transform: scale(0.5);
   margin-top: -1vh;
   font-size: 2.5vh;
-  margin-bottom: -1.5vh;
+  margin-bottom: -0.9vh;
   padding: 0px 0px 0px 0px;
 }
 // ---------------------------( TESTING )----------------------------------------------
@@ -431,7 +430,7 @@ hr {
     @include cipher-style();
     transform: scale(0.5);
     margin-top: -1vh;
-    margin-bottom: -1.5vh;
+    margin-bottom: -0.9vh;
     padding: 0px 0px 0px 0px;
   }
   

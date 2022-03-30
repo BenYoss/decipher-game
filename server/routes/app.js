@@ -24,7 +24,7 @@ const makeMutationPrint = (text, level) => {
       const randomChar = alphabet[Math.floor(Math.random() * alphabet.length - 1)];
       resultStr = resultStr.concat(randomTextChar + randomChar);
     } else {
-      const randomAmount = Math.floor(Math.random() * 3);
+      const randomAmount = Math.floor(Math.random() * 3) || 1;
       const randomTextChar = text[Math.floor(Math.random() * text.length - 1)];
       const randomChar = alphabet[Math.floor(Math.random() * alphabet.length - 1)];
       resultStr = resultStr.concat(`${randomTextChar}${randomAmount}${randomChar}`);
