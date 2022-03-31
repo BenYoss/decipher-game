@@ -2,15 +2,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import propTypes from 'prop-types';
-import { updateCookies } from '../../helpers/helpers';
+import { updateCookies, getAttemptCount } from '../../helpers/helpers';
 
 const modalAnimation = {
   scale: 2,
   opacity: '100%',
 };
 
-export default function Gameover({ percent, finalTime }) {
-  updateCookies(finalTime);
+export default function Gameover({ percent, finalTime, attempts }) {
+  const attemptCount = getAttemptCount(attempts);
+  updateCookies(finalTime, attemptCount, false);
   return (
     <motion.div id="gameover-container" animate={modalAnimation} initial={{ opacity: '0%' }} transition={{ duration: 0.5 }}>
       <div id="gameover-header">
@@ -19,9 +20,20 @@ export default function Gameover({ percent, finalTime }) {
       <hr />
       <div id="gameover-body">
         <p id="gameover-text">You were close, but not close enough!</p>
-        <p id="gameover-level">
-          {`Time:  ${finalTime && finalTime}`}
-        </p>
+        <div id="gameover-metrics-container">
+          <section id="gameover-metric">
+            <b id="gameover-time">Time:</b>
+            <p id="gameover-time">
+              <b>{finalTime && finalTime}</b>
+            </p>
+          </section>
+          <section id="gameover-metric">
+            <b id="gameover-time">Attempts:</b>
+            <p id="gameover-time">
+              <b>{attemptCount}</b>
+            </p>
+          </section>
+        </div>
         <p id="gameover-text">
           Compared to other users, you are in the top
           {` ${percent}`}
@@ -35,4 +47,9 @@ export default function Gameover({ percent, finalTime }) {
 Gameover.propTypes = {
   percent: propTypes.number.isRequired,
   finalTime: propTypes.string.isRequired,
+  attempts: [
+    {
+      open: propTypes.bool.isRequired,
+    },
+  ],
 };
