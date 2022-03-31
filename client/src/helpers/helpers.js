@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 import axios from 'axios';
+import html2canvas from 'html2canvas';
 
 // ALPHABET DATA REFERENCE
 // const alphabet = 'abcdefghijklmnopqrstuvwxyz';
@@ -120,8 +121,8 @@ export function stopCount() {
   clearInterval(counter);
 }
 
-export async function updateCookies(time) {
-  await axios.post('/setcookie', { time });
+export async function updateCookies(time, attempts, isWin) {
+  await axios.post('/setcookie', { time, attempts, isWin });
 }
 
 export async function getCookies() {
@@ -132,4 +133,33 @@ export async function getCookies() {
 export async function getCiphersFromDB() {
   const result = await axios.get('/getcipher');
   return result;
+}
+
+// Function to count the number of attempts a player makes to complete Cipher.
+export function getAttemptCount(attempts) {
+  let attemptCount = 1;
+
+  attempts.forEach((attempt) => {
+    if (!attempt.open) {
+      attemptCount += 1;
+    }
+  });
+
+  return attemptCount;
+}
+
+let count = 0;
+
+export async function getShareDownload() {
+  if (count < 1) {
+    const elt = document.getElementById('gameover-metrics-container');
+    return html2canvas(elt).then((canvas) => {
+      document.body.appendChild(canvas);
+
+      const canvas2 = document.getElementsByTagName('canvas')[0];
+      const dataURL = canvas2.toDataURL();
+      count += 1;
+      return dataURL;
+    });
+  }
 }
