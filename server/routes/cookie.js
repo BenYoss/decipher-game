@@ -20,7 +20,12 @@ app.post('/setcookie', (req, res) => {
   }
   const { timeHistory } = req.cookies.userData;
   const date = new Date().toDateString();
-  timeHistory.push({ gameDate: date, time: req.body.time });
+  timeHistory.push({
+    gameDate: date,
+    time: req.body.time,
+    attempts: req.body.attempts,
+    isWin: req.body.isWin,
+  });
   res.cookie('userData', req.cookies.userData);
   res.send(req.cookies);
 });
