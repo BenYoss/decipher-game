@@ -5,7 +5,7 @@ import axios from 'axios';
 import Cipher from './Cipher';
 import Input from './Input';
 import Level from './Level';
-import { getCiphersFromDB, getCookies } from '../helpers/helpers';
+import { getCiphersFromDB, getCookies, getShareDownload } from '../helpers/helpers';
 import Health from './Health';
 import Gameover from './modals/Gameover';
 import Victory from './modals/Victory';
@@ -13,6 +13,8 @@ import Howtoplay from './modals/Howtoplay';
 import Timer from './Timer';
 import '../styles/app.scss';
 import 'regenerator-runtime/runtime';
+
+let count = 0;
 
 export default function App() {
   const [text, setText] = useState('');
@@ -26,6 +28,16 @@ export default function App() {
   const [finalTime, setFinalTime] = useState(false);
   const [cookies, setCookies] = useState(null);
   const [played, setPlayed] = useState(false);
+  const [downloadURL, setDownloadURL] = useState('');
+
+  if (count < 1) {
+    if (document.getElementById('gameover-metric')) {
+      getShareDownload().then((url) => {
+        count += 1;
+        setDownloadURL(url);
+      });
+    }
+  }
 
   async function calculateText() {
     let levelData = { text: '' };
@@ -79,7 +91,9 @@ export default function App() {
       <div id="header-container">
         <h4 id="header">Lacipher</h4>
         <div>
-          <Level level={level} />
+          {level && (
+            <Level level={level} />
+          )}
         </div>
       </div>
       {!skipped && text && (
@@ -90,6 +104,7 @@ export default function App() {
           played={played}
           setPlayed={setPlayed}
           text={text}
+          downloadURL={downloadURL}
         />
         {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
         <div
@@ -97,6 +112,7 @@ export default function App() {
         />
         {!played ? (
           <div
+            className="modal-bg"
             id="modal-bg"
             onClick={() => setSkipped(true)}
             tabIndex="0"
@@ -105,20 +121,28 @@ export default function App() {
           />
         ) : (
           <div
-            id="modal-bg"
+            className="modal-bg"
+            id="finish-modal-bg"
           />
         )}
       </>
       )}
       {gameover && finalTime && (
       <>
-        <Gameover level={level} percent={percent} finalTime={finalTime} text={text} />
-        <div id="modal-bg" />
+        <Gameover
+          level={level}
+          percent={percent}
+          finalTime={finalTime}
+          text={text}
+          attempts={health}
+          id="gameover"
+        />
+        <div className="modal-bg" id="finish-modal-bg" />
       </>
       )}
       {victory && finalTime && (
       <>
-        <Victory level={level} percent={percent} time={finalTime} />
+        <Victory level={level} percent={percent} time={finalTime} attempts={health} />
         <div id="modal-bg" />
       </>
       )}
