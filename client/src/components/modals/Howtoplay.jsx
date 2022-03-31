@@ -35,7 +35,7 @@ const leaveAnimation = {
  */
 let currentGame;
 export default function Howtoplay({
-  setSkipped, cookieData, played, setPlayed, text,
+  setSkipped, cookieData, played, setPlayed, text, downloadURL,
 }) {
   let gamesPlayed;
   if (cookieData) {
@@ -92,7 +92,7 @@ export default function Howtoplay({
             <h2 id="gameover-text">Cipher Completed!</h2>
           </div>
           <hr />
-          <div id="gameover-body">
+          <div id="gameover-">
             <p id="gameover-text">
               Looks like you already completed today&apos;s cipher.
             </p>
@@ -101,16 +101,27 @@ export default function Howtoplay({
             </p>
           </div>
           <div id="gameover-body">
+            <p id="played-modal-cipher">
+              <b>{`La-Cipher ${new Date().toDateString()}`}</b>
+            </p>
             <section>
               {
                 currentGame
              && (
-             <section id="gameover-text">
-               <b id="gameover-time">Time:</b>
-               <p id="gameover-time">
-                 <b>{currentGame.time}</b>
-               </p>
-             </section>
+             <div id="gameover-metrics-container">
+               <section id="gameover-metric">
+                 <b id="gameover-time">Time:</b>
+                 <p id="gameover-time">
+                   <b>{currentGame.time}</b>
+                 </p>
+               </section>
+               <section id="gameover-metric">
+                 <b id="gameover-time">Attempts:</b>
+                 <p id="gameover-time">
+                   <b>{currentGame.attempts}</b>
+                 </p>
+               </section>
+             </div>
              )
               }
             </section>
@@ -120,6 +131,9 @@ export default function Howtoplay({
                 Wait until tomorrow to play
                 again!
               </p>
+              {downloadURL && (
+                <a className="button" id="standard-btn" href={downloadURL} download="decipher.png">Save Score</a>
+              )}
             </section>
           </div>
 
@@ -135,4 +149,5 @@ Howtoplay.propTypes = {
   played: propTypes.bool.isRequired,
   setPlayed: propTypes.func.isRequired,
   text: propTypes.string.isRequired,
+  downloadURL: propTypes.string.isRequired,
 };
