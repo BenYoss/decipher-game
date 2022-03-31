@@ -13,6 +13,7 @@ body {
   user-select: none;
   align-items: flex-start;
   max-width: 99vw;
+  overflow: hidden;
 }
 
 textarea {
@@ -52,6 +53,10 @@ form {
   right: 0;
   display: flex;
   flex-direction: column;
+}
+
+canvas {
+  opacity: 0.0
 }
 
 #cipher-input-container {
@@ -114,7 +119,7 @@ hr {
   transform: scale(0.5);
   margin-top: -1vh;
   font-size: 2.5vh;
-  margin-bottom: -0.9vh;
+  margin-bottom: -0.6vh;
   padding: 0px 0px 0px 0px;
 }
 // ---------------------------( TESTING )----------------------------------------------
@@ -135,7 +140,7 @@ hr {
 // Standard button styles
 #input-btn-container {
   position: absolute;
-  left: 40%;
+  left: 37%;
   top: 85%;
   margin-top: 10%;
   transform: scale(1.5);
@@ -144,7 +149,6 @@ hr {
 #standard-btn {
   // background-color: black;
   background-color: black;
-  color: white;
   cursor:pointer;
   padding: 1vw 2vw 1vw 2vw;
   border-radius: 3vw 3vw 3vw 3vw;
@@ -155,6 +159,7 @@ hr {
   font-weight: bold;
   overflow: hidden;
   font-family: sans-serif;
+  color: white;
   // color: white;
 }
 
@@ -303,6 +308,7 @@ hr {
   -webkit-box-shadow: 0 8px 6px -6px black;
   -moz-box-shadow: 0 8px 6px -6px black;
   box-shadow: 0 8px 6px -6px black;
+  overflow: scroll;
 }
 
 #gameover-header {
@@ -314,6 +320,24 @@ hr {
   color: rgb(40, 44, 52);
   font-size: 3vw;
   margin-bottom: 2%;
+}
+
+#gameover-metrics-container { 
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: relative;
+}
+
+#gameover-time {
+  font-size: 1.6vh;
+}
+
+#gameover-metric {
+  border: 1px solid rgb(187, 187, 187);
+  text-align: center;
+  padding-bottom: -20px;
+  min-width: 47%;
 }
 
 #htp-bg {
@@ -401,7 +425,7 @@ hr {
   
   #cipher-cluster {
     margin-top: 80px;
-    width: 60%;
+    width: 70%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -430,7 +454,7 @@ hr {
     @include cipher-style();
     transform: scale(0.5);
     margin-top: -1vh;
-    margin-bottom: -0.9vh;
+    margin-bottom: -0.6vh;
     padding: 0px 0px 0px 0px;
   }
   
@@ -470,7 +494,7 @@ hr {
     width: 200px;
     height: 70px;
     background-color: black;
-    color: white;
+    // color: white;
     font-family: sans-serif;
     // color: white;
     cursor:pointer;
@@ -607,6 +631,7 @@ hr {
     -webkit-box-shadow: 0 8px 6px -6px black;
     -moz-box-shadow: 0 8px 6px -6px black;
     box-shadow: 0 8px 6px -6px black;
+    overflow: hidden;
   }
   
   #timer-bo {
@@ -620,7 +645,21 @@ hr {
   
   #gameover-text {
     color: rgb(40, 44, 52);
-    font-size: 1vw;
+    font-size: 0.8vw;
+  }
+
+  #gameover-metrics-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+  }
+
+  #gameover-metric {
+    border: 1px solid rgb(187, 187, 187);
+    text-align: center;
+    padding-bottom: -20px;
+    min-width: 47%;
   }
   
   #htp-bg {
