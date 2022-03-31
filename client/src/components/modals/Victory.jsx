@@ -2,14 +2,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import propTypes from 'prop-types';
-import { updateCookies } from '../../helpers/helpers';
+import { updateCookies, getAttemptCount } from '../../helpers/helpers';
 
 const modalAnimation = {
   scale: 2,
   opacity: '100%',
 };
 
-export default function Victory({ percent, time }) {
+export default function Victory({ percent, time, attempts }) {
   let text = '';
   const times = time.split(':');
   const sec = Number(times[2]);
@@ -23,8 +23,10 @@ export default function Victory({ percent, time }) {
   } else if (min < 10) {
     text = 'Pretty slow';
   }
-  updateCookies(time);
 
+  const attemptCount = getAttemptCount(attempts);
+
+  updateCookies(time, attemptCount, true);
   return (
     <motion.div id="gameover-container" animate={modalAnimation} initial={{ opacity: '0%' }} transition={{ duration: 0.5 }}>
       <div id="gameover-header">
@@ -33,13 +35,20 @@ export default function Victory({ percent, time }) {
       <hr />
       <div id="gameover-body">
         <span id="gameover-text">{text}</span>
-        <section id="gameover-text">
-          <br />
-          <b id="gameover-time">Time:</b>
-          <p id="gameover-time">
-            <b>{time && time}</b>
-          </p>
-        </section>
+        <div id="gameover-metrics-container">
+          <section id="gameover-metric">
+            <b id="gameover-time">Time:</b>
+            <p id="gameover-time">
+              <b>{time && time}</b>
+            </p>
+          </section>
+          <section id="gameover-metric">
+            <b id="gameover-time">Attempts:</b>
+            <p id="gameover-time">
+              <b>{attemptCount}</b>
+            </p>
+          </section>
+        </div>
         <span id="gameover-text">
           Compared to other users, you are in the top
           {` ${percent}`}
@@ -53,4 +62,9 @@ export default function Victory({ percent, time }) {
 Victory.propTypes = {
   percent: propTypes.number.isRequired,
   time: propTypes.string.isRequired,
+  attempts: [
+    {
+      open: propTypes.bool.isRequired,
+    },
+  ],
 };
