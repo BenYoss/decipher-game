@@ -9,7 +9,9 @@ const modalAnimation = {
   opacity: '100%',
 };
 
-export default function Victory({ percent, time, attempts }) {
+export default function Victory({
+  percent, time, health, attempts,
+}) {
   let text = '';
   const times = time.split(':');
   const sec = Number(times[2]);
@@ -24,9 +26,9 @@ export default function Victory({ percent, time, attempts }) {
     text = 'Pretty slow';
   }
 
-  const attemptCount = getAttemptCount(attempts);
+  const attemptCount = getAttemptCount(health);
 
-  updateCookies(time, attemptCount, true);
+  updateCookies(time, attemptCount, true, attempts);
   return (
     <motion.div id="gameover-container" animate={modalAnimation} initial={{ opacity: '0%' }} transition={{ duration: 0.5 }}>
       <div id="gameover-header">
@@ -67,4 +69,5 @@ Victory.propTypes = {
       open: propTypes.bool.isRequired,
     },
   ],
+  health: propTypes.number.isRequired,
 };
