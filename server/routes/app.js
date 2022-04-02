@@ -6,28 +6,47 @@ const mutations = require('./mutations.json');
 
 const app = Router();
 
-// Cipher builder for automatically creating ciphers each day.
+const usedChars = [];
 
-const makeMutationPrint = (text, level) => {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+const findRandomCharInText = (text) => {
+  const invalidChars = ' 1234567890,-';
+  let isValidChar = false;
+  let randomChar;
+  while (!isValidChar) {
+    const randomInt = Math.floor(Math.random() * text.length);
+    randomChar = text[randomInt];
+    if (!invalidChars.includes(randomChar) && !usedChars.includes(randomChar)) {
+      isValidChar = true;
+    }
+  }
+  usedChars.push(randomChar);
+  return randomChar;
+};
+
+// Cipher builder for automatically creating ciphers each day.
+const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+const makeMutationPrint = (text, level, mutation = '') => {
   let resultStr = '';
 
   // For categorizing mutations based on level.
-  // TODO: make mutation method iteratively make multiple mutations based on level type.
   const i = Math.floor(Math.random() * 3);
   if (level >= mutations[i].minLevel) {
     resultStr = resultStr.concat(mutations[i].mutation);
 
     // Determines a random char from idiom to use in mutation.
     if (i < 2) {
-      const randomTextChar = text[Math.floor(Math.random() * text.length - 1)];
-      const randomChar = alphabet[Math.floor(Math.random() * alphabet.length - 1)];
-      resultStr = resultStr.concat(randomTextChar + randomChar);
+      // if reversal mutation is already used, recursively cycle to find a new cipher.
+      if (i === 1 && mutation.includes('r-')) {
+        return makeMutationPrint(text, level, mutation);
+      }
+      const randomChar = alphabet[Math.floor(Math.random() * alphabet.length)];
+      resultStr = resultStr.concat(findRandomCharInText(text) + randomChar);
+      alphabet.splice(randomChar, 1);
     } else {
       const randomAmount = Math.floor(Math.random() * 3) || 1;
-      const randomTextChar = text[Math.floor(Math.random() * text.length - 1)];
-      const randomChar = alphabet[Math.floor(Math.random() * alphabet.length - 1)];
-      resultStr = resultStr.concat(`${randomTextChar}${randomAmount}${randomChar}`);
+      const randomChar = alphabet[Math.floor(Math.random() * alphabet.length)];
+      resultStr = resultStr.concat(`${findRandomCharInText(text)}${randomAmount}${randomChar}`);
+      alphabet.splice(randomChar, 1);
     }
   }
   return resultStr;
@@ -55,7 +74,11 @@ const buildCipherEntry = (textData, dbCiphers) => {
   for (let i = 0; i < textData.length; i += 1) {
     if (textData[i].length < 100 / entryObject.levelType) {
       entryObject.text = textData[i];
-      entryObject.mutation = makeMutationPrint(entryObject.text, entryObject.levelType);
+      entryObject.mutation = makeMutationPrint(
+        entryObject.text,
+        entryObject.levelType,
+        entryObject.mutation,
+      );
       let j = 1;
       while (j < entryObject.levelType) {
         entryObject.mutation += `|${makeMutationPrint(entryObject.text, entryObject.levelType)}`;
