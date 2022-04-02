@@ -153,7 +153,7 @@ export default function Howtoplay({
                     transition={{ duration: 0.18 }}
                     id="standard-btn-small"
                     href={downloadURL}
-                    download="decipher.png"
+                    download={`decipher_${new Date().toDateString()}.png`}
                   >
                     <span id="save-stats">Save Stats</span>
                     <img src={downloadIcon} alt="download icon" style={{ filter: 'invert()' }} width="15" height="15" />

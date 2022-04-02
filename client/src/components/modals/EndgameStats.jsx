@@ -15,7 +15,7 @@ export default function EndgameStats({ cipher, cookies }) {
                   if (cookies.cipherAttempts[i][index]) {
                     return (<div className="stat-word-right" id={index} style={{ minWidth: `${(word.length * 10)}%` }} initial={{ x: -200, opacity: '0%' }} animate={modalAnimation} transition={{ duration: (index + 3) / 5 }} />);
                   }
-                  return (<div className="stat-word-wrong" id={index} width={`${(word.length * 10)}%`} initial={{ x: -200, opacity: '0%' }} animate={modalAnimation} transition={{ duration: (index + 3) / 5 }} />);
+                  return (<div className="stat-word-wrong" id={index} style={{ minWidth: `${(word.length * 10)}%` }} initial={{ x: -200, opacity: '0%' }} animate={modalAnimation} transition={{ duration: (index + 3) / 5 }} />);
                 })}
               </div>
             ))
