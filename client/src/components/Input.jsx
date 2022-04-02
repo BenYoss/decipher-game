@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import propTypes from 'prop-types';
+import { updateAttempts } from '../helpers/helpers';
 
 export default function Input({
-  text, level, health, setHealth, setGameover, setPercent, percent, setVictory,
+  text, level, health, setHealth, setGameover, setPercent,
+  percent, setVictory, setAttempts, attempts,
 }) {
   const hoverAnimation = {
     scale: 1.1,
@@ -42,12 +44,19 @@ export default function Input({
                 document.getElementById('standard-btn').style.border = 'rgb(181, 181, 181)';
                 document.getElementById('standard-btn').style.color = 'white';
                 document.getElementById('standard-btn').textContent = '🔒';
-                setVictory(true);
+                updateAttempts(val, text).then((data) => {
+                  setAttempts([...attempts, data]);
+                  setVictory(true);
+                });
               } else {
                 document.getElementsByTagName('textarea')[0].style.color = 'red';
                 document.getElementsByTagName('textarea')[0].style.border = 'red';
                 let hasTakenSlot = false;
                 let tally = 0;
+                updateAttempts(val, text)
+                  .then((data) => {
+                    setAttempts([...attempts, data]);
+                  });
                 const updatedHealth = health.map((slot) => {
                   if (slot.open && !hasTakenSlot) {
                     hasTakenSlot = true;
@@ -90,4 +99,6 @@ Input.propTypes = {
   setPercent: propTypes.func.isRequired,
   percent: propTypes.number.isRequired,
   setVictory: propTypes.func.isRequired,
+  setAttempts: propTypes.func.isRequired,
+  attempts: propTypes.element.isRequired,
 };

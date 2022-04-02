@@ -24,9 +24,16 @@ app.post('/setcookie', (req, res) => {
     gameDate: date,
     time: req.body.time,
     attempts: req.body.attempts,
+    cipherAttempts: req.body.cipherAttempts,
     isWin: req.body.isWin,
   });
   res.cookie('userData', req.cookies.userData);
+  res.send(req.cookies);
+});
+
+app.put('/editcookie', (req, res) => {
+  const { timeHistory } = req.cookies.userData;
+  timeHistory.attempts.push(req.body.attempt);
   res.send(req.cookies);
 });
 

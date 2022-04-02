@@ -12,13 +12,14 @@ import Victory from './modals/Victory';
 import Howtoplay from './modals/Howtoplay';
 import Timer from './Timer';
 import '../styles/app.scss';
+import '../styles/endgameStats.scss';
 import 'regenerator-runtime/runtime';
 
 let count = 0;
 
 export default function App() {
   const [text, setText] = useState('');
-  const [level, setLevel] = useState(1);
+  const [level, setLevel] = useState(0);
   const [gameover, setGameover] = useState(false);
   const [victory, setVictory] = useState(false);
   const [percent, setPercent] = useState(100);
@@ -29,6 +30,8 @@ export default function App() {
   const [cookies, setCookies] = useState(null);
   const [played, setPlayed] = useState(false);
   const [downloadURL, setDownloadURL] = useState('');
+  const [mutationCiphers, setMutationCiphers] = useState([]);
+  const [attempts, setAttempts] = useState([]);
 
   if (count < 1) {
     if (document.getElementById('gameover-metric')) {
@@ -65,6 +68,7 @@ export default function App() {
     if (!cookies) {
       getCookies()
         .then((data) => {
+          console.log(data.data);
           setCookies(data.data.userData);
         });
     }
@@ -91,12 +95,12 @@ export default function App() {
       <div id="header-container">
         <h4 id="header">Lacipher</h4>
         <div>
-          {level && (
+          {text && (
             <Level level={level} />
           )}
         </div>
       </div>
-      {!skipped && text && (
+      {!skipped && text && level > 0 && (
       <>
         <Howtoplay
           setSkipped={setSkipped}
@@ -105,6 +109,7 @@ export default function App() {
           setPlayed={setPlayed}
           text={text}
           downloadURL={downloadURL}
+          level={level}
         />
         {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
         <div
@@ -134,7 +139,8 @@ export default function App() {
           percent={percent}
           finalTime={finalTime}
           text={text}
-          attempts={health}
+          health={health}
+          attempts={attempts}
           id="gameover"
         />
         <div className="modal-bg" id="finish-modal-bg" />
@@ -142,13 +148,28 @@ export default function App() {
       )}
       {victory && finalTime && (
       <>
-        <Victory level={level} percent={percent} time={finalTime} attempts={health} />
+        <Victory
+          level={level}
+          percent={percent}
+          time={finalTime}
+          health={health}
+          attempts={attempts}
+        />
         <div id="modal-bg" />
       </>
       )}
       <div id="body-container-pc">
         <div id="ciphered-body">
-          {skipped && <Cipher text={text} gameover={gameover} level={level} mutation={mutation} />}
+          {skipped && (
+          <Cipher
+            text={text}
+            gameover={gameover}
+            level={level}
+            mutation={mutation}
+            setMutationCiphers={setMutationCiphers}
+            mutationCiphers={mutationCiphers}
+          />
+          )}
         </div>
         <div id="input-body">
           <Input
@@ -161,6 +182,8 @@ export default function App() {
             setVictory={setVictory}
             setPercent={setPercent}
             percent={percent}
+            attempts={attempts}
+            setAttempts={setAttempts}
           />
         </div>
       </div>

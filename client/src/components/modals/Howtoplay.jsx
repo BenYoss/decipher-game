@@ -3,6 +3,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import propTypes from 'prop-types';
 
+import downloadIcon from '../../img/download.png';
+import EndgameStats from './EndgameStats';
+
 const modalAnimation = {
   scale: 2,
   opacity: '100%',
@@ -35,7 +38,7 @@ const leaveAnimation = {
  */
 let currentGame;
 export default function Howtoplay({
-  setSkipped, cookieData, played, setPlayed, text, downloadURL,
+  setSkipped, cookieData, played, setPlayed, text, downloadURL, level,
 }) {
   let gamesPlayed;
   if (cookieData) {
@@ -101,39 +104,62 @@ export default function Howtoplay({
             </p>
           </div>
           <div id="gameover-body">
-            <p id="played-modal-cipher">
+            {/* <p id="played-modal-cipher">
               <b>{`La-Cipher ${new Date().toDateString()}`}</b>
-            </p>
+            </p> */}
             <section>
               {
                 currentGame
              && (
-             <div id="gameover-metrics-container">
-               <section id="gameover-metric">
-                 <b id="gameover-time">Time:</b>
-                 <p id="gameover-time">
-                   <b>{currentGame.time}</b>
-                 </p>
-               </section>
-               <section id="gameover-metric">
-                 <b id="gameover-time">Attempts:</b>
-                 <p id="gameover-time">
-                   <b>{currentGame.attempts}</b>
-                 </p>
-               </section>
+             <div>
+               <div id="gameover-metrics-container">
+                 <section id="gameover-metric">
+                   <b id="gameover-time">Time:</b>
+                   <p id="gameover-time">
+                     <b>{currentGame.time}</b>
+                   </p>
+                 </section>
+                 <section id="gameover-metric">
+                   <b id="gameover-time">Attempts:</b>
+                   <p id="gameover-time">
+                     <b>{currentGame.attempts}</b>
+                   </p>
+                 </section>
+                 <hr />
+               </div>
+               <div id="download-container">
+                 <div id="download-margin" />
+                 <div id="download-header">
+                   <p id="download-header-container">
+                     <span>{`La-Cipher ${new Date().toDateString()} - ${level}`}</span>
+                   </p>
+                   <p id="download-header-time">
+                     <span>{currentGame.time}</span>
+                   </p>
+                 </div>
+                 <EndgameStats cipher={text.split(' ')} cookies={currentGame} />
+               </div>
              </div>
              )
               }
             </section>
-            <hr />
             <section>
-              <p id="gameover-text">
-                Wait until tomorrow to play
-                again!
-              </p>
-              {downloadURL && (
-                <a className="button" id="standard-btn" href={downloadURL} download="decipher.png">Save Score</a>
-              )}
+              <div id="download-btn-container">
+                {downloadURL && (
+                  <motion.a
+                    className="button"
+                    whileHover={hoverAnimation}
+                    animate={leaveAnimation}
+                    transition={{ duration: 0.18 }}
+                    id="standard-btn-small"
+                    href={downloadURL}
+                    download="decipher.png"
+                  >
+                    <span id="save-stats">Save Stats</span>
+                    <img src={downloadIcon} alt="download icon" style={{ filter: 'invert()' }} width="15" height="15" />
+                  </motion.a>
+                )}
+              </div>
             </section>
           </div>
 
@@ -150,4 +176,5 @@ Howtoplay.propTypes = {
   setPlayed: propTypes.func.isRequired,
   text: propTypes.string.isRequired,
   downloadURL: propTypes.string.isRequired,
+  level: propTypes.number.isRequired,
 };

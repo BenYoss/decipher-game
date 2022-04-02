@@ -163,6 +163,33 @@ hr {
   // color: white;
 }
 
+#download-btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+#standard-btn-small {
+  background-color: black;
+  padding: 0.8vw 0vw 0.8vw 2.5vw;
+  border-radius: 2vw 2vw 2vw 2vw;
+  position: relative;
+  margin-top: 3%;
+  bottom: 0;
+  border: none;
+  font-size: 1.5vh;
+  font-weight: bold;
+  vertical-align: middle;
+  width: 90px;
+  text-decoration: none;
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  font-family: sans-serif;
+  // color: white;
+  cursor:pointer;
+}
+
 #standard-btn:hover {
   // background-color: white;
   background-color: black;
@@ -299,7 +326,7 @@ hr {
   text-align: center;
   vertical-align: middle;
   width: 40vw;
-  height: 54vw;
+  height: 60vw;
   background-color: white;
   transform: scale(2);
   border-radius: 0.5vw 0.5vw 0.5vw 0.5vw;
@@ -326,7 +353,12 @@ hr {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  position: relative;
+  position: absolute;
+  background-color: white;
+  left: 0;
+  right: 0;
+  top: 40%;
+  z-index: 1;
 }
 
 #gameover-time {
@@ -344,7 +376,7 @@ hr {
   background-color: rgb(44, 44, 44);
 }
 
-#modal-bg {
+.modal-bg {
   background-color: rgb(0, 0, 0);
   opacity: 30%;
   position: absolute;
@@ -425,7 +457,7 @@ hr {
   
   #cipher-cluster {
     margin-top: 80px;
-    width: 70%;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
@@ -489,7 +521,7 @@ hr {
     padding: 1vw 2vw 1vw 2vw;
     border-radius: 2vw 2vw 2vw 2vw;
     border: none;
-    font-size: 1.5vw;
+    font-size: 1.3vw;
     font-weight: bold;
     width: 200px;
     height: 70px;
@@ -498,6 +530,36 @@ hr {
     font-family: sans-serif;
     // color: white;
     cursor:pointer;
+  }
+
+  #standard-btn-small {
+    background-color: black;
+    padding: 0.8vw 1vw 0.8vw 1.6vw;
+    border-radius: 2vw 2vw 2vw 2vw;
+    position: absolute;
+    bottom: 5%;
+    border: none;
+    font-size: 0.7vw;
+    font-weight: bold;
+    vertical-align: middle;
+    width: 90px;
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    font-family: sans-serif;
+    // color: white;
+    cursor:pointer;
+  }
+
+  span {
+    margin-right: 5px;
+  }
+
+  #download-btn-container {
+    display: flex;
+    justify-content: center;
   }
 
   #input-btn-container {
@@ -622,7 +684,7 @@ hr {
     text-align: center;
     vertical-align: middle;
     width: 20vw;
-    height: 15vw;
+    height: 18vw;
     background-color: white;
     transform: scale(2);
     border-radius: 0.5vw 0.5vw 0.5vw 0.5vw;
@@ -632,6 +694,10 @@ hr {
     -moz-box-shadow: 0 8px 6px -6px black;
     box-shadow: 0 8px 6px -6px black;
     overflow: hidden;
+  }
+
+  #gameover-time {
+    margin-bottom: 0;
   }
   
   #timer-bo {

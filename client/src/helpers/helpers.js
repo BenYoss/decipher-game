@@ -121,8 +121,10 @@ export function stopCount() {
   clearInterval(counter);
 }
 
-export async function updateCookies(time, attempts, isWin) {
-  await axios.post('/setcookie', { time, attempts, isWin });
+export async function updateCookies(time, attempts, isWin, cipherAttempts) {
+  await axios.post('/setcookie', {
+    time, attempts, isWin, cipherAttempts,
+  });
 }
 
 export async function getCookies() {
@@ -152,7 +154,7 @@ let count = 0;
 
 export async function getShareDownload() {
   if (count < 1) {
-    const elt = document.getElementById('gameover-metrics-container');
+    const elt = document.getElementById('download-container');
     return html2canvas(elt).then((canvas) => {
       document.body.appendChild(canvas);
 
@@ -162,4 +164,19 @@ export async function getShareDownload() {
       return dataURL;
     });
   }
+}
+
+// updates cookie attempts
+export async function updateAttempts(attempt, text) {
+  const words = text.split(' ');
+  const attemptWords = attempt.split(' ');
+  const attemptResults = [];
+  words.forEach((word, index) => {
+    if (!attemptWords[index] || attemptWords[index] !== word) {
+      attemptResults.push(false);
+    } else {
+      attemptResults.push(true);
+    }
+  });
+  return attemptResults;
 }
