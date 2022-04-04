@@ -57,13 +57,14 @@ const makeMutationPrint = (text, level, mutation = '') => {
  * @param {*} textData is the incoming text fetched from the ciphers.txt doc.
  * @returns cipher object
  */
+const now = new Date(); const utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+
 const buildCipherEntry = (textData, dbCiphers) => {
   const entryObject = {};
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const seeded = dbCiphers;
-
   entryObject.id = `${Number(dbCiphers[dbCiphers.length - 1] ? dbCiphers[dbCiphers.length - 1].id : 0) + 1 || 1}`;
-  entryObject.dateIssued = new Date().toDateString();
+  entryObject.dateIssued = utc.toDateString();
 
   days.forEach((day, i) => {
     if (entryObject.dateIssued.includes(day)) {

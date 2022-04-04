@@ -42,6 +42,8 @@ export default function App() {
     }
   }
 
+  const now = new Date(); const utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+
   async function calculateText() {
     let levelData = { text: '' };
     const { data: ciphers } = await getCiphersFromDB().catch((err) => console.error(err));
@@ -50,7 +52,7 @@ export default function App() {
       levelData = data;
     }
     ciphers.forEach((sentence) => {
-      if (sentence.date_issued === new Date().toDateString()) {
+      if (sentence.date_issued === utc.toDateString()) {
         levelData = sentence;
       }
     });

@@ -37,6 +37,8 @@ const leaveAnimation = {
  * @param {*} setSkipped props for skip state in parent component.
  */
 let currentGame;
+
+const now = new Date(); const utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
 export default function Howtoplay({
   setSkipped, cookieData, played, setPlayed, text, downloadURL, level,
 }) {
@@ -45,7 +47,7 @@ export default function Howtoplay({
     gamesPlayed = cookieData.timeHistory;
     if (!played) {
       gamesPlayed.forEach((game) => {
-        if (game.gameDate === new Date().toDateString()) {
+        if (game.gameDate === utc.toDateString()) {
           currentGame = game;
           setPlayed(true);
         }
@@ -95,10 +97,7 @@ export default function Howtoplay({
             <h2 id="gameover-text">Cipher Completed!</h2>
           </div>
           <hr />
-          <div id="gameover-">
-            <p id="gameover-text">
-              Looks like you already completed today&apos;s cipher.
-            </p>
+          <div id="gameover-cipher-container">
             <p id="played-modal-cipher">
               <b>{text}</b>
             </p>
@@ -127,11 +126,11 @@ export default function Howtoplay({
                  </section>
                  <hr />
                </div>
+               <div id="download-margin" />
                <div id="download-container">
-                 <div id="download-margin" />
                  <div id="download-header">
                    <p id="download-header-container">
-                     <span>{`La-Cipher ${new Date().toDateString()} - ${level}`}</span>
+                     <span>{`La-Cipher ${utc.toDateString()} - ${level}`}</span>
                    </p>
                    <p id="download-header-time">
                      <span>{currentGame.time}</span>
@@ -143,6 +142,9 @@ export default function Howtoplay({
              )
               }
             </section>
+            <p id="gameover-text">
+              Wait until tomorrow for the next cipher!
+            </p>
             <section>
               <div id="download-btn-container">
                 {downloadURL && (

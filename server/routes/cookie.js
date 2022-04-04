@@ -8,6 +8,8 @@ app.get('/setcookie', (req, res) => {
   res.send('cookie saved!');
 });
 
+const now = new Date(); const utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+
 // for getting cookies from server to save user data.
 app.get('/getcookie', (req, res) => {
   const cookie = req.cookies;
@@ -19,7 +21,7 @@ app.post('/setcookie', (req, res) => {
     req.cookies.userData = { timeHistory: [] };
   }
   const { timeHistory } = req.cookies.userData;
-  const date = new Date().toDateString();
+  const date = utc.toDateString();
   timeHistory.push({
     gameDate: date,
     time: req.body.time,
