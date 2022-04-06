@@ -33,6 +33,8 @@ export default function App() {
   const [mutationCiphers, setMutationCiphers] = useState([]);
   const [attempts, setAttempts] = useState([]);
 
+  console.log(text, skipped, level);
+
   if (count < 1) {
     if (document.getElementById('gameover-metric')) {
       getShareDownload().then((url) => {
@@ -57,11 +59,11 @@ export default function App() {
       }
     });
     if (!levelData.text.length) {
-      const { data } = await axios.get('/addcipher');
-      levelData = data;
+      const { data: resultText } = await axios.get('/addcipher');
+      levelData = resultText;
     }
     setText(levelData.text);
-    setLevel(levelData.level_type);
+    setLevel(levelData.levelType || levelData.level_type);
     setMutation(levelData.mutation);
   }
 
@@ -70,7 +72,6 @@ export default function App() {
     if (!cookies) {
       getCookies()
         .then((data) => {
-          console.log(data.data);
           setCookies(data.data.userData);
         });
     }
