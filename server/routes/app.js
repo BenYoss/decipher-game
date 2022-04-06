@@ -10,7 +10,7 @@ const app = Router();
 const usedChars = [];
 
 const findRandomCharInText = (text) => {
-  const invalidChars = ' 1234567890,-';
+  const invalidChars = "1234567890,-' ";
   let isValidChar = false;
   let randomChar;
   while (!isValidChar) {
@@ -35,18 +35,22 @@ const makeMutationPrint = (text, level, mutation = '') => {
     resultStr = resultStr.concat(mutations[i].mutation);
 
     // Determines a random char from idiom to use in mutation.
+    const randomText = findRandomCharInText(text);
     if (i < 2) {
       // if reversal mutation is already used, recursively cycle to find a new cipher.
       if (i === 1 && mutation.includes('r-')) {
         return makeMutationPrint(text, level, mutation);
       }
-      const randomChar = alphabet[Math.floor(Math.random() * alphabet.length)];
-      resultStr = resultStr.concat(findRandomCharInText(text) + randomChar);
+      let randomChar = alphabet[Math.floor(Math.random() * alphabet.length)];
+      if (randomText === randomText.toUpperCase()) {
+        randomChar = randomChar.toUpperCase();
+      }
+      resultStr = resultStr.concat(randomText + randomChar);
       alphabet.splice(randomChar, 1);
     } else {
       const randomAmount = Math.floor(Math.random() * 3) || 1;
       const randomChar = alphabet[Math.floor(Math.random() * alphabet.length)];
-      resultStr = resultStr.concat(`${findRandomCharInText(text)}${randomAmount}${randomChar}`);
+      resultStr = resultStr.concat(`${randomText}${randomAmount}${randomChar}`);
       alphabet.splice(randomChar, 1);
     }
   }
@@ -91,8 +95,9 @@ const buildCipherEntry = (textData, dbCiphers) => {
         entryObject.mutation,
       );
       let j = 1;
-      while (j < entryObject.levelType) {
-        entryObject.mutation += `|${makeMutationPrint(entryObject.text, entryObject.levelType)}`;
+      const words = entryObject.text.split(' ');
+      while (j < Math.floor(entryObject.levelType / 2 + words.length / 2)) {
+        entryObject.mutation += `|${makeMutationPrint(entryObject.text, entryObject.levelType, entryObject.mutation)}`;
         j += 1;
       }
       break;
