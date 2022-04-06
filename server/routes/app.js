@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 /* eslint-disable no-restricted-syntax */
 const { Router } = require('express');
 const fsPromise = require('fs').promises;
@@ -63,9 +64,7 @@ const buildCipherEntry = (textData, dbCiphers) => {
   const entryObject = {};
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const seeded = dbCiphers;
-  entryObject.id = `${Number(dbCiphers[dbCiphers.length - 1] ? dbCiphers[dbCiphers.length - 1].id : 0) + 1 || 1}`;
   entryObject.dateIssued = utc.toDateString();
-
   days.forEach((day, i) => {
     if (entryObject.dateIssued.includes(day)) {
       entryObject.levelType = i + 1;
@@ -74,6 +73,17 @@ const buildCipherEntry = (textData, dbCiphers) => {
 
   for (let i = 0; i < textData.length; i += 1) {
     if (textData[i].length < 100 / entryObject.levelType) {
+      // to check if specific idiom text already exists in cipher list
+      let isDupe = false;
+      for (let j = 0; j < seeded.length; j += 1) {
+        if (textData[i] === seeded[j].text) {
+          isDupe = true;
+          break;
+        }
+      }
+      if (isDupe) {
+        continue;
+      }
       entryObject.text = textData[i];
       entryObject.mutation = makeMutationPrint(
         entryObject.text,
@@ -99,7 +109,6 @@ const buildCipherEntry = (textData, dbCiphers) => {
       return buildCipherEntry(textData, dbCiphers);
     }
   }
-
   if (bool) {
     // base case for function to return cipher instance.
     return entryObject;
