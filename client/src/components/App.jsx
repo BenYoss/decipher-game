@@ -11,8 +11,10 @@ import Gameover from './modals/Gameover';
 import Victory from './modals/Victory';
 import Howtoplay from './modals/Howtoplay';
 import Timer from './Timer';
+import Attempts from './Attempts';
 import '../styles/app.scss';
 import '../styles/endgameStats.scss';
+import '../styles/attempts.scss';
 import 'regenerator-runtime/runtime';
 
 let count = 0;
@@ -23,7 +25,8 @@ export default function App() {
   const [gameover, setGameover] = useState(false);
   const [victory, setVictory] = useState(false);
   const [percent, setPercent] = useState(100);
-  const [health, setHealth] = useState([{ open: true }, { open: true }, { open: true }]);
+  const [health, setHealth] = useState([{ open: true }, { open: true },
+    { open: true }, { open: true }]);
   const [mutation, setMutation] = useState(null);
   const [skipped, setSkipped] = useState(false);
   const [finalTime, setFinalTime] = useState(false);
@@ -32,8 +35,6 @@ export default function App() {
   const [downloadURL, setDownloadURL] = useState('');
   const [mutationCiphers, setMutationCiphers] = useState([]);
   const [attempts, setAttempts] = useState([]);
-
-  console.log(text, skipped, level);
 
   if (count < 1) {
     if (document.getElementById('gameover-metric')) {
@@ -162,16 +163,30 @@ export default function App() {
       </>
       )}
       <div id="body-container-pc">
-        <div id="ciphered-body">
+        <div id={window.innerWidth > 750 ? 'ciphered-body' : 'ciphered-body-mobile'}>
           {skipped && (
-          <Cipher
-            text={text}
-            gameover={gameover}
-            level={level}
-            mutation={mutation}
-            setMutationCiphers={setMutationCiphers}
-            mutationCiphers={mutationCiphers}
-          />
+          <>
+            {
+              attempts.map((attempt, index) => (
+                <Attempts
+                  attempt={attempt}
+                  margin={index * 5}
+                  text={text}
+                  index={attempts.length - index}
+                />
+              ))
+            }
+            <div>
+              <Cipher
+                text={text}
+                gameover={gameover}
+                level={level}
+                mutation={mutation}
+                setMutationCiphers={setMutationCiphers}
+                mutationCiphers={mutationCiphers}
+              />
+            </div>
+          </>
           )}
         </div>
         <div id="input-body">

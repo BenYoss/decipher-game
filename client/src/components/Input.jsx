@@ -68,7 +68,7 @@ export default function Input({
                   if (!slot.open) {
                     tally += 1;
                   }
-                  if (tally === 3) {
+                  if (tally === 4) {
                     setGameover(true);
                   }
                 });

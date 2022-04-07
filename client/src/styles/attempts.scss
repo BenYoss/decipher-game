@@ -1,0 +1,16 @@
+
+    #attempts-container {
+        z-index: 0;
+        position: absolute;
+        max-width: fit-content;
+        left: 0;
+    }
+
+@media only screen and (min-width: 750px) {
+    #attempts-container {
+        z-index: 0;
+        position: absolute;
+        top: 3.5%;
+        max-width: 25%;
+    }
+}
