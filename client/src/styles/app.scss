@@ -369,7 +369,7 @@ hr {
   transform: scale(2);
   border-radius: 0.5vw 0.5vw 0.5vw 0.5vw;
   box-shadow: gray;
-  z-index: 2;
+  z-index: 6;
   -webkit-box-shadow: 0 8px 6px -6px black;
   -moz-box-shadow: 0 8px 6px -6px black;
   box-shadow: 0 8px 6px -6px black;
@@ -452,7 +452,7 @@ hr {
   width: 100%;
   margin-top: 30%;
   position: relative;
-  top: 20%;
+  top: 10%;
 }
 
 // Core selectors (selectors impacting default markups)
