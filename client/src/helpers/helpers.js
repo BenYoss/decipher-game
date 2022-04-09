@@ -95,7 +95,7 @@ let counter;
 export function countDown(time) {
   if (!counter) {
     counter = setInterval(() => {
-      mil += 1;
+      mil += 2;
       if (mil === 100) {
         mil = 0;
         sec += 1;
@@ -113,7 +113,7 @@ export function countDown(time) {
       const secStr = sec > 9 ? sec : `0${sec}`;
       const milStr = mil > 9 ? mil : `0${mil}`;
       time(`${hourStr}:${minStr}:${secStr}:${milStr}`);
-    }, 10);
+    }, 20);
   }
 }
 
