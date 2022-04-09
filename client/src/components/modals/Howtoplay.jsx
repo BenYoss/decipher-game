@@ -68,26 +68,67 @@ export default function Howtoplay({
           </div>
           <hr />
           <div id="gameover-body">
-            <p id="gameover-text">A cipher is an encrypted pattern of text. Try to solve this cipher...</p>
+            <p id="gameover-text">Every day a new cipher will generate with increasing difficulty throughout the week.</p>
+            <br />
+            <hr />
+            <p id="gameover-text">Ciphers include different encryption patterns. Such as:</p>
+            <div id="mutations-outter-container">
+              <table id="mutations-desc-container">
+                <tr className="mutation-example">
+                  <td><strong>Swapped Chars:</strong></td>
+                  <td>Fehind fars</td>
+                </tr>
+                <tr className="mutation-example">
+                  <td><strong>Reverse Text:</strong></td>
+                  <td>srab dniheB</td>
+                </tr>
+                <tr className="mutation-example">
+                  <td><strong>Multiple Chars:</strong></td>
+                  <td>Nnnnehind nnnnars</td>
+                </tr>
+              </table>
+            </div>
+            <br />
+            <hr />
+            <p id="gameover-text">If a word is right, a green box will appear.</p>
+            <div
+              id="true-example"
+              className="example-container"
+              style={{ bottom: '-1.5vh' }}
+            >
+              <div className="cipher-word-attempt-true" style={{ width: '20%', height: '1vw', marginRight: '0px' }} />
+            </div>
+            <br />
+            <hr />
+            <p id="gameover-text">If a word is wrong, a gray box will appear.</p>
+            <div
+              id="false-example"
+              className="example-container"
+              style={{ bottom: '-8.5vh' }}
+            >
+              <div className="cipher-word-attempt-false" style={{ width: '20%', height: '1vw', marginRight: '0px' }} />
+            </div>
+            <br />
+            <hr />
             <p id="gameover-text">
               If you get it wrong 3 times
               {' '}
               <b>GAME OVER!</b>
             </p>
-            <br />
-            <hr />
-            <motion.button
-              id="standard-btn"
-              type="button"
-              whileHover={hoverAnimation}
-              animate={leaveAnimation}
-              initial="hidden"
-              transition={{ duration: 0.18 }}
-              onClick={() => setSkipped(true)}
-            >
-              Continue
+            <div id="modal-btn-container">
+              <motion.button
+                id="standard-btn-small2"
+                type="button"
+                whileHover={hoverAnimation}
+                animate={leaveAnimation}
+                initial="hidden"
+                transition={{ duration: 0.18 }}
+                onClick={() => setSkipped(true)}
+              >
+                Continue
 
-            </motion.button>
+              </motion.button>
+            </div>
           </div>
 
         </>
@@ -103,9 +144,6 @@ export default function Howtoplay({
             </p>
           </div>
           <div id="gameover-body">
-            {/* <p id="played-modal-cipher">
-              <b>{`La-Cipher ${new Date().toDateString()}`}</b>
-            </p> */}
             <section>
               {
                 currentGame

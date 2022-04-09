@@ -182,8 +182,8 @@ hr {
   top: 85%;
   margin-top: 10%;
   transform: scale(1.5);
-  overflow: hidden;
 }
+
 #standard-btn {
   // background-color: black;
   background-color: black;
@@ -649,7 +649,6 @@ hr {
     left: 0%;
     top: 85%;
     margin-top: 10%;
-    overflow: hidden;
     transform: scale(1);
   }
   
@@ -681,7 +680,7 @@ hr {
   }
   
   #level-container-normal {
-    background-color: rgb(179, 213, 27);
+    background-color: radial-gradient(rgb(179, 213, 27) 60%, rgb(133, 159, 18));
     @include levelModel
   }
   #level-container-difficult {
@@ -694,7 +693,7 @@ hr {
     @include levelModel
   }
   #level-container {
-    background-color: green;
+    background-color: radial-gradient(green 60%, rgb(0, 79, 0));
     @include levelModel
   }
   
@@ -787,7 +786,7 @@ hr {
     -webkit-box-shadow: 0 8px 6px -6px black;
     -moz-box-shadow: 0 8px 6px -6px black;
     box-shadow: 0 8px 6px -6px black;
-    overflow: hidden;
+    overflow-y: scroll;
   }
 
   #gameover-time {

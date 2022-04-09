@@ -15,6 +15,7 @@ import Attempts from './Attempts';
 import '../styles/app.scss';
 import '../styles/endgameStats.scss';
 import '../styles/attempts.scss';
+import '../styles/howToPlay.scss';
 import 'regenerator-runtime/runtime';
 
 let count = 0;
