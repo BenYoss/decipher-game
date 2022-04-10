@@ -6,14 +6,8 @@ const modalAnimation = {
   opacity: '100%',
 };
 
-const hoverAnimation = {
-  scale: 1.1,
-  boxShadow: '0px 0px 8px hsl(120, 61%, 50%)',
-};
-
 export default function Attempts({ attempt, margin, text, index }) {
   const bodyArray = text.split(' ');
-  console.log(document.getElementsByClassName('cipher-cluster')[0].offsetWidth);
 
   let style = {
     left: `${margin / 2}%`,
@@ -25,11 +19,12 @@ export default function Attempts({ attempt, margin, text, index }) {
     style.top = `${(margin + 5)}%`;
     style.zIndex = index;
   }
+
   return (
     <motion.div
       className="cipher-cluster-attempt"
       whileHover={{
-        x: -300,
+        x: text.split(' ').length * 50,
         scale: 1,
         transition: { ease: 'easeOut', duration: 0.7 },
       }}

@@ -184,7 +184,6 @@ hr {
   transform: scale(1.5);
 }
 #standard-btn {
-  // background-color: black;
   background-color: black;
   cursor:pointer;
   padding: 1vw 2vw 1vw 2vw;
@@ -197,7 +196,6 @@ hr {
   overflow: hidden;
   font-family: sans-serif;
   color: white;
-  // color: white;
 }
 
 #download-btn-container {
@@ -260,7 +258,7 @@ hr {
 }
 
 #level-container-normal {
-  background-color: rgb(179, 213, 27);
+  background: radial-gradient(rgb(179, 213, 27) 60%, rgb(133, 159, 18));
   @include levelModel
 }
 #level-container-difficult {
@@ -269,11 +267,11 @@ hr {
   @include levelModel
 }
 #level-container-hard {
-  background: radial-gradient(rgb(224, 51, 21) 60%, rgb(142, 33, 13));;
+  background: radial-gradient(rgb(224, 51, 21) 60%, rgb(142, 33, 13));
   @include levelModel
 }
 #level-container {
-  background-color: green;
+  background: radial-gradient(rgb(3, 135, 3) 60%, rgb(2, 129, 2));
   @include levelModel
 }
 
@@ -359,11 +357,11 @@ hr {
 #gameover-container {
   position: absolute;
   left: 30%;
-  top: 30%;
+  top: 25%;
   text-align: center;
   vertical-align: middle;
   width: 40vw;
-  height: 60vw;
+  height: 70vw;
   background-color: white;
   transform: scale(2);
   border-radius: 0.5vw 0.5vw 0.5vw 0.5vw;
@@ -391,7 +389,7 @@ hr {
 
 #gameover-text {
   color: rgb(40, 44, 52);
-  font-size: 3vw;
+  font-size: 2vw;
   margin-bottom: 2%;
 }
 
@@ -679,7 +677,7 @@ hr {
   }
   
   #level-container-normal {
-    background-color: radial-gradient(rgb(179, 213, 27) 60%, rgb(133, 159, 18));
+    background: radial-gradient(rgb(179, 213, 27) 60%, rgb(133, 159, 18));
     @include levelModel
   }
   #level-container-difficult {
@@ -692,7 +690,7 @@ hr {
     @include levelModel
   }
   #level-container {
-    background-color: radial-gradient(green 60%, rgb(0, 79, 0));
+    background: radial-gradient(rgb(3, 135, 3) 60%, rgb(0, 79, 0));
     @include levelModel
   }
   

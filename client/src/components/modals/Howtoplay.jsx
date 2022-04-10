@@ -42,6 +42,10 @@ const now = new Date(); const utc = new Date(now.getTime() + now.getTimezoneOffs
 export default function Howtoplay({
   setSkipped, cookieData, played, setPlayed, text, downloadURL, level,
 }) {
+  let cipherSectionMargins = ['-1.5vh', '-8.5vh'];
+  if (window.innerWidth < 750) {
+    cipherSectionMargins = ['-1.5vh', '-11.2vh'];
+  }
   let gamesPlayed;
   if (cookieData) {
     gamesPlayed = cookieData.timeHistory;
@@ -69,7 +73,7 @@ export default function Howtoplay({
           <hr />
           <div id="gameover-body">
             <p id="gameover-text">Every day a new cipher will generate with increasing difficulty throughout the week.</p>
-            <br />
+            <p id="gameover-text">Ciphers reset at the end of each week.</p>
             <hr />
             <p id="gameover-text">Ciphers include different encryption patterns. Such as:</p>
             <div id="mutations-outter-container">
@@ -88,33 +92,49 @@ export default function Howtoplay({
                 </tr>
               </table>
             </div>
-            <br />
             <hr />
-            <p id="gameover-text">If a word is right, a green box will appear.</p>
+            <p id="gameover-text">
+              If a word is right, a
+              {' '}
+              <b>GREEN</b>
+              {' '}
+              box will appear.
+            </p>
             <div
               id="true-example"
               className="example-container"
-              style={{ bottom: '-1.5vh' }}
+              style={{ bottom: cipherSectionMargins[0] }}
             >
-              <div className="cipher-word-attempt-true" style={{ width: '20%', height: '1vw', marginRight: '0px' }} />
+              <div
+                className="cipher-word-attempt-true"
+                style={{
+                  width: '20%', height: '1vw', marginRight: '0px', marginTop: '0vw',
+                }}
+              />
             </div>
-            <br />
-            <hr />
-            <p id="gameover-text">If a word is wrong, a gray box will appear.</p>
+            <p id="gameover-text">
+              If a word is wrong, a
+              {' '}
+              <b>GRAY</b>
+              {' '}
+              box will appear.
+            </p>
             <div
               id="false-example"
               className="example-container"
-              style={{ bottom: '-8.5vh' }}
+              style={{ bottom: cipherSectionMargins[1] }}
             >
-              <div className="cipher-word-attempt-false" style={{ width: '20%', height: '1vw', marginRight: '0px' }} />
+              <div
+                className="cipher-word-attempt-false"
+                style={{
+                  width: '20%', height: '1vw', marginRight: '0px', marginTop: '0vw',
+                }}
+              />
             </div>
-            <br />
             <hr />
-            <p id="gameover-text">
-              If you get it wrong 3 times
-              {' '}
-              <b>GAME OVER!</b>
-            </p>
+            <b id="gameover-text">
+              Try to complete the cipher in 4 tries!
+            </b>
             <div id="modal-btn-container">
               <motion.button
                 id="standard-btn-small2"
@@ -185,20 +205,20 @@ export default function Howtoplay({
             </p>
             <section>
               <div id="download-btn-container">
-                {downloadURL && (
-                  <motion.a
-                    className="button"
-                    whileHover={hoverAnimation}
-                    animate={leaveAnimation}
-                    transition={{ duration: 0.18 }}
-                    id="standard-btn-small"
-                    href={downloadURL}
-                    download={`decipher_${new Date().toDateString()}.png`}
-                  >
-                    <span id="save-stats">Save Stats</span>
-                    <img src={downloadIcon} alt="download icon" style={{ filter: 'invert()' }} width="15" height="15" />
-                  </motion.a>
-                )}
+                {/* {downloadURL && ( */}
+                <motion.a
+                  className="button"
+                  whileHover={hoverAnimation}
+                  animate={leaveAnimation}
+                  transition={{ duration: 0.18 }}
+                  id="standard-btn-small"
+                  href={downloadURL}
+                  download={`decipher_${new Date().toDateString()}.png`}
+                >
+                  <span id="save-stats">Save Stats</span>
+                  <img src={downloadIcon} alt="download icon" style={{ filter: 'invert()' }} width="15" height="15" />
+                </motion.a>
+                {/* )} */}
               </div>
             </section>
           </div>
