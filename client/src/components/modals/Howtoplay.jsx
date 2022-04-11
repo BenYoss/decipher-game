@@ -205,7 +205,7 @@ export default function Howtoplay({
             </p>
             <section>
               <div id="download-btn-container">
-                {/* {downloadURL && ( */}
+                {downloadURL && (
                 <motion.a
                   className="button"
                   whileHover={hoverAnimation}
@@ -218,7 +218,7 @@ export default function Howtoplay({
                   <span id="save-stats">Save Stats</span>
                   <img src={downloadIcon} alt="download icon" style={{ filter: 'invert()' }} width="15" height="15" />
                 </motion.a>
-                {/* )} */}
+                )}
               </div>
             </section>
           </div>

@@ -28,7 +28,6 @@ const findRandomCharInText = (text) => {
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 const makeMutationPrint = (text, level, mutation = '') => {
   let resultStr = '';
-
   // For categorizing mutations based on level.
   const i = Math.floor(Math.random() * 3);
   if (level >= mutations[i].minLevel) {
@@ -53,6 +52,8 @@ const makeMutationPrint = (text, level, mutation = '') => {
       resultStr = resultStr.concat(`${randomText}${randomAmount}${randomChar}`);
       alphabet.splice(randomChar, 1);
     }
+  } else {
+    return makeMutationPrint(text, level, mutation);
   }
   return resultStr;
 };
@@ -97,6 +98,7 @@ const buildCipherEntry = (textData, dbCiphers) => {
       let j = 1;
       const words = entryObject.text.split(' ');
       while (j < Math.floor(entryObject.levelType / 2 + words.length / 2)) {
+        console.log(entryObject.mutation);
         entryObject.mutation += `|${makeMutationPrint(entryObject.text, entryObject.levelType, entryObject.mutation)}`;
         j += 1;
       }

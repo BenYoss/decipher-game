@@ -38,7 +38,7 @@ export default function App() {
   const [attempts, setAttempts] = useState([]);
 
   if (count < 1) {
-    if (document.getElementById('gameover-metric')) {
+    if (played || victory || gameover) {
       getShareDownload().then((url) => {
         count += 1;
         setDownloadURL(url);

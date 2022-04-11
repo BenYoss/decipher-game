@@ -14,17 +14,20 @@ import html2canvas from 'html2canvas';
 export function flipLetters(text, letter, replacement) {
   let regexCase;
   let result;
+  let caseChangedChar = '';
   if (letter === letter.toUpperCase()) {
     regexCase = new RegExp(letter.toLowerCase(), 'g');
+    caseChangedChar = replacement.toLowerCase();
   } else {
     regexCase = new RegExp(letter.toUpperCase(), 'g');
+    caseChangedChar = replacement.toUpperCase();
   }
   const regex = new RegExp(letter, 'g');
   // Randomizes text ⬇⬇⬇
   // result = text.replace(regex, alphabet[Math.floor(Math.random()
   //   * alphabet.length - 1)].toUpperCase());
   result = text.replace(regex, replacement);
-  result = result.replace(regexCase, replacement.toUpperCase());
+  result = result.replace(regexCase, caseChangedChar);
   // Randomizes text ⬇⬇⬇
   // result = text.replace(regex, alphabet[Math.floor(Math.random() * alphabet.length - 1)]);
   return result;
