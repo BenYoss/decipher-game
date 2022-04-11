@@ -166,11 +166,11 @@ export async function getShareDownload() {
       const canvas2 = document.getElementsByTagName('canvas')[0];
       const dataURL = canvas2.toDataURL();
       count += 1;
+      if (window.innerWidth < 750) {
+        document.getElementById('viewport').setAttribute('content', 'width=device-width, initial-scale=1');
+      }
       return dataURL;
     });
-  }
-  if (window.innerWidth < 750) {
-    document.getElementById('viewport').setAttribute('content', 'width=device-width, initial-scale=1');
   }
 }
 
