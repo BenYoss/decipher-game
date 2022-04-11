@@ -156,16 +156,21 @@ export function getAttemptCount(attempts) {
 let count = 0;
 
 export async function getShareDownload() {
+  if (window.innerWidth < 750) {
+    document.getElementById('viewport').setAttribute('content', 'width=1200px');
+  }
   if (count < 1) {
     const elt = document.getElementById('download-container');
-    return html2canvas(elt).then((canvas) => {
+    return html2canvas(elt, { scale: 5 }).then((canvas) => {
       document.body.appendChild(canvas);
-
       const canvas2 = document.getElementsByTagName('canvas')[0];
       const dataURL = canvas2.toDataURL();
       count += 1;
       return dataURL;
     });
+  }
+  if (window.innerWidth < 750) {
+    document.getElementById('viewport').setAttribute('content', 'width=device-width, initial-scale=1');
   }
 }
 
