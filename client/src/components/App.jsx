@@ -12,13 +12,18 @@ import Victory from './modals/Victory';
 import Howtoplay from './modals/Howtoplay';
 import Timer from './Timer';
 import Attempts from './Attempts';
+import Toolbar from './toolbar/Toolbar';
+
 import '../styles/app.scss';
 import '../styles/endgameStats.scss';
 import '../styles/attempts.scss';
 import '../styles/howToPlay.scss';
+import '../styles/toolbar.scss';
 import 'regenerator-runtime/runtime';
 
 let count = 0;
+
+document.documentElement.setAttribute('data-theme', localStorage.getItem('data-theme') || 'light');
 
 export default function App() {
   const [text, setText] = useState('');
@@ -36,6 +41,7 @@ export default function App() {
   const [downloadURL, setDownloadURL] = useState('');
   const [mutationCiphers, setMutationCiphers] = useState([]);
   const [attempts, setAttempts] = useState([]);
+  const [drawerOpened, setDrawerOpened] = useState(false);
 
   if (count < 1) {
     if (played || victory || gameover) {
@@ -88,6 +94,7 @@ export default function App() {
             setFinalTime={setFinalTime}
             gameover={gameover}
             victory={victory}
+            drawerOpened={drawerOpened}
           />
           )}
         </div>
@@ -163,6 +170,7 @@ export default function App() {
         <div id="modal-bg" />
       </>
       )}
+      <Toolbar setDrawerOpened={setDrawerOpened} />
       <div id="body-container-pc">
         <div id={window.innerWidth > 750 ? 'ciphered-body' : 'ciphered-body-mobile'}>
           {skipped && (
@@ -174,6 +182,7 @@ export default function App() {
                   margin={index * 5}
                   text={text}
                   index={attempts.length - index}
+                  opened={drawerOpened}
                 />
               ))
             }
@@ -185,6 +194,7 @@ export default function App() {
                 mutation={mutation}
                 setMutationCiphers={setMutationCiphers}
                 mutationCiphers={mutationCiphers}
+                opened={drawerOpened}
               />
             </div>
           </>
