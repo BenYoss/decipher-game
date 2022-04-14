@@ -1,3 +1,5 @@
+@import './app';
+
 .example-container {
     display: flex;
     justify-content: center;
@@ -14,8 +16,8 @@
   height: 14vw;
 }
 
-#mutations-desc-container {
-  background-color: rgb(208, 208, 208);
+[data-theme="dark"] #mutations-desc-container, [data-theme="light"] #mutations-desc-container {
+  background-color: var(--third-undertone-color);
   border: 1px solid rgb(189, 189, 189);
   padding: 5% 0px 5% 0px;
   margin: 0px 0px 0px 0px;
@@ -74,8 +76,8 @@
       height: 10vw;
     }
     
-    #mutations-desc-container {
-      background-color: rgb(208, 208, 208);
+    [data-theme="dark"] #mutations-desc-container, [data-theme="light"] #mutations-desc-container {
+      background-color: var(--third-undertone-color);
       border: 1px solid rgb(189, 189, 189);
       padding: 5% 0px 5% 0px;
       margin: 0px 0.2vw 0px 0.2vw;

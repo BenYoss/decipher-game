@@ -1,4 +1,3 @@
-// Color pallete
 
 $bkgColor: #0f270d;
 $bkgColor2: #1b4a17;
@@ -7,21 +6,62 @@ $colorAvg: #fff;
 $colorEasy: #fff;
 $colorHard: #fff;
 
+:root {
+  --primary-background-color: white;
+  --secondary-background-color: white;
+  --primary-undertone-color: #ccc;
+  --secondary-undertone-color: black;
+  --third-undertone-color: #ccc;
+  --primary-inner-color: rgb(40, 44, 52);
+  --secondary-inner-color: rgb(255, 255, 255);
+  --primary-text-color: black;
+  --secondary-text-color: gray;
+  --background-green: #1b4a17;
+  --color-correct: #12EE1B;
+  --filter-type: "none";
+  --download-color: #EBEBEB;
+  --download-color2: #BDBDBD;
+  --download-color-interior: #DADADA;
+  --download-text-color: #666666;
+  color-scheme: light;
+}
 
-body {
-  background: border-box $bkgColor2;
+html[data-theme="dark"] {
+  --primary-background-color: black;
+  --secondary-background-color: rgb(26, 27, 29);
+  --primary-text-color: white;
+  --primary-undertone-color: rgb(120, 120, 120);
+  --secondary-undertone-color: rgb(120, 120, 120);
+  --third-undertone-color: rgb(44, 45, 48);
+  --secondary-text-color: rgb(212, 212, 212);
+  --primary-inner-color: rgb(26, 27, 29);
+  --secondary-inner-color: rgb(40, 44, 52);
+  --background-green: #133410;
+  --color-correct: #08890c;
+  --filter-type: "invert()";
+  --download-color: rgb(49, 53, 59);
+  --download-color2: #3e3e3e;
+  --download-color-interior: rgb(48, 50, 54);
+  --download-text-color: white;
+  color-scheme: dark;
+}
+
+
+[data-theme="dark"] body, [data-theme="light"] body {
+  background: border-box var(--background-green);
   user-select: none;
   align-items: flex-start;
   max-width: 99vw;
   overflow: hidden;
 }
 
-textarea {
+[data-theme="dark"] textarea, [data-theme="light"] textarea {
   border: none;
   margin: 5vw 0vw 1vw 0vw;
   height: 120px;
   min-width: fit-content;
-  background-color: white;
+  background-color: var(--secondary-inner-color);
+  color: var(--primary-text-color);
   font-size: 4vh;
   font-weight: bold;
 }
@@ -32,16 +72,12 @@ textarea {
   justify-content: space-around;
 }
 
-// #ciphered-body {
-//   overflow: scroll;
-//   max-height: 200px;
-// }
-
-#header-container {
+[data-theme="dark"] #header-container, [data-theme="light"] #header-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: white;
+  background-color: var(--primary-background-color);
+  color: var(--primary-text-color);
   position: absolute;
   top: 0;
   max-height: 60px;
@@ -64,14 +100,14 @@ canvas {
   opacity: 0.0
 }
 
-#cipher-input-container {
+[data-theme="dark"] #cipher-input-container, [data-theme="light"] #cipher-input-container {
   position: absolute;
   bottom: 0;
   right: 0;
   left: 0;
   top: 54vh;
   padding-top: 20px;
-  background-color: rgb(40, 44, 52);
+  background-color: var(--primary-inner-color);
 }
 
 #header {
@@ -89,7 +125,6 @@ canvas {
   justify-content: flex-start;
   margin-left: 15%;
   user-select: none;
-  // overflow: scroll;
   max-height: 60%;
   z-index: 4;
   position: relative;
@@ -104,18 +139,18 @@ canvas {
   justify-content: flex-start;
   margin-left: 15%;
   user-select: none;
-  // overflow: scroll;
   max-height: 60%;
   z-index: 0;
 }
 
 @mixin cipher-style() {
-  background-color: white;
+  background-color: var(--secondary-background-color);
+  color: var(--primary-text-color);
+  border: 2px solid var(--secondary-undertone-color);
   border-radius: 3vh 3vh 3vh 3vh;
   padding: 2px 2.5vh 2px 2.5vh;
   font-size: 3vh;
   font-family: sans-serif;
-  border: 2px solid black;
   user-select: none;
 }
 
@@ -123,18 +158,18 @@ hr {
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid var(--primary-undertone-color);
   margin: 0.2em 0;
   padding: 0;
 }
 
-#cipher-word {
+[data-theme="dark"] #cipher-word, [data-theme="light"] #cipher-word {
   @include cipher-style();
   margin-top: 10vw;
   margin-right: 1vw;
 }
 
-.cipher-word-attempt-false {
+[data-theme="dark"] .cipher-word-attempt-false, [data-theme="light"] .cipher-word-attempt-false {
   @include cipher-style();
   background-color: gray;
   color: gray;
@@ -142,10 +177,11 @@ hr {
   margin-right: 1vw;
 }
 
-.cipher-word-attempt-true {
+[data-theme="dark"] .cipher-word-attempt-true,
+[data-theme="light"] .cipher-word-attempt-true {
   @include cipher-style();
-  background-color: #12EE1B;
-  color: #12EE1B;
+  background-color: var(--color-correct);
+  color: var(--color-correct);
   margin-top: 10vw;
   margin-right: 1vw;
 }
@@ -221,12 +257,10 @@ hr {
   display: flex;
   flex-direction: row;
   font-family: sans-serif;
-  // color: white;
   cursor:pointer;
 }
 
 #standard-btn:hover {
-  // background-color: white;
   background-color: black;
   color: white;
   cursor:pointer;
@@ -236,7 +270,6 @@ hr {
   font-size: 2vh;
   font-weight: bold;
   font-family: sans-serif;
-  // color: black;
   -webkit-box-shadow: 0 8px 6px -6px black;
   -moz-box-shadow: 0 8px 6px -6px black;
   box-shadow: 0 8px 6px -6px black;
@@ -262,7 +295,6 @@ hr {
   @include levelModel
 }
 #level-container-difficult {
-  // background-color: rgb(224, 143, 21);
   background: radial-gradient(rgb(224, 143, 21) 60%, rgb(179, 120, 31));
   @include levelModel
 }
@@ -276,14 +308,14 @@ hr {
 }
 
 @mixin crease() {
-  background-color: $bkgColor2;
+  background-color: var(--background-green);
   width: 100px;
   height: 100px;
   transform: rotate(45deg);
   position: absolute;
 }
 
-#level-crease {
+[data-theme="dark"] #level-crease, [data-theme="light"] #level-crease {
   @include crease;
   right: 1%;
   top: 80%;
@@ -354,7 +386,7 @@ hr {
   pointer-events: none;
 }
 
-#gameover-container {
+[data-theme="dark"] #gameover-container, [data-theme="light"] #gameover-container {
   position: absolute;
   left: 30%;
   top: 25%;
@@ -362,7 +394,8 @@ hr {
   vertical-align: middle;
   width: 40vw;
   height: 70vw;
-  background-color: white;
+  background-color: var(--secondary-background-color);
+  color: var(--primary-text-color);
   transform: scale(2);
   border-radius: 0.5vw 0.5vw 0.5vw 0.5vw;
   box-shadow: gray;
@@ -387,18 +420,18 @@ hr {
   left: -40%;
 }
 
-#gameover-text {
-  color: rgb(40, 44, 52);
+[data-theme="dark"] #gameover-text, [data-theme="light"] #gameover-text {
+  color: var(--primary-text-color);
   font-size: 2vw;
   margin-bottom: 2%;
 }
 
-#gameover-metrics-container { 
+[data-theme="dark"] #gameover-metrics-container, [data-theme="light"] #gameover-metrics-container { 
   display: flex;
   flex-direction: row;
   justify-content: center;
   position: absolute;
-  background-color: white;
+  background-color: var(--secondary-background-color);
   left: 0;
   right: 0;
   top: 30%;
@@ -462,12 +495,13 @@ hr {
     padding: 0px 4vw 0px 4vw;
   }
   
-  textarea {
+  [data-theme="dark"] textarea, [data-theme="light"] textarea {
     border: none;
     margin: 5vw 3vw 1vw 3vw;
     height: 200px;
     min-width: auto;
-    background-color: white;
+    background-color: var(--secondary-inner-color);
+    color: var(--primary-text-color);
     font-size: 2vw;
   }
   
@@ -488,10 +522,11 @@ hr {
     justify-content: space-around;
   }
   
-  #header-container {
+  [data-theme="dark"] #header-container, [data-theme="light"] #header-container {
     display: flex;
     justify-content: center;
-    background-color: white;
+    background-color: var(--primary-background-color);
+    color: var(--primary-text-color);
     position: absolute;
     max-height: 70px;
     top: 0;
@@ -520,22 +555,24 @@ hr {
   }
   
   @mixin cipher-style() {
-    background-color: white;
+    background-color: var(--secondary-background-color);
+    color: var(--primary-text-color);
+    border: 2px solid var(--secondary-undertone-color);
     border-radius: 3vh 3vh 3vh 3vh;
     padding: 2px 2.5vh 2px 2.5vh;
     font-size: 3vh;
     font-family: sans-serif;
-    border: 1px solid black;
     user-select: none;
   }
   
-  #cipher-word {
+  [data-theme="dark"] #cipher-word, [data-theme="light"] #cipher-word {
     @include cipher-style();
     margin-top: 5vw;
     margin-right: 1vw;
   }
 
-  .cipher-word-attempt-false {
+  [data-theme="dark"] .cipher-word-attempt-false,
+[data-theme="light"] .cipher-word-attempt-false {
     @include cipher-style();
     background-color: gray;
     color: gray;
@@ -543,10 +580,11 @@ hr {
     margin-right: 1vw;
   }
   
-  .cipher-word-attempt-true {
+  [data-theme="dark"] .cipher-word-attempt-true,
+[data-theme="light"] .cipher-word-attempt-true {
     @include cipher-style();
-    background-color: #12EE1B;
-    color: #12EE1B;
+    background-color: var(--color-correct);
+    color: var(--color-correct);
     margin-top: 5vw;
     margin-right: 1vw;
   }
@@ -559,7 +597,7 @@ hr {
     padding: 0px 0px 0px 0px;
   }
   
-  #cipher-input-container {
+  [data-theme="dark"] #cipher-input-container, [data-theme="light"] #cipher-input-container {
     position: absolute;
     bottom: 0;
     left: 70%;
@@ -567,7 +605,7 @@ hr {
     padding-top: 20px;
     right: 0;
     top: 23%;
-    background-color: rgb(40, 44, 52);
+    background-color: var(--primary-inner-color);
   }
   // ---------------------------( TESTING )----------------------------------------------
   #test {
@@ -586,7 +624,6 @@ hr {
   
   // Standard button styles
   #standard-btn {
-    // background-color: black;
     padding: 1vw 2vw 1vw 2vw;
     border-radius: 2vw 2vw 2vw 2vw;
     border: none;
@@ -595,9 +632,7 @@ hr {
     width: 200px;
     height: 70px;
     background-color: black;
-    // color: white;
     font-family: sans-serif;
-    // color: white;
     cursor:pointer;
   }
 
@@ -617,18 +652,8 @@ hr {
     display: flex;
     flex-direction: row;
     font-family: sans-serif;
-    // color: white;
     cursor:pointer;
   }
-
-  // #ciphered-body {
-  //   overflow-y: hidden;
-  //   height: fit-content;
-  //   width: fit-content;
-  //   margin-top: 0;
-  //   position: relative;
-  //   top: none;
-  // }
 
   span {
     margin-right: 5px;
@@ -650,7 +675,6 @@ hr {
   }
   
   #standard-btn:hover {
-    // background-color: white;
     background-color: black;
     color: white;
     padding: 1vw 2vw 1vw 2vw;
@@ -659,7 +683,6 @@ hr {
     font-size: 1.5vw;
     font-weight: bold;
     font-family: sans-serif;
-    // color: black;
     -webkit-box-shadow: 0 8px 6px -6px black;
     -moz-box-shadow: 0 8px 6px -6px black;
     box-shadow: 0 8px 6px -6px black;
@@ -681,7 +704,6 @@ hr {
     @include levelModel
   }
   #level-container-difficult {
-    // background-color: rgb(224, 143, 21);
     background: radial-gradient(rgb(224, 143, 21) 60%, rgb(179, 120, 31));
     @include levelModel
   }
@@ -695,14 +717,14 @@ hr {
   }
   
   @mixin crease() {
-    background-color: $bkgColor2;
+    background-color: var(--background-green);
     width: 7.5vw;
     height: 9vw;
     transform: rotate(45deg);
     position: absolute;
   }
   
-  #level-crease {
+  [data-theme="dark"] #level-crease, [data-theme="light"] #level-crease {
     @include crease;
     right: 1%;
     top: 80%;
@@ -767,7 +789,7 @@ hr {
     z-index: 0;
   }
   
-  #gameover-container {
+  [data-theme="dark"] #gameover-container, [data-theme="light"] #gameover-container {
     position: absolute;
     left: 40%;
     top: 30%;
@@ -775,7 +797,8 @@ hr {
     vertical-align: middle;
     width: 20vw;
     height: 18vw;
-    background-color: white;
+    background-color: var(--secondary-background-color);
+    color: var(--primary-text-color);
     transform: scale(2);
     border-radius: 0.5vw 0.5vw 0.5vw 0.5vw;
     box-shadow: gray;
@@ -799,12 +822,12 @@ hr {
     justify-content: center;
   }
   
-  #gameover-text {
-    color: rgb(40, 44, 52);
+  [data-theme="dark"] #gameover-text, [data-theme="light"] #gameover-text {
+    color: var(--primary-text-color);
     font-size: 0.8vw;
   }
 
-  #gameover-metrics-container {
+  [data-theme="dark"] #gameover-metrics-container, [data-theme="light"] #gameover-metrics-container { 
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -845,4 +868,3 @@ hr {
     font-size: 2vw;
   }
 }
-
