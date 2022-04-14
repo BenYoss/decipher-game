@@ -6,12 +6,13 @@ const modalAnimation = {
   opacity: '100%',
 };
 
-export default function Attempts({ attempt, margin, text, index }) {
+export default function Attempts({ attempt, margin, text, index, opened }) {
   const bodyArray = text.split(' ');
 
   let style = {
     left: `${margin / 2}%`,
     width: document.getElementsByClassName('cipher-cluster')[0].offsetWidth,
+    filter: opened ? 'blur(5px)' : null,
   };
 
   if (window.innerWidth < 750) {
