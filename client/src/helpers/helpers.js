@@ -95,7 +95,7 @@ let counter;
  * counting up from miliseconds to hours.
  * @param {*} time stateful component method that updates the timer state in the App component.
  */
-export function countDown(time) {
+export function countDown(time, opened) {
   if (!counter) {
     counter = setInterval(() => {
       mil += 2;
@@ -117,6 +117,9 @@ export function countDown(time) {
       const milStr = mil > 9 ? mil : `0${mil}`;
       time(`${hourStr}:${minStr}:${secStr}:${milStr}`);
     }, 20);
+  } else if (opened) {
+    clearInterval(counter);
+    counter = undefined;
   }
 }
 
@@ -156,9 +159,6 @@ export function getAttemptCount(attempts) {
 let count = 0;
 
 export async function getShareDownload() {
-  if (window.innerWidth < 750) {
-    document.getElementById('viewport').setAttribute('content', 'width=1200px');
-  }
   if (count < 1) {
     const elt = document.getElementById('download-container');
     return html2canvas(elt, { scale: 5 }).then((canvas) => {
@@ -166,9 +166,7 @@ export async function getShareDownload() {
       const canvas2 = document.getElementsByTagName('canvas')[0];
       const dataURL = canvas2.toDataURL();
       count += 1;
-      if (window.innerWidth < 750) {
-        document.getElementById('viewport').setAttribute('content', 'width=device-width, initial-scale=1');
-      }
+      document.getElementById('viewport').setAttribute('content', 'width=device-width, initial-scale=1');
       return dataURL;
     });
   }
