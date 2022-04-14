@@ -8,7 +8,7 @@ const modalAnimation = {
   opacity: '100%',
 };
 
-export default function Cipher({ text, mutation }) {
+export default function Cipher({ text, mutation, opened }) {
   let body = text;
   if (text) {
     for (let i = 0; i < text.length; i += 1) {
@@ -47,8 +47,12 @@ export default function Cipher({ text, mutation }) {
     });
   }
   const bodyArray = body.split(' ');
+
+  const blurredWords = {
+    filter: 'blur(6px)',
+  };
   return (
-    <div className="cipher-cluster">
+    <div className="cipher-cluster" style={opened ? blurredWords : {}}>
       {text.length ? (
         bodyArray.map((word, i) => (
           <motion.div id="cipher-word" initial={{ x: -200, opacity: '0%' }} animate={modalAnimation} transition={{ duration: (i + 3) / 10 }}>
@@ -70,4 +74,5 @@ export default function Cipher({ text, mutation }) {
 Cipher.propTypes = {
   text: propTypes.string.isRequired,
   mutation: propTypes.string.isRequired,
+  opened: propTypes.bool.isRequired,
 };
