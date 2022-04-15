@@ -14,7 +14,7 @@ import statisticsIcon from '../../img/statistics-icon.png';
 export default function Toolbar({ setDrawerOpened }) {
   const [drawerType, handleDrawer] = useState(-1);
   const drawerAnimation = {
-    x: window.innerWidth > 750 ? 410 : 410,
+    x: window.innerWidth > 750 ? 410 : 430,
   };
 
   const retractAnimation = {
