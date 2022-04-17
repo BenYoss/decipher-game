@@ -163,7 +163,8 @@ export async function getShareDownload() {
     const elt = document.getElementById('download-container');
     return html2canvas(elt, { scale: 5 }).then((canvas) => {
       document.body.appendChild(canvas);
-      const canvas2 = document.getElementsByTagName('canvas')[0];
+      const canvases = document.getElementsByTagName('canvas');
+      const canvas2 = document.getElementsByTagName('canvas')[canvases.length - 1];
       const dataURL = canvas2.toDataURL();
       count += 1;
       document.getElementById('viewport').setAttribute('content', 'width=device-width, initial-scale=1');

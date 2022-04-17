@@ -40,7 +40,7 @@ let currentGame;
 
 const now = new Date(); const utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
 export default function Howtoplay({
-  setSkipped, cookieData, played, setPlayed, text, downloadURL, level,
+  setSkipped, cookieData, played, setPlayed, text, downloadURL, level, setReload,
 }) {
   let cipherSectionMargins = ['-1.5vh', '-8.5vh'];
   if (window.innerWidth < 750) {
@@ -211,6 +211,11 @@ export default function Howtoplay({
                   whileHover={hoverAnimation}
                   animate={leaveAnimation}
                   transition={{ duration: 0.18 }}
+                  onClick={() => {
+                    setTimeout(() => {
+                      setReload([]);
+                    }, 50);
+                  }}
                   id="standard-btn-small"
                   href={downloadURL}
                   download={`decipher_${new Date().toDateString()}.png`}

@@ -22,15 +22,15 @@ export default function Statistics({ ciphers, setReload }) {
     <div id="settings-container">
       <div id="settings-header">
         <p id="drawer-title">Statistics</p>
-        <hr />
       </div>
+      <hr />
       <div id="stats-datatype-head">
         <div id="stats-datatype-header">
           <p id="drawer-title">Select Type</p>
         </div>
         <div id="stats-datatype-selector">
           <button type="button" onClick={() => handleDataTypes('down')} className="datatype-selector-btn">{'<'}</button>
-          <p id="drawer-title">{dataType}</p>
+          <p id="drawer-title">{dataType.toUpperCase()}</p>
           <button type="button" onClick={() => handleDataTypes('up')} className="datatype-selector-btn">{'>'}</button>
         </div>
       </div>

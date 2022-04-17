@@ -137,6 +137,7 @@ export default function App() {
           text={text}
           downloadURL={downloadURL}
           level={level}
+          setReload={setReload}
         />
         {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
         <div
