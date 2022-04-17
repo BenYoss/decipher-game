@@ -11,7 +11,7 @@ import Statistics from './Statistics';
 import settingsIcon from '../../img/settings-icon.png';
 import statisticsIcon from '../../img/statistics-icon.png';
 
-export default function Toolbar({ setDrawerOpened }) {
+export default function Toolbar({ setDrawerOpened, ciphers, setReload }) {
   const [drawerType, handleDrawer] = useState(-1);
   const drawerAnimation = {
     x: window.innerWidth > 750 ? 410 : 430,
@@ -38,7 +38,7 @@ export default function Toolbar({ setDrawerOpened }) {
           <button type="button" onClick={() => { drawerHandler(-1); setDrawerOpened(false); }} className="btn-exit">X</button>
         </div>
         {drawerType === 1 && (
-          <Statistics />
+          <Statistics ciphers={ciphers} setReload={setReload} />
         )}
         {drawerType === 0 && (
           <Settings />
@@ -50,4 +50,5 @@ export default function Toolbar({ setDrawerOpened }) {
 
 Toolbar.propTypes = {
   setDrawerOpened: propTypes.func.isRequired,
+  ciphers: propTypes.element.isRequired,
 };

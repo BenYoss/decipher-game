@@ -19,9 +19,12 @@ import '../styles/endgameStats.scss';
 import '../styles/attempts.scss';
 import '../styles/howToPlay.scss';
 import '../styles/toolbar.scss';
+import '../styles/statistics.scss';
 import 'regenerator-runtime/runtime';
 
 let count = 0;
+
+let cipherCookies;
 
 document.documentElement.setAttribute('data-theme', localStorage.getItem('data-theme') || 'light');
 
@@ -42,6 +45,18 @@ export default function App() {
   const [mutationCiphers, setMutationCiphers] = useState([]);
   const [attempts, setAttempts] = useState([]);
   const [drawerOpened, setDrawerOpened] = useState(false);
+  const [, setReload] = useState([]);
+
+  function getThisWeeksCiphers(cipherss) {
+    const days = cipherss.map((cipher) => cipher.gameDate.slice(0, 3));
+    const lastSevenDays = cipherss.slice(-7);
+    const startOfWeek = lastSevenDays.slice(lastSevenDays.length === 7 ? days.indexOf('Sun') : 0);
+    return startOfWeek;
+  }
+
+  if (!cipherCookies) {
+    cipherCookies = cookies && getThisWeeksCiphers(cookies.timeHistory);
+  }
 
   if (count < 1) {
     if (played || victory || gameover) {
@@ -170,7 +185,11 @@ export default function App() {
         <div id="modal-bg" />
       </>
       )}
-      <Toolbar setDrawerOpened={setDrawerOpened} />
+      <Toolbar
+        setDrawerOpened={setDrawerOpened}
+        ciphers={cipherCookies && cipherCookies}
+        setReload={setReload}
+      />
       <div id="body-container-pc">
         <div id={window.innerWidth > 750 ? 'ciphered-body' : 'ciphered-body-mobile'}>
           {skipped && (

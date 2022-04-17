@@ -97,8 +97,9 @@ form {
 }
 
 canvas {
-  opacity: 0.0
+  opacity: 0.0;
 }
+
 
 [data-theme="dark"] #cipher-input-container, [data-theme="light"] #cipher-input-container {
   position: absolute;
