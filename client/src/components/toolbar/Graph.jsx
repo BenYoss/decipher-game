@@ -1,11 +1,14 @@
+/* eslint-disable consistent-return */
+/* eslint-disable array-callback-return */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Chart from 'chart.js/auto';
+import propTypes from 'prop-types';
 
 let counter = 0;
 let chart;
-export default function Graph({ ciphers, dataType, setReload }) {
+export default function Graph({ ciphers, dataType }) {
   const dates = ciphers.map((cipher) => cipher.gameDate);
   const selectData = () => {
     let resolverArr = [];
@@ -76,4 +79,6 @@ export default function Graph({ ciphers, dataType, setReload }) {
 }
 
 Graph.propTypes = {
+  ciphers: propTypes.element.isRequired,
+  dataType: propTypes.string.isRequired,
 };

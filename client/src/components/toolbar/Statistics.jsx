@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
+import propTypes from 'prop-types';
 import Graph from './Graph';
 import dataTypes from './datatypes.json';
 
@@ -50,4 +51,6 @@ export default function Statistics({ ciphers, setReload }) {
 }
 
 Statistics.propTypes = {
+  ciphers: propTypes.element.isRequired,
+  setReload: propTypes.func.isRequired,
 };

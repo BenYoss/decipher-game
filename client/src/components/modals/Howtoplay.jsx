@@ -11,22 +11,11 @@ const modalAnimation = {
   opacity: '100%',
 };
 
-// Variant 1:
-// const hoverAnimation = {
-//   scale: 1.05,
-//   backgroundColor: ['hsl(0, 61%, 0%)', 'hsl(127, 61%, 12%)'],
-//   color: 'hsl(180, 61%, 100%)',
-// };
-// const leaveAnimation = {
-//   scale: 1.0,
-//   backgroundColor: ['hsl(127, 61%, 12%)', 'hsl(0, 61%, 0%)'],
-//   color: 'hsl(180, 61%, 100%)',
-// };
-
 const hoverAnimation = {
   scale: 1.1,
   boxShadow: '0px 0px 8px hsl(120, 61%, 50%)',
 };
+
 const leaveAnimation = {
   scale: 1.0,
   boxShadow: '0px 0px 0px hsl(120, 61%, 50%)',
@@ -242,4 +231,5 @@ Howtoplay.propTypes = {
   text: propTypes.string.isRequired,
   downloadURL: propTypes.string.isRequired,
   level: propTypes.number.isRequired,
+  setReload: propTypes.func.isRequired,
 };
