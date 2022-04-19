@@ -7,11 +7,27 @@ import propTypes from 'prop-types';
 
 import Settings from './Settings';
 import Statistics from './Statistics';
+import LevelSelection from './LevelSelection';
 
 import settingsIcon from '../../img/settings-icon.png';
 import statisticsIcon from '../../img/statistics-icon.png';
+import cipherListIcon from './level-selection.svg';
+import coffeeIcon from './coffee.svg';
 
-export default function Toolbar({ setDrawerOpened, ciphers, setReload }) {
+export default function Toolbar({
+  setDrawerOpened,
+  ciphers,
+  setReload,
+  thisWeeksCiphers,
+  setText,
+  setLevel,
+  setMutation,
+  setLevelSwapped,
+  setDate,
+  setPlayed,
+  date,
+  setHealth,
+}) {
   const [drawerType, handleDrawer] = useState(-1);
   const drawerAnimation = {
     x: window.innerWidth > 750 ? 410 : 430,
@@ -33,10 +49,34 @@ export default function Toolbar({ setDrawerOpened, ciphers, setReload }) {
       <div className="toolbar-item" onClick={() => { drawerHandler(1); setDrawerOpened(true); }}>
         <img src={statisticsIcon} alt="statistics icon" className="toolbar-icon-img" id="toolbar-icon-statistics" />
       </div>
+      <div className="toolbar-item" onClick={() => { drawerHandler(2); setDrawerOpened(true); }}>
+        <img src={cipherListIcon} alt="cipher list icon" className="toolbar-icon-img" id="toolbar-icon-cipher-list" />
+      </div>
+      <div
+        className="toolbar-item"
+        onClick={() => { drawerHandler(2); setDrawerOpened(true); }}
+      >
+        <img src={coffeeIcon} alt="donation icon" className="toolbar-icon-img" id="toolbar-icon-donation" />
+      </div>
       <div id="toolbar-drawer">
         <div id="exit-btn-container">
           <button type="button" onClick={() => { drawerHandler(-1); setDrawerOpened(false); }} className="btn-exit">X</button>
         </div>
+        {drawerType === 2 && (
+          <LevelSelection
+            ciphers={ciphers}
+            setReload={setReload}
+            thisWeeksCiphers={thisWeeksCiphers}
+            setText={setText}
+            setLevel={setLevel}
+            setMutation={setMutation}
+            setLevelSwapped={setLevelSwapped}
+            setDate={setDate}
+            setPlayed={setPlayed}
+            date={date}
+            setHealth={setHealth}
+          />
+        )}
         {drawerType === 1 && (
           <Statistics ciphers={ciphers} setReload={setReload} />
         )}
@@ -51,4 +91,14 @@ export default function Toolbar({ setDrawerOpened, ciphers, setReload }) {
 Toolbar.propTypes = {
   setDrawerOpened: propTypes.func.isRequired,
   ciphers: propTypes.element.isRequired,
+  date: propTypes.string.isRequired,
+  setLevel: propTypes.func.isRequired,
+  setHealth: propTypes.func.isRequired,
+  thisWeeksCiphers: propTypes.element.isRequired,
+  setReload: propTypes.func.isRequired,
+  setText: propTypes.func.isRequired,
+  setMutation: propTypes.func.isRequired,
+  setDate: propTypes.func.isRequired,
+  setPlayed: propTypes.func.isRequired,
+  setLevelSwapped: propTypes.func.isRequired,
 };
