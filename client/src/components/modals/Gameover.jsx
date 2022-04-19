@@ -10,10 +10,10 @@ const modalAnimation = {
 };
 
 export default function Gameover({
-  percent, finalTime, health, attempts,
+  percent, finalTime, health, attempts, date,
 }) {
   const attemptCount = getAttemptCount(health);
-  updateCookies(finalTime, attemptCount, false, attempts);
+  updateCookies(date, finalTime, attemptCount, false, attempts);
   return (
     <motion.div id="gameover-container" animate={modalAnimation} initial={{ opacity: '0%' }} transition={{ duration: 0.5 }}>
       <div id="gameover-header">
@@ -55,4 +55,5 @@ Gameover.propTypes = {
     },
   ],
   health: propTypes.number.isRequired,
+  date: propTypes.string.isRequired,
 };

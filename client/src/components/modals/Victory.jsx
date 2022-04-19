@@ -10,7 +10,7 @@ const modalAnimation = {
 };
 
 export default function Victory({
-  percent, time, health, attempts,
+  percent, time, health, attempts, date,
 }) {
   let text = '';
   const times = time.split(':');
@@ -27,8 +27,8 @@ export default function Victory({
   }
 
   const attemptCount = getAttemptCount(health);
-
-  updateCookies(time, attemptCount, true, attempts);
+  console.log(date);
+  updateCookies(date, time, attemptCount, true, attempts);
   return (
     <motion.div id="gameover-container" animate={modalAnimation} initial={{ opacity: '0%' }} transition={{ duration: 0.5 }}>
       <div id="gameover-header">
@@ -70,4 +70,5 @@ Victory.propTypes = {
     },
   ],
   health: propTypes.number.isRequired,
+  date: propTypes.string.isRequired,
 };

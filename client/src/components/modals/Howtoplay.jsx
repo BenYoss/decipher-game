@@ -26,10 +26,8 @@ const leaveAnimation = {
  * @param {*} setSkipped props for skip state in parent component.
  */
 let currentGame;
-
-const now = new Date(); const utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
 export default function Howtoplay({
-  setSkipped, cookieData, played, setPlayed, text, downloadURL, level, setReload,
+  setSkipped, cookieData, played, setPlayed, text, downloadURL, level, setReload, date,
 }) {
   let cipherSectionMargins = ['-1.5vh', '-8.5vh'];
   if (window.innerWidth < 750) {
@@ -40,7 +38,7 @@ export default function Howtoplay({
     gamesPlayed = cookieData.timeHistory;
     if (!played) {
       gamesPlayed.forEach((game) => {
-        if (game.gameDate === utc.toDateString()) {
+        if (game.gameDate === date) {
           currentGame = game;
           setPlayed(true);
         }
@@ -177,7 +175,7 @@ export default function Howtoplay({
                <div id="download-container">
                  <div id="download-header">
                    <p id="download-header-container">
-                     <span>{`La-Cipher ${utc.toDateString()} - ${level}`}</span>
+                     <span>{`La-Cipher ${date} - ${level}`}</span>
                    </p>
                    <p id="download-header-time">
                      <span>{currentGame.time}</span>
@@ -232,4 +230,5 @@ Howtoplay.propTypes = {
   downloadURL: propTypes.string.isRequired,
   level: propTypes.number.isRequired,
   setReload: propTypes.func.isRequired,
+  date: propTypes.string.isRequired,
 };
