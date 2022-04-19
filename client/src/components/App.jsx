@@ -20,6 +20,7 @@ import '../styles/attempts.scss';
 import '../styles/howToPlay.scss';
 import '../styles/toolbar.scss';
 import '../styles/statistics.scss';
+import '../styles/levelSelection.scss';
 import 'regenerator-runtime/runtime';
 
 let count = 0;
@@ -29,7 +30,7 @@ let cipherCookies;
 document.documentElement.setAttribute('data-theme', localStorage.getItem('data-theme') || 'light');
 
 export default function App() {
-  const [text, setText] = useState('');
+  const [text, setText] = useState(null);
   const [level, setLevel] = useState(0);
   const [gameover, setGameover] = useState(false);
   const [victory, setVictory] = useState(false);
@@ -46,11 +47,26 @@ export default function App() {
   const [attempts, setAttempts] = useState([]);
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [, setReload] = useState([]);
+  const [thisWeeksCiphers, setThisWeeksCiphers] = useState([]);
+  const [levelSwapped, setLevelSwapped] = useState(false);
+  const [date, setDate] = useState();
 
   function getThisWeeksCiphers(cipherss) {
-    const days = cipherss.map((cipher) => cipher.gameDate.slice(0, 3));
-    const lastSevenDays = cipherss.slice(-7);
-    const startOfWeek = lastSevenDays.slice(lastSevenDays.length === 7 ? days.indexOf('Sun') : 0);
+    let days;
+    let lastSevenDays;
+    let startOfWeek;
+    if (cipherss[0].gameDate) {
+      days = cipherss.map((cipher) => cipher.gameDate.slice(0, 3));
+      lastSevenDays = cipherss.slice(-7);
+      startOfWeek = lastSevenDays.slice(lastSevenDays.length === 7 ? days.indexOf('Sun') : 0);
+    }
+    if (cipherss[0].date_issued) {
+      days = cipherss.map((cipher) => cipher.date_issued.slice(0, 3));
+      lastSevenDays = cipherss.slice(-7);
+      const sevenDays = days.slice(-7);
+      startOfWeek = lastSevenDays.slice(lastSevenDays.length === 7 ? sevenDays.indexOf('Sun') : 0);
+      setThisWeeksCiphers(startOfWeek);
+    }
     return startOfWeek;
   }
 
@@ -88,17 +104,21 @@ export default function App() {
     setText(levelData.text);
     setLevel(levelData.levelType || levelData.level_type);
     setMutation(levelData.mutation);
+    setDate(levelData.date_issued);
+    getThisWeeksCiphers(ciphers);
   }
 
   useEffect(() => {
-    calculateText();
-    if (!cookies) {
-      getCookies()
-        .then((data) => {
-          setCookies(data.data.userData);
-        });
+    if (!text && !level && !mutation) {
+      calculateText();
+      if (!cookies) {
+        getCookies()
+          .then((data) => {
+            setCookies(data.data.userData);
+          });
+      }
     }
-  }, []);
+  }, [text, level, mutation]);
 
   return (
     <div id="container">
@@ -110,6 +130,8 @@ export default function App() {
             gameover={gameover}
             victory={victory}
             drawerOpened={drawerOpened}
+            levelSwapped={levelSwapped}
+            setLevelSwapped={setLevelSwapped}
           />
           )}
         </div>
@@ -127,39 +149,40 @@ export default function App() {
           )}
         </div>
       </div>
-      {!skipped && text && level > 0 && (
-      <>
-        <Howtoplay
-          setSkipped={setSkipped}
-          cookieData={cookies}
-          played={played}
-          setPlayed={setPlayed}
-          text={text}
-          downloadURL={downloadURL}
-          level={level}
-          setReload={setReload}
-        />
-        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-        <div
-          id="htp-bg"
-        />
-        {!played ? (
-          <div
-            className="modal-bg"
-            id="modal-bg"
-            onClick={() => setSkipped(true)}
-            tabIndex="0"
-            label="modal"
-            role="button"
+      {(!skipped && text && level > 0) || levelSwapped ? (
+        <>
+          <Howtoplay
+            setSkipped={setSkipped}
+            cookieData={cookies}
+            played={played}
+            setPlayed={setPlayed}
+            text={text}
+            downloadURL={downloadURL}
+            level={level}
+            setReload={setReload}
+            date={date}
           />
-        ) : (
+          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
           <div
-            className="modal-bg"
-            id="finish-modal-bg"
+            id="htp-bg"
           />
-        )}
-      </>
-      )}
+          {!played ? (
+            <div
+              className="modal-bg"
+              id="modal-bg"
+              onClick={() => setSkipped(true)}
+              tabIndex="0"
+              label="modal"
+              role="button"
+            />
+          ) : (
+            <div
+              className="modal-bg"
+              id="finish-modal-bg"
+            />
+          )}
+        </>
+      ) : null}
       {gameover && finalTime && (
       <>
         <Gameover
@@ -169,6 +192,7 @@ export default function App() {
           text={text}
           health={health}
           attempts={attempts}
+          date={date}
           id="gameover"
         />
         <div className="modal-bg" id="finish-modal-bg" />
@@ -182,6 +206,7 @@ export default function App() {
           time={finalTime}
           health={health}
           attempts={attempts}
+          date={date}
         />
         <div id="modal-bg" />
       </>
@@ -190,6 +215,15 @@ export default function App() {
         setDrawerOpened={setDrawerOpened}
         ciphers={cipherCookies && cipherCookies}
         setReload={setReload}
+        thisWeeksCiphers={thisWeeksCiphers}
+        setText={setText}
+        setLevel={setLevel}
+        setMutation={setMutation}
+        setLevelSwapped={setLevelSwapped}
+        setDate={setDate}
+        setPlayed={setPlayed}
+        date={date}
+        setHealth={setHealth}
       />
       <div id="body-container-pc">
         <div id={window.innerWidth > 750 ? 'ciphered-body' : 'ciphered-body-mobile'}>

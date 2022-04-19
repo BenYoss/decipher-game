@@ -3,11 +3,11 @@ import propTypes from 'prop-types';
 import { countDown, stopCount } from '../helpers/helpers';
 
 export default function Timer({
-  setFinalTime, gameover, victory, drawerOpened,
+  setFinalTime, gameover, victory, drawerOpened, levelSwapped, setLevelSwapped,
 }) {
   const [time, setTime] = useState('00:00:00:00');
   if (!gameover && !victory) {
-    countDown(setTime, drawerOpened);
+    countDown(setTime, drawerOpened, levelSwapped, setLevelSwapped);
   }
   if (gameover || victory) {
     setFinalTime(time);
@@ -25,4 +25,6 @@ Timer.propTypes = {
   victory: propTypes.bool.isRequired,
   setFinalTime: propTypes.func.isRequired,
   drawerOpened: propTypes.func.isRequired,
+  setLevelSwapped: propTypes.func.isRequired,
+  levelSwapped: propTypes.bool.isRequired,
 };
