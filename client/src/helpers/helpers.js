@@ -95,9 +95,16 @@ let counter;
  * counting up from miliseconds to hours.
  * @param {*} time stateful component method that updates the timer state in the App component.
  */
-export function countDown(time, opened) {
+export function countDown(time, opened, levelSwapped, setLevelSwapped) {
   if (!counter) {
     counter = setInterval(() => {
+      if (levelSwapped) {
+        hour = 0;
+        min = 0;
+        sec = 0;
+        mil = 0;
+        setLevelSwapped(false);
+      }
       mil += 2;
       if (mil === 100) {
         mil = 0;
@@ -127,9 +134,9 @@ export function stopCount() {
   clearInterval(counter);
 }
 
-export async function updateCookies(time, attempts, isWin, cipherAttempts) {
+export async function updateCookies(date, time, attempts, isWin, cipherAttempts) {
   await axios.post('/setcookie', {
-    time, attempts, isWin, cipherAttempts,
+    date, time, attempts, isWin, cipherAttempts,
   });
 }
 
@@ -145,7 +152,7 @@ export async function getCiphersFromDB() {
 
 // Function to count the number of attempts a player makes to complete Cipher.
 export function getAttemptCount(attempts) {
-  let attemptCount = 1;
+  let attemptCount = 0;
 
   attempts.forEach((attempt) => {
     if (!attempt.open) {
