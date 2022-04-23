@@ -23,8 +23,6 @@ import '../styles/statistics.scss';
 import '../styles/levelSelection.scss';
 import 'regenerator-runtime/runtime';
 
-let count = 0;
-
 let cipherCookies;
 
 document.documentElement.setAttribute('data-theme', localStorage.getItem('data-theme') || 'light');
@@ -50,6 +48,7 @@ export default function App() {
   const [thisWeeksCiphers, setThisWeeksCiphers] = useState([]);
   const [levelSwapped, setLevelSwapped] = useState(false);
   const [date, setDate] = useState();
+  const [disableTimer, setDisableTimer] = useState(false);
 
   function getThisWeeksCiphers(cipherss) {
     let days;
@@ -74,10 +73,9 @@ export default function App() {
     cipherCookies = cookies && getThisWeeksCiphers(cookies.timeHistory);
   }
 
-  if (count < 1) {
+  if (!downloadURL) {
     if (played || victory || gameover) {
       getShareDownload().then((url) => {
-        count += 1;
         setDownloadURL(url);
       });
     }
@@ -132,6 +130,7 @@ export default function App() {
             drawerOpened={drawerOpened}
             levelSwapped={levelSwapped}
             setLevelSwapped={setLevelSwapped}
+            disableTimer={disableTimer}
           />
           )}
         </div>
@@ -149,7 +148,42 @@ export default function App() {
           )}
         </div>
       </div>
-      {(!skipped && text && level > 0) || levelSwapped ? (
+      {(!skipped && text && level > 0) && !levelSwapped ? (
+        <>
+          <Howtoplay
+            setSkipped={setSkipped}
+            cookieData={cookies}
+            played={played}
+            setPlayed={setPlayed}
+            text={text}
+            downloadURL={downloadURL}
+            level={level}
+            setReload={setReload}
+            date={date}
+          />
+          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+          <div
+            id="htp-bg"
+          />
+          {!played ? (
+            <div
+              className="modal-bg"
+              id="modal-bg"
+              onClick={() => setSkipped(true)}
+              tabIndex="0"
+              label="modal"
+              role="button"
+            />
+          ) : (
+            <div
+              className="modal-bg"
+              id="finish-modal-bg"
+            />
+          )}
+        </>
+      ) : null}
+
+      {levelSwapped ? (
         <>
           <Howtoplay
             setSkipped={setSkipped}
@@ -193,6 +227,7 @@ export default function App() {
           health={health}
           attempts={attempts}
           date={date}
+          cookies={cookies}
           id="gameover"
         />
         <div className="modal-bg" id="finish-modal-bg" />
@@ -207,6 +242,7 @@ export default function App() {
           health={health}
           attempts={attempts}
           date={date}
+          cookies={cookies}
         />
         <div id="modal-bg" />
       </>
@@ -224,6 +260,14 @@ export default function App() {
         setPlayed={setPlayed}
         date={date}
         setHealth={setHealth}
+        setAttempts={setAttempts}
+        skipped={skipped}
+        setDownloadURL={setDownloadURL}
+        downloadURL={downloadURL}
+        setSkipped={setSkipped}
+        setDisableTimer={setDisableTimer}
+        setGameover={setGameover}
+        setVictory={setVictory}
       />
       <div id="body-container-pc">
         <div id={window.innerWidth > 750 ? 'ciphered-body' : 'ciphered-body-mobile'}>
