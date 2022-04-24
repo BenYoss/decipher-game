@@ -10,7 +10,7 @@ export default function Timer({
     countDown(setTime, drawerOpened, levelSwapped, setLevelSwapped);
   }
   if (disableTimer) {
-    setFinalTime('Timer Disabled');
+    setFinalTime('No Time');
     stopCount();
   }
 
@@ -32,4 +32,5 @@ Timer.propTypes = {
   drawerOpened: propTypes.func.isRequired,
   setLevelSwapped: propTypes.func.isRequired,
   levelSwapped: propTypes.bool.isRequired,
+  disableTimer: propTypes.bool.isRequired,
 };
