@@ -19,6 +19,12 @@ app.post('/setcookie', (req, res) => {
     req.cookies.userData = { timeHistory: [] };
   }
   const { timeHistory } = req.cookies.userData;
+
+  for (let i = 0; i < timeHistory.length; i += 1) {
+    if (timeHistory[i].gameDate === req.body.date) {
+      timeHistory.splice(i, 1);
+    }
+  }
   timeHistory.push({
     gameDate: req.body.date,
     time: req.body.time,
