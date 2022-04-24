@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import propTypes from 'prop-types';
+import { clearCount } from '../../helpers/helpers';
 
 import level1 from './level-select-banner-lvl1.svg';
 import level2 from './level-select-banner-lvl2.svg';
@@ -28,7 +29,6 @@ export default function LevelSelection({
   for (let i = weeklyCiphers.length; i < 7; i += 1) {
     weeklyCiphers.push({ level_type: 'locked' });
   }
-
   const handleCipherSwitch = (cipher) => {
     setText(cipher.text);
     setLevel(cipher.levelType || cipher.level_type);
@@ -48,6 +48,7 @@ export default function LevelSelection({
     setSkipped(false);
     setGameover(false);
     setVictory(false);
+    clearCount();
   };
 
   return (
