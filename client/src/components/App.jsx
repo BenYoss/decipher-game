@@ -5,7 +5,9 @@ import axios from 'axios';
 import Cipher from './Cipher';
 import Input from './Input';
 import Level from './Level';
-import { getCiphersFromDB, getCookies, getShareDownload } from '../helpers/helpers';
+import {
+  getCiphersFromDB, getCookies, getShareDownload,
+} from '../helpers/helpers';
 import Health from './Health';
 import Gameover from './modals/Gameover';
 import Victory from './modals/Victory';
@@ -48,7 +50,8 @@ export default function App() {
   const [thisWeeksCiphers, setThisWeeksCiphers] = useState([]);
   const [levelSwapped, setLevelSwapped] = useState(false);
   const [date, setDate] = useState();
-  const [disableTimer, setDisableTimer] = useState(false);
+  const [disableTimer, setDisableTimer] = useState(JSON.parse(localStorage.getItem('disable-timer')));
+  const [ciphertext, setCiphertext] = useState('');
 
   function getThisWeeksCiphers(cipherss) {
     let days;
@@ -118,21 +121,32 @@ export default function App() {
     }
   }, [text, level, mutation]);
 
+  useEffect(() => {
+    if (levelSwapped) {
+      getCookies()
+        .then((data) => {
+          cipherCookies = cookies && getThisWeeksCiphers(data.data.userData.timeHistory);
+          setCookies(data.data.userData);
+        });
+    }
+    setLevelSwapped(false);
+  }, [levelSwapped]);
+
   return (
     <div id="container">
       <div id="nav-body">
         <div id="timer-bo">
-          {skipped && (
-          <Timer
-            setFinalTime={setFinalTime}
-            gameover={gameover}
-            victory={victory}
-            drawerOpened={drawerOpened}
-            levelSwapped={levelSwapped}
-            setLevelSwapped={setLevelSwapped}
-            disableTimer={disableTimer}
-          />
-          )}
+          {skipped ? (
+            <Timer
+              setFinalTime={setFinalTime}
+              gameover={gameover}
+              victory={victory}
+              drawerOpened={drawerOpened}
+              levelSwapped={levelSwapped}
+              setLevelSwapped={setLevelSwapped}
+              disableTimer={disableTimer}
+            />
+          ) : null}
         </div>
         <div id="health-body">
 
@@ -281,6 +295,7 @@ export default function App() {
                   text={text}
                   index={attempts.length - index}
                   opened={drawerOpened}
+                  ciphertext={ciphertext}
                 />
               ))
             }
@@ -293,6 +308,7 @@ export default function App() {
                 setMutationCiphers={setMutationCiphers}
                 mutationCiphers={mutationCiphers}
                 opened={drawerOpened}
+                setCiphertext={setCiphertext}
               />
             </div>
           </>
