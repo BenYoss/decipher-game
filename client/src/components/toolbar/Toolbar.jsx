@@ -27,6 +27,14 @@ export default function Toolbar({
   setPlayed,
   date,
   setHealth,
+  setAttempts,
+  skipped,
+  downloadURL,
+  setDownloadURL,
+  setSkipped,
+  setDisableTimer,
+  setGameover,
+  setVictory,
 }) {
   const [drawerType, handleDrawer] = useState(-1);
   const drawerAnimation = {
@@ -75,13 +83,20 @@ export default function Toolbar({
             setPlayed={setPlayed}
             date={date}
             setHealth={setHealth}
+            setAttempts={setAttempts}
+            skipped={skipped}
+            setDownloadURL={setDownloadURL}
+            downloadURL={downloadURL}
+            setSkipped={setSkipped}
+            setGameover={setGameover}
+            setVictory={setVictory}
           />
         )}
         {drawerType === 1 && (
           <Statistics ciphers={ciphers} setReload={setReload} />
         )}
         {drawerType === 0 && (
-          <Settings />
+          <Settings setDisableTimer={setDisableTimer} />
         )}
       </div>
     </motion.div>
@@ -100,5 +115,13 @@ Toolbar.propTypes = {
   setMutation: propTypes.func.isRequired,
   setDate: propTypes.func.isRequired,
   setPlayed: propTypes.func.isRequired,
+  setAttempts: propTypes.func.isRequired,
   setLevelSwapped: propTypes.func.isRequired,
+  skipped: propTypes.bool.isRequired,
+  downloadURL: propTypes.string.isRequired,
+  setDownloadURL: propTypes.func.isRequired,
+  setVictory: propTypes.func.isRequired,
+  setGameover: propTypes.func.isRequired,
+  setSkipped: propTypes.func.isRequired,
+  setDisableTimer: propTypes.func.isRequired,
 };
