@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 import axios from 'axios';
 import html2canvas from 'html2canvas';
@@ -96,15 +97,15 @@ let counter;
  * @param {*} time stateful component method that updates the timer state in the App component.
  */
 export function countDown(time, opened, levelSwapped, setLevelSwapped) {
+  if (levelSwapped) {
+    hour = 0;
+    min = 0;
+    sec = 0;
+    mil = 0;
+    setLevelSwapped(false);
+  }
   if (!counter) {
     counter = setInterval(() => {
-      if (levelSwapped) {
-        hour = 0;
-        min = 0;
-        sec = 0;
-        mil = 0;
-        setLevelSwapped(false);
-      }
       mil += 2;
       if (mil === 100) {
         mil = 0;
@@ -131,6 +132,14 @@ export function countDown(time, opened, levelSwapped, setLevelSwapped) {
 }
 
 export function stopCount() {
+  clearInterval(counter);
+}
+
+export function clearCount() {
+  hour = 0;
+  min = 0;
+  sec = 0;
+  mil = 0;
   clearInterval(counter);
 }
 
@@ -174,12 +183,10 @@ export async function getShareDownload() {
       canvases = document.getElementsByTagName('canvas');
     } else {
       canvases = document.getElementsByTagName('canvas');
-      console.log(document.getElementsByTagName('canvas')[canvases.length - 1] || document.getElementsByTagName('canvas'));
       document.body.replaceChild(canvas, document.getElementsByTagName('canvas')[canvases.length - 1] || document.getElementsByTagName('canvas')[0]);
     }
     const canvas2 = document.getElementsByTagName('canvas')[canvases.length - 1];
     const dataURL = canvas2.toDataURL();
-    console.log(dataURL);
     count += 1;
     document.getElementById('viewport').setAttribute('content', 'width=device-width, initial-scale=1');
     return dataURL;
