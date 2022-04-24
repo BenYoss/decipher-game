@@ -8,7 +8,9 @@ const modalAnimation = {
   opacity: '100%',
 };
 
-export default function Cipher({ text, mutation, opened }) {
+export default function Cipher({
+  text, mutation, opened, setCiphertext,
+}) {
   let body = text;
   if (text) {
     for (let i = 0; i < text.length; i += 1) {
@@ -47,7 +49,7 @@ export default function Cipher({ text, mutation, opened }) {
     });
   }
   const bodyArray = body.split(' ');
-
+  setCiphertext(body);
   const blurredWords = {
     filter: 'blur(6px)',
   };
@@ -75,4 +77,5 @@ Cipher.propTypes = {
   text: propTypes.string.isRequired,
   mutation: propTypes.string.isRequired,
   opened: propTypes.bool.isRequired,
+  setCiphertext: propTypes.func.isRequired,
 };
