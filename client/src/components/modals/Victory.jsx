@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import { motion } from 'framer-motion';
@@ -10,7 +11,7 @@ const modalAnimation = {
 };
 
 export default function Victory({
-  percent, time, health, attempts, date,
+  percent, time, health, attempts, date, cookies,
 }) {
   let text = '';
   const times = time.split(':');
@@ -27,8 +28,15 @@ export default function Victory({
   }
 
   const attemptCount = getAttemptCount(health);
-  console.log(date);
-  updateCookies(date, time, attemptCount, true, attempts);
+  let isDuplicate = false;
+  cookies && cookies.timeHistory.forEach((cookie) => {
+    if (cookie.gameDate === date) {
+      isDuplicate = true;
+    }
+  });
+  if (!isDuplicate) {
+    updateCookies(date, time, attemptCount, true, attempts);
+  }
   return (
     <motion.div id="gameover-container" animate={modalAnimation} initial={{ opacity: '0%' }} transition={{ duration: 0.5 }}>
       <div id="gameover-header">
@@ -47,7 +55,7 @@ export default function Victory({
           <section id="gameover-metric">
             <b id="gameover-time">Attempts:</b>
             <p id="gameover-time">
-              <b>{attemptCount}</b>
+              <b>{attemptCount + 1}</b>
             </p>
           </section>
         </div>
@@ -71,4 +79,7 @@ Victory.propTypes = {
   ],
   health: propTypes.number.isRequired,
   date: propTypes.string.isRequired,
+  cookies: {
+    timeHistory: propTypes.element.isRequired,
+  },
 };

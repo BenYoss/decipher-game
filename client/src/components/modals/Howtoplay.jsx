@@ -48,6 +48,7 @@ export default function Howtoplay({
   return (
     <motion.div
       id="gameover-container"
+      className={!played ? '' : 'gameover-container-pc'}
       animate={modalAnimation}
       initial={{ opacity: '0%' }}
       transition={{ duration: 0.5 }}
@@ -66,7 +67,7 @@ export default function Howtoplay({
             <div id="mutations-outter-container">
               <table id="mutations-desc-container">
                 <tr className="mutation-example">
-                  <td><strong>Swapped Chars:</strong></td>
+                  <td><strong>Swapped Characters:</strong></td>
                   <td>Fehind fars</td>
                 </tr>
                 <tr className="mutation-example">
@@ -74,7 +75,7 @@ export default function Howtoplay({
                   <td>srab dniheB</td>
                 </tr>
                 <tr className="mutation-example">
-                  <td><strong>Multiple Chars:</strong></td>
+                  <td><strong>Multiple Characters:</strong></td>
                   <td>Nnnnehind nnnnars</td>
                 </tr>
               </table>
@@ -192,25 +193,25 @@ export default function Howtoplay({
             </p>
             <section>
               <div id="download-btn-container">
-                {downloadURL && (
-                <motion.a
-                  className="button"
-                  whileHover={hoverAnimation}
-                  animate={leaveAnimation}
-                  transition={{ duration: 0.18 }}
-                  onClick={() => {
-                    setTimeout(() => {
-                      setReload([]);
-                    }, 50);
-                  }}
-                  id="standard-btn-small"
-                  href={downloadURL}
-                  download={`decipher_${new Date().toDateString()}.png`}
-                >
-                  <span id="save-stats">Save Stats</span>
-                  <img src={downloadIcon} alt="download icon" style={{ filter: 'invert()' }} width="15" height="15" />
-                </motion.a>
-                )}
+                {downloadURL ? (
+                  <motion.a
+                    className="button"
+                    whileHover={hoverAnimation}
+                    animate={leaveAnimation}
+                    transition={{ duration: 0.18 }}
+                    onClick={() => {
+                      setTimeout(() => {
+                        setReload([]);
+                      }, 50);
+                    }}
+                    id="standard-btn-small"
+                    href={downloadURL}
+                    download={`decipher_${new Date().toDateString()}.png`}
+                  >
+                    <span id="save-stats">Save Stats</span>
+                    <img src={downloadIcon} alt="download icon" style={{ filter: 'invert()' }} width="15" height="15" />
+                  </motion.a>
+                ) : setTimeout(() => setReload([]), 500)}
               </div>
             </section>
           </div>
