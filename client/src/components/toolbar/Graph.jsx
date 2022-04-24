@@ -9,7 +9,17 @@ import propTypes from 'prop-types';
 let counter = 0;
 let chart;
 export default function Graph({ ciphers, dataType }) {
-  const dates = ciphers.map((cipher) => cipher.gameDate);
+  const dateTimes = {
+    Sun: 1,
+    Mon: 2,
+    Tue: 3,
+    Wed: 4,
+    Thu: 5,
+    Fri: 6,
+    Sat: 7,
+  };
+  const dates = ciphers.map((cipher) => cipher.gameDate).sort((a, b) => dateTimes[a.slice(0, 3)]
+   - dateTimes[b.slice(0, 3)]);
   const selectData = () => {
     let resolverArr = [];
     if (dataType === 'attempts') {
