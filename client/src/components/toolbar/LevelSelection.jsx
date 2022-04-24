@@ -19,8 +19,9 @@ const levelList = [level1, level2, level3, level4, level5, level6, level7];
 
 export default function LevelSelection({
   thisWeeksCiphers, setText, setLevel,
-  setMutation, setLevelSwapped,
-  ciphers, setDate, setPlayed, date, setHealth,
+  setMutation, setLevelSwapped, downloadURL,
+  setDownloadURL, setGameover, setVictory,
+  ciphers, setDate, setPlayed, date, setHealth, setAttempts, setSkipped,
 }) {
   const weeklyCiphers = thisWeeksCiphers;
   const cookieCiphers = ciphers ? ciphers.map((cipher) => cipher.gameDate) : [];
@@ -34,9 +35,19 @@ export default function LevelSelection({
     setMutation(cipher.mutation);
     setDate(cipher.date_issued);
     setLevelSwapped(true);
+    setTimeout(() => {
+      setLevelSwapped(false);
+    }, 1);
     setPlayed(false);
     setHealth([{ open: true }, { open: true },
       { open: true }, { open: true }]);
+    setAttempts([]);
+    if (downloadURL) {
+      setDownloadURL(null);
+    }
+    setSkipped(false);
+    setGameover(false);
+    setVictory(false);
   };
 
   return (
@@ -97,4 +108,10 @@ LevelSelection.propTypes = {
   setPlayed: propTypes.func.isRequired,
   setLevelSwapped: propTypes.func.isRequired,
   ciphers: propTypes.element.isRequired,
+  setAttempts: propTypes.func.isRequired,
+  setDownloadURL: propTypes.func.isRequired,
+  setVictory: propTypes.func.isRequired,
+  setGameover: propTypes.func.isRequired,
+  downloadURL: propTypes.string.isRequired,
+  setSkipped: propTypes.func.isRequired,
 };
