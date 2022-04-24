@@ -166,18 +166,24 @@ export function getAttemptCount(attempts) {
 let count = 0;
 
 export async function getShareDownload() {
-  if (count < 1) {
-    const elt = document.getElementById('download-container');
-    return html2canvas(elt, { scale: 5 }).then((canvas) => {
+  const elt = document.getElementById('download-container');
+  let canvases;
+  return html2canvas(elt, { scale: 5 }).then((canvas) => {
+    if (!document.getElementsByTagName('canvas').length) {
       document.body.appendChild(canvas);
-      const canvases = document.getElementsByTagName('canvas');
-      const canvas2 = document.getElementsByTagName('canvas')[canvases.length - 1];
-      const dataURL = canvas2.toDataURL();
-      count += 1;
-      document.getElementById('viewport').setAttribute('content', 'width=device-width, initial-scale=1');
-      return dataURL;
-    });
-  }
+      canvases = document.getElementsByTagName('canvas');
+    } else {
+      canvases = document.getElementsByTagName('canvas');
+      console.log(document.getElementsByTagName('canvas')[canvases.length - 1] || document.getElementsByTagName('canvas'));
+      document.body.replaceChild(canvas, document.getElementsByTagName('canvas')[canvases.length - 1] || document.getElementsByTagName('canvas')[0]);
+    }
+    const canvas2 = document.getElementsByTagName('canvas')[canvases.length - 1];
+    const dataURL = canvas2.toDataURL();
+    console.log(dataURL);
+    count += 1;
+    document.getElementById('viewport').setAttribute('content', 'width=device-width, initial-scale=1');
+    return dataURL;
+  });
 }
 
 // updates cookie attempts
