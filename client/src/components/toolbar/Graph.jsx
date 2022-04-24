@@ -52,7 +52,7 @@ export default function Graph({ ciphers, dataType }) {
         }],
       };
       chart = new Chart(document.getElementById('stats-chart').getContext('2d'), {
-        type: 'line',
+        type: 'bar',
         data,
         options: {
           scales: {
