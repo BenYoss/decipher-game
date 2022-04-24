@@ -25,7 +25,7 @@ const findRandomCharInText = (text) => {
 };
 
 // Cipher builder for automatically creating ciphers each day.
-const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+const alphabet = 'abcdefghijklmnopqrstuvwy'.split('');
 const makeMutationPrint = (text, level, mutation = '') => {
   let resultStr = '';
   // For categorizing mutations based on level.
@@ -40,7 +40,13 @@ const makeMutationPrint = (text, level, mutation = '') => {
       if (i === 1 && mutation.includes('r-')) {
         return makeMutationPrint(text, level, mutation);
       }
-      let randomChar = alphabet[Math.floor(Math.random() * alphabet.length)];
+      let randomChar;
+      while (!randomChar) {
+        const searchedChar = alphabet[Math.floor(Math.random() * alphabet.length)];
+        if (!text.includes(searchedChar)) {
+          randomChar = searchedChar;
+        }
+      }
       if (randomText === randomText.toUpperCase()) {
         randomChar = randomChar.toUpperCase();
       }
