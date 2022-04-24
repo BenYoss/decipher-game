@@ -31,24 +31,21 @@ export default function Input({
             type="button"
             onClick={() => {
               if (val === text) {
+                const initialColor = document.getElementsByTagName('textarea')[0].style.color;
                 document.getElementsByTagName('textarea')[0].style.color = 'lime';
                 document.getElementsByTagName('textarea')[0].style.border = 'lime';
                 setPercent(percent / level);
                 setTimeout(() => {
-                  document.getElementsByTagName('textarea')[0].style.color = 'black';
-                  document.getElementsByTagName('textarea')[0].style.border = 'black';
+                  document.getElementsByTagName('textarea')[0].style.color = initialColor;
+                  document.getElementsByTagName('textarea')[0].style.border = initialColor;
                   document.getElementsByTagName('textarea')[0].value = '';
                 }, 1000);
-                document.getElementById('standard-btn').disabled = true;
-                document.getElementById('standard-btn').style.backgroundColor = 'gray';
-                document.getElementById('standard-btn').style.border = 'rgb(181, 181, 181)';
-                document.getElementById('standard-btn').style.color = 'white';
-                document.getElementById('standard-btn').textContent = '🔒';
                 updateAttempts(val, text).then((data) => {
                   setAttempts([...attempts, data]);
                   setVictory(true);
                 });
               } else {
+                const initialColor = document.getElementsByTagName('textarea')[0].style.color;
                 document.getElementsByTagName('textarea')[0].style.color = 'red';
                 document.getElementsByTagName('textarea')[0].style.border = 'red';
                 let hasTakenSlot = false;
@@ -74,8 +71,8 @@ export default function Input({
                 });
                 setHealth(updatedHealth);
                 setTimeout(() => {
-                  document.getElementsByTagName('textarea')[0].style.color = 'black';
-                  document.getElementsByTagName('textarea')[0].style.border = 'black';
+                  document.getElementsByTagName('textarea')[0].style.color = initialColor;
+                  document.getElementsByTagName('textarea')[0].style.border = initialColor;
                   document.getElementsByTagName('textarea')[0].value = '';
                 }, 1000);
               }
