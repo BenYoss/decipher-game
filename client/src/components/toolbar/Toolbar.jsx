@@ -96,7 +96,7 @@ export default function Toolbar({
           <Statistics ciphers={ciphers} setReload={setReload} />
         )}
         {drawerType === 0 && (
-          <Settings setDisableTimer={setDisableTimer} />
+          <Settings setDisableTimer={setDisableTimer} setReload={setReload} />
         )}
       </div>
     </motion.div>
