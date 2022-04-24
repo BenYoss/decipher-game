@@ -6,7 +6,7 @@ $bkgColor1: #12EE1B;
     position: absolute;
     z-index: 11;
     left: -12vw;
-    top: 35vh;
+    top: 16vh;
     vertical-align: center;
     padding: 40px 30px 45px 50px;
     background-color: var(--secondary-background-color);
@@ -126,7 +126,8 @@ input:checked + .slider:before {
     width: 100vw;
     padding: 0px 0px 0px 1vw;
     height: 100vh;
-    top: -35vh;
+    overflow: hidden;
+    top: -16vh;
     left: -93vw;
     background-color: var(--secondary-background-color);
     color: var(--primary-text-color);
