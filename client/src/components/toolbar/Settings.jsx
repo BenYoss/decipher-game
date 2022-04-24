@@ -2,10 +2,11 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
+import propTypes from 'prop-types';
 
-let mode = [false, false];
+const mode = [localStorage.getItem('data-theme') === 'dark', JSON.parse(localStorage.getItem('disable-timer'))];
 
-export default function Settings({ setDisableTimer }) {
+export default function Settings({ setDisableTimer, setReload }) {
   const changeDarkLightModes = (scheme) => {
     let change = 'light';
     if (scheme) {
@@ -13,6 +14,7 @@ export default function Settings({ setDisableTimer }) {
     }
     localStorage.setItem('data-theme', change);
     document.documentElement.setAttribute('data-theme', localStorage.getItem('data-theme'));
+    setReload([]);
   };
 
   return (
@@ -28,6 +30,7 @@ export default function Settings({ setDisableTimer }) {
             <input
               type="checkbox"
               className="dark-mode-btn"
+              checked={mode[0]}
               id="settings-type-dark-mode"
               onClick={() => {
                 mode[0] = !mode[0];
@@ -42,10 +45,12 @@ export default function Settings({ setDisableTimer }) {
           <label className="switch">
             <input
               type="checkbox"
+              checked={mode[1]}
               className="dark-mode-btn"
               id="settings-type-dark-mode"
               onClick={() => {
                 mode[1] = !mode[1];
+                localStorage.setItem('disable-timer', mode[1]);
                 setDisableTimer(mode[1]);
               }}
             />
@@ -58,4 +63,6 @@ export default function Settings({ setDisableTimer }) {
 }
 
 Settings.propTypes = {
+  setDisableTimer: propTypes.func.isRequired,
+  setReload: propTypes.func.isRequired,
 };
