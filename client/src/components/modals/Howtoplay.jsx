@@ -200,9 +200,9 @@ export default function Howtoplay({
                     animate={leaveAnimation}
                     transition={{ duration: 0.18 }}
                     onClick={() => {
-                      setTimeout(() => {
-                        setReload([]);
-                      }, 50);
+                      // setTimeout(() => {
+                      //   setReload([]);
+                      // }, 50);
                     }}
                     id="standard-btn-small"
                     href={downloadURL}
@@ -211,7 +211,7 @@ export default function Howtoplay({
                     <span id="save-stats">Save Stats</span>
                     <img src={downloadIcon} alt="download icon" style={{ filter: 'invert()' }} width="15" height="15" />
                   </motion.a>
-                ) : setTimeout(() => setReload([]), 500)}
+                ) : setTimeout(() => setReload([]), 1000)}
               </div>
             </section>
           </div>
