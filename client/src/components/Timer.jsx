@@ -3,19 +3,24 @@ import propTypes from 'prop-types';
 import { countDown, stopCount } from '../helpers/helpers';
 
 export default function Timer({
-  setFinalTime, gameover, victory, drawerOpened, levelSwapped, setLevelSwapped,
+  setFinalTime, gameover, victory, drawerOpened, levelSwapped, setLevelSwapped, disableTimer,
 }) {
   const [time, setTime] = useState('00:00:00:00');
-  if (!gameover && !victory) {
+  if (!gameover && !victory && !disableTimer) {
     countDown(setTime, drawerOpened, levelSwapped, setLevelSwapped);
   }
-  if (gameover || victory) {
+  if (disableTimer) {
+    setFinalTime('Timer Disabled');
+    stopCount();
+  }
+
+  if ((gameover && !disableTimer) || (victory && !disableTimer)) {
     setFinalTime(time);
     stopCount();
   }
   return (
     <div id="timer-container">
-      <h4 id="time">{time}</h4>
+      <h4 id="time">{!disableTimer ? time : ''}</h4>
     </div>
   );
 }
