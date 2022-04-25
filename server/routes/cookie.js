@@ -8,14 +8,37 @@ app.get('/setcookie', (req, res) => {
   res.send('cookie saved!');
 });
 
+// for getting cookies from server to save user data.
+app.get('/getcookie', (req, res) => {
+  const cookie = req.cookies;
+  res.send(cookie);
+});
+
 app.post('/setcookie', (req, res) => {
   if (!req.cookies.userData) {
     req.cookies.userData = { timeHistory: [] };
   }
   const { timeHistory } = req.cookies.userData;
-  const date = new Date().toDateString();
-  timeHistory.push({ gameDate: date, time: req.body.time });
+
+  for (let i = 0; i < timeHistory.length; i += 1) {
+    if (timeHistory[i].gameDate === req.body.date) {
+      timeHistory.splice(i, 1);
+    }
+  }
+  timeHistory.push({
+    gameDate: req.body.date,
+    time: req.body.time,
+    attempts: req.body.attempts,
+    cipherAttempts: req.body.cipherAttempts,
+    isWin: req.body.isWin,
+  });
   res.cookie('userData', req.cookies.userData);
+  res.send(req.cookies);
+});
+
+app.put('/editcookie', (req, res) => {
+  const { timeHistory } = req.cookies.userData;
+  timeHistory.attempts.push(req.body.attempt);
   res.send(req.cookies);
 });
 

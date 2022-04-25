@@ -1,0 +1,238 @@
+@import './app';
+
+$bkgColor2: #43b039;
+$bkgColor1: #12EE1B;
+[data-theme="dark"] #toolbar-container, [data-theme="light"] #toolbar-container {
+    position: absolute;
+    z-index: 11;
+    left: -12vw;
+    top: 16vh;
+    vertical-align: center;
+    padding: 40px 30px 45px 50px;
+    background-color: var(--secondary-background-color);
+    color: var(--primary-text-color);
+    display: flex;
+    flex-direction: column;
+    max-width: 2vw;
+    border-radius: 30px;
+}
+
+#settings-body {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.settings-feat {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#dark-mode-slider {
+    display: flex;
+    justify-content: center;
+    // margin-top: 5px;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    // margin-left: 10px;
+    transform: scale(0.5);
+    margin: 10px 10px 10px 10px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.btn-exit {
+    background-color: #ccc;
+    color: gray;
+    font-weight: 900;
+    font-size: 4vh;
+    border: none;
+    cursor: pointer;
+}
+
+#exit-btn-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+/* Checking to see if the slider is checked or not */
+input:checked + .slider {
+    background-color: $bkgColor2;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 10px $bkgColor1;
+}
+
+.slider:hover {
+    box-shadow: 0 0 10px $bkgColor1;
+}
+
+/* transformation tweens that happen before switch render */
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+  
+.slider.round {
+    border-radius: 34px;
+}
+  
+.slider.round:before {
+    border-radius: 50%;
+}
+
+#drawer-title {
+    font-size: 2vh;
+    font-weight: bold;
+}
+
+#settings-header {
+    display: flex;
+    justify-content: center;
+}
+
+#settings-title {
+    font-size: 2.2vh;
+}
+
+[data-theme="dark"] #toolbar-drawer, [data-theme="light"] #toolbar-drawer {
+    position: absolute;
+    width: 100vw;
+    padding: 0px 0px 0px 1vw;
+    height: 100vh;
+    overflow: hidden;
+    top: -16vh;
+    left: -93vw;
+    background-color: var(--secondary-background-color);
+    color: var(--primary-text-color);
+}
+
+[data-theme="dark"] .toolbar-icon-img
+{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    filter: invert(1);
+}
+
+[data-theme="light"] .toolbar-icon-img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    filter: none;
+}
+
+
+@media only screen and (min-width: 750px) {    
+    #drawer-title {
+        font-size: 1.5vw;
+        font-weight: bold;
+    }
+    [data-theme="dark"] #toolbar-container, [data-theme="light"] #toolbar-container {
+        position: absolute;
+        z-index: 11;
+        left: -2vw;
+        top: 40vh;
+        background-color: var(--secondary-background-color);
+        color: var(--primary-text-color);
+        vertical-align: center;
+        padding: 25px 20px 25px 50px;
+        display: flex;
+        flex-direction: column;
+        max-width: 2vw;
+        border-radius: 30px;
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+        // margin-left: 10px;
+        transform: scale(1);
+        margin: 10px 10px 10px 10px;
+    }
+    [data-theme="dark"] .toolbar-icon-img
+    {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        filter: invert(1);
+    }
+    
+    [data-theme="light"] .toolbar-icon-img {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        filter: none;
+    }
+    [data-theme="dark"] #toolbar-drawer, [data-theme="light"] #toolbar-drawer  {
+        position: absolute;
+        width: 21vw;
+        padding: 0px 0px 0px 1vw;
+        height: 100vh;
+        top: -40vh;
+        left: -20vw;
+        background-color: var(--secondary-background-color);
+        color: var(--primary-text-color);
+    }
+    #drawer-title {
+        font-size: 2vh;
+        font-weight: bold;
+    }
+    
+    #settings-header {
+        display: flex;
+        justify-content: center;
+    }
+    
+    #settings-title {
+        font-size: 1.2vw;
+    }
+
+    .btn-exit {
+        background-color: var(--secondary-background-color);
+        color: var(--primary-text-color);
+        font-weight: 900;
+        font-size: 2vw;
+        border: none;
+        cursor: pointer;
+    }
+    
+    #exit-btn-container {
+        display: flex;
+        justify-content: flex-end;
+    }
+}

@@ -1,44 +1,69 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import { motion } from 'framer-motion';
 import propTypes from 'prop-types';
-import { updateCookies } from '../../helpers/helpers';
+import { updateCookies, getAttemptCount } from '../../helpers/helpers';
 
 const modalAnimation = {
   scale: 2,
   opacity: '100%',
 };
 
-export default function Victory({ percent, time }) {
+export default function Victory({
+  percent, time, health, attempts, date, cookies,
+}) {
   let text = '';
   const times = time.split(':');
   const sec = Number(times[2]);
-  if (sec < 5) {
+  const min = Number(times[1]);
+  if (sec < 30) {
     text = 'Wow! Inhuman solving speed!';
-  } else if (sec < 7) {
+  } else if (min < 2) {
     text = 'Pretty fast!';
-  } else if (sec < 10) {
+  } else if (min < 5) {
     text = 'Average time!';
-  } else if (sec < 15) {
+  } else if (min < 10) {
     text = 'Pretty slow';
   }
-  updateCookies(time);
 
+  const attemptCount = getAttemptCount(health);
+  let isDuplicate = false;
+  cookies && cookies.timeHistory.forEach((cookie) => {
+    if (cookie.gameDate === date) {
+      isDuplicate = true;
+    }
+  });
+  if (!isDuplicate) {
+    updateCookies(date, time, attemptCount, true, attempts);
+  }
   return (
     <motion.div id="gameover-container" animate={modalAnimation} initial={{ opacity: '0%' }} transition={{ duration: 0.5 }}>
       <div id="gameover-header">
         <h2 id="gameover-text">Correct!</h2>
       </div>
+      <hr />
       <div id="gameover-body">
-        <h4 id="gameover-text">{text}</h4>
-        <h4 id="gameover-level">
-          {`Time:  ${time && time}`}
-        </h4>
-        <h4 id="gameover-text">
+        <span id="gameover-text">{text}</span>
+        <div id="gameover-metrics-container">
+          <section id="gameover-metric">
+            <b id="gameover-time">Time:</b>
+            <p id="gameover-time">
+              <b>{time && time}</b>
+            </p>
+          </section>
+          <section id="gameover-metric">
+            <b id="gameover-time">Attempts:</b>
+            <p id="gameover-time">
+              <b>{attemptCount + 1}</b>
+            </p>
+          </section>
+        </div>
+        <span id="gameover-text">
           Compared to other users, you are in the top
           {` ${percent}`}
           % in this challenge.
-        </h4>
+        </span>
       </div>
     </motion.div>
   );
@@ -47,4 +72,14 @@ export default function Victory({ percent, time }) {
 Victory.propTypes = {
   percent: propTypes.number.isRequired,
   time: propTypes.string.isRequired,
+  attempts: [
+    {
+      open: propTypes.bool.isRequired,
+    },
+  ],
+  health: propTypes.number.isRequired,
+  date: propTypes.string.isRequired,
+  cookies: {
+    timeHistory: propTypes.element.isRequired,
+  },
 };

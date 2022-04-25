@@ -1,4 +1,3 @@
-// Color pallete
 
 $bkgColor: #0f270d;
 $bkgColor2: #1b4a17;
@@ -7,20 +6,62 @@ $colorAvg: #fff;
 $colorEasy: #fff;
 $colorHard: #fff;
 
+:root {
+  --primary-background-color: white;
+  --secondary-background-color: white;
+  --primary-undertone-color: #ccc;
+  --secondary-undertone-color: black;
+  --third-undertone-color: #ccc;
+  --primary-inner-color: rgb(40, 44, 52);
+  --secondary-inner-color: rgb(255, 255, 255);
+  --primary-text-color: black;
+  --secondary-text-color: gray;
+  --background-green: #1b4a17;
+  --color-correct: #12EE1B;
+  --filter-type: "none";
+  --download-color: #EBEBEB;
+  --download-color2: #BDBDBD;
+  --download-color-interior: #DADADA;
+  --download-text-color: #666666;
+  color-scheme: light;
+}
 
-body {
-  background: border-box $bkgColor2;
+html[data-theme="dark"] {
+  --primary-background-color: black;
+  --secondary-background-color: rgb(26, 27, 29);
+  --primary-text-color: white;
+  --primary-undertone-color: rgb(120, 120, 120);
+  --secondary-undertone-color: rgb(120, 120, 120);
+  --third-undertone-color: rgb(44, 45, 48);
+  --secondary-text-color: rgb(212, 212, 212);
+  --primary-inner-color: rgb(26, 27, 29);
+  --secondary-inner-color: rgb(40, 44, 52);
+  --background-green: #133410;
+  --color-correct: #08890c;
+  --filter-type: "invert()";
+  --download-color: rgb(49, 53, 59);
+  --download-color2: #3e3e3e;
+  --download-color-interior: rgb(48, 50, 54);
+  --download-text-color: white;
+  color-scheme: dark;
+}
+
+
+[data-theme="dark"] body, [data-theme="light"] body {
+  background: border-box var(--background-green);
   user-select: none;
   align-items: flex-start;
   max-width: 99vw;
+  overflow: hidden;
 }
 
-textarea {
+[data-theme="dark"] textarea, [data-theme="light"] textarea {
   border: none;
   margin: 5vw 0vw 1vw 0vw;
   height: 120px;
   min-width: fit-content;
-  background-color: white;
+  background-color: var(--secondary-inner-color);
+  color: var(--primary-text-color);
   font-size: 4vh;
   font-weight: bold;
 }
@@ -31,11 +72,12 @@ textarea {
   justify-content: space-around;
 }
 
-#header-container {
+[data-theme="dark"] #header-container, [data-theme="light"] #header-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: white;
+  background-color: var(--primary-background-color);
+  color: var(--primary-text-color);
   position: absolute;
   top: 0;
   max-height: 60px;
@@ -54,15 +96,19 @@ form {
   flex-direction: column;
 }
 
-#cipher-input-container {
+canvas {
+  opacity: 0.0;
+}
+
+
+[data-theme="dark"] #cipher-input-container, [data-theme="light"] #cipher-input-container {
   position: absolute;
-  bottom: -2vw;
-  // width: 100vw;
+  bottom: 0;
   right: 0;
   left: 0;
-  top: 55vh;
+  top: 54vh;
   padding-top: 20px;
-  background-color: rgb(40, 44, 52);
+  background-color: var(--primary-inner-color);
 }
 
 #header {
@@ -71,7 +117,7 @@ form {
 
 // selectors for the component "Cipher".
 
-#cipher-cluster {
+.cipher-cluster {
   margin-top: 120px;
   width: 80%;
   display: flex;
@@ -80,18 +126,76 @@ form {
   justify-content: flex-start;
   margin-left: 15%;
   user-select: none;
+  max-height: 60%;
+  z-index: 4;
+  position: relative;
 }
 
-#cipher-word {
-  margin-top: 5vw;
-  background-color: white;
-  margin-right: 1vw;
+.cipher-cluster-attempt {
+  margin-top: 120px;
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-left: 15%;
+  user-select: none;
+  max-height: 60%;
+  z-index: 0;
+}
+
+@mixin cipher-style() {
+  background-color: var(--secondary-background-color);
+  color: var(--primary-text-color);
+  border: 2px solid var(--secondary-undertone-color);
   border-radius: 3vh 3vh 3vh 3vh;
   padding: 2px 2.5vh 2px 2.5vh;
   font-size: 3vh;
   font-family: sans-serif;
-  border: 2px solid black;
   user-select: none;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid var(--primary-undertone-color);
+  margin: 0.2em 0;
+  padding: 0;
+}
+
+[data-theme="dark"] #cipher-word, [data-theme="light"] #cipher-word {
+  @include cipher-style();
+  margin-top: 10vw;
+  margin-right: 1vw;
+}
+
+[data-theme="dark"] .cipher-word-attempt-false, [data-theme="light"] .cipher-word-attempt-false {
+  @include cipher-style();
+  background-color: gray;
+  color: gray;
+  margin-top: 10vw;
+  margin-right: 1vw;
+}
+
+[data-theme="dark"] .cipher-word-attempt-true,
+[data-theme="light"] .cipher-word-attempt-true {
+  @include cipher-style();
+  background-color: var(--color-correct);
+  color: var(--color-correct);
+  margin-top: 10vw;
+  margin-right: 1vw;
+}
+
+#played-modal-cipher {
+  @include cipher-style();
+  transform: scale(0.5);
+  margin-top: -1vh;
+  font-size: 2.5vh;
+  max-width: 180%;
+  display: flex;
+  margin-bottom: -0.6vh;
+  padding: 0px 0px 0px 0px;
 }
 // ---------------------------( TESTING )----------------------------------------------
 #test {
@@ -111,14 +215,14 @@ form {
 // Standard button styles
 #input-btn-container {
   position: absolute;
-  left: 40%;
+  left: 37%;
   top: 85%;
   margin-top: 10%;
   transform: scale(1.5);
-  overflow: hidden;
 }
 #standard-btn {
-  // background-color: black;
+  background-color: black;
+  cursor:pointer;
   padding: 1vw 2vw 1vw 2vw;
   border-radius: 3vw 3vw 3vw 3vw;
   border: none;
@@ -128,18 +232,45 @@ form {
   font-weight: bold;
   overflow: hidden;
   font-family: sans-serif;
-  // color: white;
+  color: white;
+}
+
+#download-btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+#standard-btn-small {
+  background-color: black;
+  padding: 0.8vw 0vw 0.8vw 2.5vw;
+  border-radius: 2vw 2vw 2vw 2vw;
+  position: relative;
+  margin-top: 3%;
+  bottom: 0;
+  border: none;
+  font-size: 1.5vh;
+  font-weight: bold;
+  vertical-align: middle;
+  width: 90px;
+  text-decoration: none;
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  font-family: sans-serif;
+  cursor:pointer;
 }
 
 #standard-btn:hover {
-  // background-color: white;
+  background-color: black;
+  color: white;
+  cursor:pointer;
   padding: 1vw 2vw 1vw 2vw;
   border-radius: 2vw 2vw 2vw 2vw;
   border: none;
   font-size: 2vh;
   font-weight: bold;
   font-family: sans-serif;
-  // color: black;
   -webkit-box-shadow: 0 8px 6px -6px black;
   -moz-box-shadow: 0 8px 6px -6px black;
   box-shadow: 0 8px 6px -6px black;
@@ -157,35 +288,35 @@ form {
   top: -10px;
   gap: 2px 2px 2px 2px;
   height: 160px;
+  z-index: 1;
 }
 
 #level-container-normal {
-  background-color: rgb(179, 213, 27);
+  background: radial-gradient(rgb(179, 213, 27) 60%, rgb(133, 159, 18));
   @include levelModel
 }
 #level-container-difficult {
-  // background-color: rgb(224, 143, 21);
   background: radial-gradient(rgb(224, 143, 21) 60%, rgb(179, 120, 31));
   @include levelModel
 }
 #level-container-hard {
-  background: radial-gradient(rgb(224, 51, 21) 60%, rgb(142, 33, 13));;
+  background: radial-gradient(rgb(224, 51, 21) 60%, rgb(142, 33, 13));
   @include levelModel
 }
 #level-container {
-  background-color: green;
+  background: radial-gradient(rgb(3, 135, 3) 60%, rgb(2, 129, 2));
   @include levelModel
 }
 
 @mixin crease() {
-  background-color: $bkgColor2;
+  background-color: var(--background-green);
   width: 100px;
   height: 100px;
   transform: rotate(45deg);
   position: absolute;
 }
 
-#level-crease {
+[data-theme="dark"] #level-crease, [data-theme="light"] #level-crease {
   @include crease;
   right: 1%;
   top: 80%;
@@ -256,22 +387,33 @@ form {
   pointer-events: none;
 }
 
-#gameover-container {
+[data-theme="dark"] #gameover-container, [data-theme="light"] #gameover-container {
   position: absolute;
   left: 30%;
-  top: 30%;
+  top: 25%;
   text-align: center;
   vertical-align: middle;
   width: 40vw;
-  height: 50vw;
-  background-color: white;
+  height: 70vw;
+  background-color: var(--secondary-background-color);
+  color: var(--primary-text-color);
   transform: scale(2);
   border-radius: 0.5vw 0.5vw 0.5vw 0.5vw;
   box-shadow: gray;
-  z-index: 2;
+  z-index: 6;
   -webkit-box-shadow: 0 8px 6px -6px black;
   -moz-box-shadow: 0 8px 6px -6px black;
   box-shadow: 0 8px 6px -6px black;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.gameover-container {
+  
+}
+
+.gameover-container-pc {
+  overflow-y: hidden;
 }
 
 #gameover-header {
@@ -279,16 +421,48 @@ form {
   justify-content: center;
 }
 
-#gameover-text {
-  color: rgb(40, 44, 52);
-  font-size: 3vw;
+#gameover-cipher-container {
+  display: flex;
+  justify-content: center;
+  width: 180%;
+  position: relative;
+  left: -40%;
+}
+
+[data-theme="dark"] #gameover-text, [data-theme="light"] #gameover-text {
+  color: var(--primary-text-color);
+  font-size: 2vw;
+  margin-bottom: 2%;
+}
+
+[data-theme="dark"] #gameover-metrics-container, [data-theme="light"] #gameover-metrics-container { 
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: absolute;
+  background-color: var(--secondary-background-color);
+  left: 0;
+  right: 0;
+  top: 30%;
+  z-index: 1;
+}
+
+#gameover-time {
+  font-size: 1.6vh;
+}
+
+#gameover-metric {
+  border: 1px solid rgb(187, 187, 187);
+  text-align: center;
+  padding-bottom: -20px;
+  min-width: 47%;
 }
 
 #htp-bg {
   background-color: rgb(44, 44, 44);
 }
 
-#modal-bg {
+.modal-bg {
   background-color: rgb(0, 0, 0);
   opacity: 30%;
   position: absolute;
@@ -310,10 +484,19 @@ form {
   font-size: 6vw;
 }
 
+  
+#ciphered-body-mobile {
+  overflow-y: scroll;
+  height: 300px;
+  width: 100%;
+  margin-top: 10%;
+  position: relative;
+}
+
 // Core selectors (selectors impacting default markups)
 
 @media only screen and (min-width: 750px) {
-  
+
   body {
     background: border-box $bkgColor2;
     background-repeat: no-repeat;
@@ -321,12 +504,13 @@ form {
     padding: 0px 4vw 0px 4vw;
   }
   
-  textarea {
+  [data-theme="dark"] textarea, [data-theme="light"] textarea {
     border: none;
     margin: 5vw 3vw 1vw 3vw;
     height: 200px;
     min-width: auto;
-    background-color: white;
+    background-color: var(--secondary-inner-color);
+    color: var(--primary-text-color);
     font-size: 2vw;
   }
   
@@ -347,10 +531,11 @@ form {
     justify-content: space-around;
   }
   
-  #header-container {
+  [data-theme="dark"] #header-container, [data-theme="light"] #header-container {
     display: flex;
     justify-content: center;
-    background-color: white;
+    background-color: var(--primary-background-color);
+    color: var(--primary-text-color);
     position: absolute;
     max-height: 70px;
     top: 0;
@@ -367,27 +552,61 @@ form {
   
   // selectors for the component "Cipher".
   
-  #cipher-cluster {
+  .cipher-cluster {
     margin-top: 80px;
-    width: 70%;
+    width: 80%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: flex-start;
+    overflow: hidden;
+    max-height: none;
   }
   
-  #cipher-word {
-    margin-top: 5vw;
-    background-color: white;
-    margin-right: 1vw;
-    border-radius: 2vw 2vw 2vw 2vw;
-    padding: 2px 2vw 2px 2vw;
-    font-size: 1.8vw;
+  @mixin cipher-style() {
+    background-color: var(--secondary-background-color);
+    color: var(--primary-text-color);
+    border: 2px solid var(--secondary-undertone-color);
+    border-radius: 3vh 3vh 3vh 3vh;
+    padding: 2px 2.5vh 2px 2.5vh;
+    font-size: 3vh;
     font-family: sans-serif;
-    border: 2px solid black;
+    user-select: none;
   }
   
-  #cipher-input-container {
+  [data-theme="dark"] #cipher-word, [data-theme="light"] #cipher-word {
+    @include cipher-style();
+    margin-top: 5vw;
+    margin-right: 1vw;
+  }
+
+  [data-theme="dark"] .cipher-word-attempt-false,
+[data-theme="light"] .cipher-word-attempt-false {
+    @include cipher-style();
+    background-color: gray;
+    color: gray;
+    margin-top: 5vw;
+    margin-right: 1vw;
+  }
+  
+  [data-theme="dark"] .cipher-word-attempt-true,
+[data-theme="light"] .cipher-word-attempt-true {
+    @include cipher-style();
+    background-color: var(--color-correct);
+    color: var(--color-correct);
+    margin-top: 5vw;
+    margin-right: 1vw;
+  }
+  
+  #played-modal-cipher {
+    @include cipher-style();
+    transform: scale(0.5);
+    margin-top: -1vh;
+    margin-bottom: -0.6vh;
+    padding: 0px 0px 0px 0px;
+  }
+  
+  [data-theme="dark"] #cipher-input-container, [data-theme="light"] #cipher-input-container {
     position: absolute;
     bottom: 0;
     left: 70%;
@@ -395,7 +614,7 @@ form {
     padding-top: 20px;
     right: 0;
     top: 23%;
-    background-color: rgb(40, 44, 52);
+    background-color: var(--primary-inner-color);
   }
   // ---------------------------( TESTING )----------------------------------------------
   #test {
@@ -414,33 +633,65 @@ form {
   
   // Standard button styles
   #standard-btn {
-    // background-color: black;
     padding: 1vw 2vw 1vw 2vw;
     border-radius: 2vw 2vw 2vw 2vw;
     border: none;
-    font-size: 1.5vw;
+    font-size: 1.3vw;
     font-weight: bold;
     width: 200px;
     height: 70px;
+    background-color: black;
     font-family: sans-serif;
-    // color: white;
+    cursor:pointer;
+  }
+
+  #standard-btn-small {
+    background-color: black;
+    padding: 0.8vw 1vw 0.8vw 1.6vw;
+    border-radius: 2vw 2vw 2vw 2vw;
+    position: absolute;
+    bottom: 5%;
+    border: none;
+    font-size: 0.7vw;
+    font-weight: bold;
+    vertical-align: middle;
+    width: 5vw;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    font-family: sans-serif;
+    cursor:pointer;
+  }
+
+  span {
+    margin-right: 5px;
+  }
+
+  #download-btn-container {
+    display: flex;
+    justify-content: center;
   }
 
   #input-btn-container {
     display: flex;
     justify-content: center;
+    position: relative;
+    left: 0%;
+    top: 85%;
+    margin-top: 10%;
     transform: scale(1);
   }
   
   #standard-btn:hover {
-    // background-color: white;
+    background-color: black;
+    color: white;
     padding: 1vw 2vw 1vw 2vw;
     border-radius: 2vw 2vw 2vw 2vw;
     border: none;
     font-size: 1.5vw;
     font-weight: bold;
     font-family: sans-serif;
-    // color: black;
     -webkit-box-shadow: 0 8px 6px -6px black;
     -moz-box-shadow: 0 8px 6px -6px black;
     box-shadow: 0 8px 6px -6px black;
@@ -458,11 +709,10 @@ form {
   }
   
   #level-container-normal {
-    background-color: rgb(179, 213, 27);
+    background: radial-gradient(rgb(179, 213, 27) 60%, rgb(133, 159, 18));
     @include levelModel
   }
   #level-container-difficult {
-    // background-color: rgb(224, 143, 21);
     background: radial-gradient(rgb(224, 143, 21) 60%, rgb(179, 120, 31));
     @include levelModel
   }
@@ -471,19 +721,19 @@ form {
     @include levelModel
   }
   #level-container {
-    background-color: green;
+    background: radial-gradient(rgb(3, 135, 3) 60%, rgb(0, 79, 0));
     @include levelModel
   }
   
   @mixin crease() {
-    background-color: $bkgColor2;
+    background-color: var(--background-green);
     width: 7.5vw;
     height: 9vw;
     transform: rotate(45deg);
     position: absolute;
   }
   
-  #level-crease {
+  [data-theme="dark"] #level-crease, [data-theme="light"] #level-crease {
     @include crease;
     right: 1%;
     top: 80%;
@@ -533,23 +783,43 @@ form {
   .full {
     background-color: rgb(34, 133, 41);
   }
+
+  .cipher-cluster-attempt {
+    margin-top: 120px;
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 15%;
+    user-select: none;
+    overflow: hidden;
+    max-height: 60%;
+    z-index: 0;
+  }
   
-  #gameover-container {
+  [data-theme="dark"] #gameover-container, [data-theme="light"] #gameover-container {
     position: absolute;
     left: 40%;
     top: 30%;
     text-align: center;
     vertical-align: middle;
     width: 20vw;
-    height: 15vw;
-    background-color: white;
+    height: 18vw;
+    background-color: var(--secondary-background-color);
+    color: var(--primary-text-color);
     transform: scale(2);
     border-radius: 0.5vw 0.5vw 0.5vw 0.5vw;
     box-shadow: gray;
-    z-index: 2;
+    z-index: 6;
     -webkit-box-shadow: 0 8px 6px -6px black;
     -moz-box-shadow: 0 8px 6px -6px black;
     box-shadow: 0 8px 6px -6px black;
+    overflow-y: scroll;
+  }
+
+  #gameover-time {
+    margin-bottom: 0;
   }
   
   #timer-bo {
@@ -561,9 +831,24 @@ form {
     justify-content: center;
   }
   
-  #gameover-text {
-    color: rgb(40, 44, 52);
-    font-size: 1vw;
+  [data-theme="dark"] #gameover-text, [data-theme="light"] #gameover-text {
+    color: var(--primary-text-color);
+    font-size: 0.8vw;
+  }
+
+  [data-theme="dark"] #gameover-metrics-container, [data-theme="light"] #gameover-metrics-container { 
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: absolute;
+    top: 22%;
+  }
+
+  #gameover-metric {
+    border: 1px solid rgb(187, 187, 187);
+    text-align: center;
+    padding-bottom: -20px;
+    min-width: 47%;
   }
   
   #htp-bg {
@@ -592,4 +877,3 @@ form {
     font-size: 2vw;
   }
 }
-

@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 /* eslint-disable no-restricted-syntax */
 const { Router } = require('express');
 const fsPromise = require('fs').promises;
@@ -6,34 +7,59 @@ const mutations = require('./mutations.json');
 
 const app = Router();
 
-// Cipher builder for automatically creating ciphers each day.
+const usedChars = [];
 
-const makeMutationPrint = (text, level) => {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-  let resultStr = '';
-
-  // For categorizing mutations based on level.
-  // TODO: make mutation method iteratively make multiple mutations based on level type.
-  for (let i = 0; i < mutations.length; i += 1) {
-    if (level >= mutations[i].minLevel) {
-      resultStr = resultStr.concat(mutations[i].mutation);
-
-      // Determines a random char from idiom to use in mutation.
-      if (i === 0) {
-        const randomTextChar = text[Math.floor(Math.random() * text.length - 1)];
-        const randomChar = alphabet[Math.floor(Math.random() * alphabet.length - 1)];
-        resultStr = resultStr.concat(randomTextChar + randomChar);
-      }
-      if (i === 2) {
-        const randomAmount = Math.floor(Math.random() * 3);
-        const randomTextChar = text[Math.floor(Math.random() * text.length - 1)];
-        const randomChar = alphabet[Math.floor(Math.random() * alphabet.length - 1)];
-        resultStr = resultStr.concat(`${randomTextChar}${randomAmount}${randomChar}`);
-      }
-
-      // break statement once mutation is created.
-      break;
+const findRandomCharInText = (text) => {
+  const invalidChars = "1234567890,-' ";
+  let isValidChar = false;
+  let randomChar;
+  while (!isValidChar) {
+    const randomInt = Math.floor(Math.random() * text.length);
+    randomChar = text[randomInt];
+    if (!invalidChars.includes(randomChar) && !usedChars.includes(randomChar)) {
+      isValidChar = true;
     }
+  }
+  usedChars.push(randomChar);
+  return randomChar;
+};
+
+// Cipher builder for automatically creating ciphers each day.
+const alphabet = 'abcdefghijklmnopqrstuvwy'.split('');
+const makeMutationPrint = (text, level, mutation = '') => {
+  let resultStr = '';
+  // For categorizing mutations based on level.
+  const i = Math.floor(Math.random() * 3);
+  if (level >= mutations[i].minLevel) {
+    resultStr = resultStr.concat(mutations[i].mutation);
+
+    // Determines a random char from idiom to use in mutation.
+    const randomText = findRandomCharInText(text);
+    if (i < 2) {
+      // if reversal mutation is already used, recursively cycle to find a new cipher.
+      if (i === 1 && mutation.includes('r-')) {
+        return makeMutationPrint(text, level, mutation);
+      }
+      let randomChar;
+      while (!randomChar) {
+        const searchedChar = alphabet[Math.floor(Math.random() * alphabet.length)];
+        if (!text.includes(searchedChar)) {
+          randomChar = searchedChar;
+        }
+      }
+      if (randomText === randomText.toUpperCase()) {
+        randomChar = randomChar.toUpperCase();
+      }
+      resultStr = resultStr.concat(randomText + randomChar);
+      alphabet.splice(randomChar, 1);
+    } else {
+      const randomAmount = Math.floor(Math.random() * 3) || 1;
+      const randomChar = alphabet[Math.floor(Math.random() * alphabet.length)];
+      resultStr = resultStr.concat(`${randomText}${randomAmount}${randomChar}`);
+      alphabet.splice(randomChar, 1);
+    }
+  } else {
+    return makeMutationPrint(text, level, mutation);
   }
   return resultStr;
 };
@@ -43,14 +69,13 @@ const makeMutationPrint = (text, level) => {
  * @param {*} textData is the incoming text fetched from the ciphers.txt doc.
  * @returns cipher object
  */
+const now = new Date(); const utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+
 const buildCipherEntry = (textData, dbCiphers) => {
   const entryObject = {};
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const seeded = dbCiphers;
-
-  entryObject.id = `${Number(dbCiphers[dbCiphers.length - 1] ? dbCiphers[dbCiphers.length - 1].id : 0) + 1 || 1}`;
-  entryObject.dateIssued = new Date().toDateString();
-
+  entryObject.dateIssued = utc.toDateString();
   days.forEach((day, i) => {
     if (entryObject.dateIssued.includes(day)) {
       entryObject.levelType = i + 1;
@@ -59,11 +84,28 @@ const buildCipherEntry = (textData, dbCiphers) => {
 
   for (let i = 0; i < textData.length; i += 1) {
     if (textData[i].length < 100 / entryObject.levelType) {
+      // to check if specific idiom text already exists in cipher list
+      let isDupe = false;
+      for (let j = 0; j < seeded.length; j += 1) {
+        if (textData[i] === seeded[j].text) {
+          isDupe = true;
+          break;
+        }
+      }
+      if (isDupe) {
+        continue;
+      }
       entryObject.text = textData[i];
-      entryObject.mutation = makeMutationPrint(entryObject.text, entryObject.levelType);
+      entryObject.mutation = makeMutationPrint(
+        entryObject.text,
+        entryObject.levelType,
+        entryObject.mutation,
+      );
       let j = 1;
-      while (j < entryObject.levelType) {
-        entryObject.mutation += `|${makeMutationPrint(entryObject.text, entryObject.levelType)}`;
+      const words = entryObject.text.split(' ');
+      while (j < Math.floor(entryObject.levelType / 2 + words.length / 2)) {
+        console.log(entryObject.mutation);
+        entryObject.mutation += `|${makeMutationPrint(entryObject.text, entryObject.levelType, entryObject.mutation)}`;
         j += 1;
       }
       break;
@@ -80,7 +122,6 @@ const buildCipherEntry = (textData, dbCiphers) => {
       return buildCipherEntry(textData, dbCiphers);
     }
   }
-
   if (bool) {
     // base case for function to return cipher instance.
     return entryObject;

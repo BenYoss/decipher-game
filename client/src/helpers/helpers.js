@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 import axios from 'axios';
+import html2canvas from 'html2canvas';
 
 // ALPHABET DATA REFERENCE
 // const alphabet = 'abcdefghijklmnopqrstuvwxyz';
@@ -11,18 +13,24 @@ import axios from 'axios';
  * @returns
  */
 export function flipLetters(text, letter, replacement) {
-  const regex = new RegExp(letter, 'g');
+  let regexCase;
   let result;
-  if (letter && letter === letter.toUpperCase()) {
-    // Randomizes text ⬇⬇⬇
-    // result = text.replace(regex, alphabet[Math.floor(Math.random()
-    //   * alphabet.length - 1)].toUpperCase());
-    result = text.replace(regex, replacement.toUpperCase());
+  let caseChangedChar = '';
+  if (letter === letter.toUpperCase()) {
+    regexCase = new RegExp(letter.toLowerCase(), 'g');
+    caseChangedChar = replacement.toLowerCase();
   } else {
-    result = text.replace(regex, replacement);
-    // Randomizes text ⬇⬇⬇
-    // result = text.replace(regex, alphabet[Math.floor(Math.random() * alphabet.length - 1)]);
+    regexCase = new RegExp(letter.toUpperCase(), 'g');
+    caseChangedChar = replacement.toUpperCase();
   }
+  const regex = new RegExp(letter, 'g');
+  // Randomizes text ⬇⬇⬇
+  // result = text.replace(regex, alphabet[Math.floor(Math.random()
+  //   * alphabet.length - 1)].toUpperCase());
+  result = text.replace(regex, replacement);
+  result = result.replace(regexCase, caseChangedChar);
+  // Randomizes text ⬇⬇⬇
+  // result = text.replace(regex, alphabet[Math.floor(Math.random() * alphabet.length - 1)]);
   return result;
 }
 
@@ -76,15 +84,29 @@ export function mutate(text, cycleCount) {
   }
 }
 
+// time incrementors.
 let hour = 0;
 let min = 0;
 let sec = 0;
 let mil = 0;
 let counter;
-export function countDown(time) {
+
+/**
+ * @func CountDown is a timer algorithm that acts as a stopwatch
+ * counting up from miliseconds to hours.
+ * @param {*} time stateful component method that updates the timer state in the App component.
+ */
+export function countDown(time, opened, levelSwapped, setLevelSwapped) {
+  if (levelSwapped) {
+    hour = 0;
+    min = 0;
+    sec = 0;
+    mil = 0;
+    setLevelSwapped(false);
+  }
   if (!counter) {
     counter = setInterval(() => {
-      mil += 1;
+      mil += 2;
       if (mil === 100) {
         mil = 0;
         sec += 1;
@@ -102,7 +124,10 @@ export function countDown(time) {
       const secStr = sec > 9 ? sec : `0${sec}`;
       const milStr = mil > 9 ? mil : `0${mil}`;
       time(`${hourStr}:${minStr}:${secStr}:${milStr}`);
-    }, 10);
+    }, 20);
+  } else if (opened) {
+    clearInterval(counter);
+    counter = undefined;
   }
 }
 
@@ -110,11 +135,75 @@ export function stopCount() {
   clearInterval(counter);
 }
 
-export async function updateCookies(time) {
-  await axios.post('/setcookie', { time });
+export function clearCount() {
+  hour = 0;
+  min = 0;
+  sec = 0;
+  mil = 0;
+  clearInterval(counter);
+}
+
+export async function updateCookies(date, time, attempts, isWin, cipherAttempts) {
+  await axios.post('/setcookie', {
+    date, time, attempts, isWin, cipherAttempts,
+  });
+}
+
+export async function getCookies() {
+  const cookieData = await axios.get('/getcookie');
+  return cookieData;
 }
 
 export async function getCiphersFromDB() {
   const result = await axios.get('/getcipher');
   return result;
+}
+
+// Function to count the number of attempts a player makes to complete Cipher.
+export function getAttemptCount(attempts) {
+  let attemptCount = 0;
+
+  attempts.forEach((attempt) => {
+    if (!attempt.open) {
+      attemptCount += 1;
+    }
+  });
+
+  return attemptCount;
+}
+
+let count = 0;
+
+export async function getShareDownload() {
+  const elt = document.getElementById('download-container');
+  let canvases;
+  return html2canvas(elt, { scale: 5 }).then((canvas) => {
+    if (!document.getElementsByTagName('canvas').length) {
+      document.body.appendChild(canvas);
+      canvases = document.getElementsByTagName('canvas');
+    } else {
+      canvases = document.getElementsByTagName('canvas');
+      document.body.replaceChild(canvas, document.getElementsByTagName('canvas')[canvases.length - 1] || document.getElementsByTagName('canvas')[0]);
+    }
+    const canvas2 = document.getElementsByTagName('canvas')[canvases.length - 1];
+    const dataURL = canvas2.toDataURL();
+    count += 1;
+    document.getElementById('viewport').setAttribute('content', 'width=device-width, initial-scale=1');
+    return dataURL;
+  });
+}
+
+// updates cookie attempts
+export async function updateAttempts(attempt, text) {
+  const words = text.split(' ');
+  const attemptWords = attempt.split(' ');
+  const attemptResults = [];
+  words.forEach((word, index) => {
+    if (!attemptWords[index] || attemptWords[index] !== word) {
+      attemptResults.push(false);
+    } else {
+      attemptResults.push(true);
+    }
+  });
+  return attemptResults;
 }

@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import propTypes from 'prop-types';
+import { updateAttempts } from '../helpers/helpers';
 
 export default function Input({
-  text, level, health, setHealth, setGameover, setPercent, percent, setVictory,
+  text, level, health, setHealth, setGameover, setPercent,
+  percent, setVictory, setAttempts, attempts,
 }) {
   const hoverAnimation = {
     scale: 1.1,
-    backgroundColor: ['hsl(0, 61%, 0%)', 'hsl(180, 61%, 100%)'],
-    color: ['hsl(180, 61%, 100%)', 'hsl(0, 61%, 0%)'],
+    boxShadow: '0px 0px 8px hsl(120, 61%, 50%)',
   };
   const leaveAnimation = {
     scale: 1.0,
-    backgroundColor: ['hsl(180, 61%, 100%)', 'hsl(0, 61%, 0%)'],
-    color: ['hsl(0, 61%, 0%)', 'hsl(180, 61%, 100%)'],
+    boxShadow: '0px 0px 0px hsl(120, 61%, 50%)',
   };
   const [hover, onHover] = useState(false);
   const [val, useVal] = useState('');
@@ -31,25 +31,29 @@ export default function Input({
             type="button"
             onClick={() => {
               if (val === text) {
+                const initialColor = document.getElementsByTagName('textarea')[0].style.color;
                 document.getElementsByTagName('textarea')[0].style.color = 'lime';
                 document.getElementsByTagName('textarea')[0].style.border = 'lime';
                 setPercent(percent / level);
                 setTimeout(() => {
-                  document.getElementsByTagName('textarea')[0].style.color = 'black';
-                  document.getElementsByTagName('textarea')[0].style.border = 'black';
+                  document.getElementsByTagName('textarea')[0].style.color = initialColor;
+                  document.getElementsByTagName('textarea')[0].style.border = initialColor;
                   document.getElementsByTagName('textarea')[0].value = '';
                 }, 1000);
-                document.getElementById('standard-btn').disabled = true;
-                document.getElementById('standard-btn').style.backgroundColor = 'gray';
-                document.getElementById('standard-btn').style.border = 'rgb(181, 181, 181)';
-                document.getElementById('standard-btn').style.color = 'white';
-                document.getElementById('standard-btn').textContent = '🔒';
-                setVictory(true);
+                updateAttempts(val, text).then((data) => {
+                  setAttempts([...attempts, data]);
+                  setVictory(true);
+                });
               } else {
+                const initialColor = document.getElementsByTagName('textarea')[0].style.color;
                 document.getElementsByTagName('textarea')[0].style.color = 'red';
                 document.getElementsByTagName('textarea')[0].style.border = 'red';
                 let hasTakenSlot = false;
                 let tally = 0;
+                updateAttempts(val, text)
+                  .then((data) => {
+                    setAttempts([...attempts, data]);
+                  });
                 const updatedHealth = health.map((slot) => {
                   if (slot.open && !hasTakenSlot) {
                     hasTakenSlot = true;
@@ -61,14 +65,14 @@ export default function Input({
                   if (!slot.open) {
                     tally += 1;
                   }
-                  if (tally === 3) {
+                  if (tally === 4) {
                     setGameover(true);
                   }
                 });
                 setHealth(updatedHealth);
                 setTimeout(() => {
-                  document.getElementsByTagName('textarea')[0].style.color = 'black';
-                  document.getElementsByTagName('textarea')[0].style.border = 'black';
+                  document.getElementsByTagName('textarea')[0].style.color = initialColor;
+                  document.getElementsByTagName('textarea')[0].style.border = initialColor;
                   document.getElementsByTagName('textarea')[0].value = '';
                 }, 1000);
               }
@@ -92,4 +96,6 @@ Input.propTypes = {
   setPercent: propTypes.func.isRequired,
   percent: propTypes.number.isRequired,
   setVictory: propTypes.func.isRequired,
+  setAttempts: propTypes.func.isRequired,
+  attempts: propTypes.element.isRequired,
 };
