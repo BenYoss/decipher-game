@@ -23,6 +23,7 @@ import '../styles/howToPlay.scss';
 import '../styles/toolbar.scss';
 import '../styles/statistics.scss';
 import '../styles/levelSelection.scss';
+import '../styles/donate.scss';
 import 'regenerator-runtime/runtime';
 
 let cipherCookies;
@@ -51,6 +52,7 @@ export default function App() {
   const [levelSwapped, setLevelSwapped] = useState(false);
   const [date, setDate] = useState();
   const [disableTimer, setDisableTimer] = useState(JSON.parse(localStorage.getItem('disable-timer')));
+  const [hardMode, setHardMode] = useState(JSON.parse(localStorage.getItem('hard-mode')));
   const [ciphertext, setCiphertext] = useState('');
 
   function getThisWeeksCiphers(cipherss) {
@@ -282,13 +284,14 @@ export default function App() {
         setDisableTimer={setDisableTimer}
         setGameover={setGameover}
         setVictory={setVictory}
+        setHardMode={setHardMode}
       />
       <div id="body-container-pc">
         <div id={window.innerWidth > 750 ? 'ciphered-body' : 'ciphered-body-mobile'}>
           {skipped && (
           <>
             {
-              attempts.map((attempt, index) => (
+              !hardMode && attempts.map((attempt, index) => (
                 <Attempts
                   attempt={attempt}
                   margin={index * 5}

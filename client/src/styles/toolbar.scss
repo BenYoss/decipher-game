@@ -23,6 +23,12 @@ $bkgColor1: #12EE1B;
     flex-direction: column;
 }
 
+.settings-feat {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 #dark-mode-slider {
     display: flex;
     justify-content: center;
@@ -46,7 +52,7 @@ $bkgColor1: #12EE1B;
     width: 60px;
     height: 34px;
     // margin-left: 10px;
-    transform: scale(1);
+    transform: scale(0.5);
     margin: 10px 10px 10px 10px;
 }
 
@@ -175,7 +181,7 @@ input:checked + .slider:before {
         width: 60px;
         height: 34px;
         // margin-left: 10px;
-        transform: scale(1.5);
+        transform: scale(1);
         margin: 10px 10px 10px 10px;
     }
     [data-theme="dark"] .toolbar-icon-img

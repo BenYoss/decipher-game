@@ -8,6 +8,7 @@ import propTypes from 'prop-types';
 import Settings from './Settings';
 import Statistics from './Statistics';
 import LevelSelection from './LevelSelection';
+import Donate from './Donate';
 
 import settingsIcon from '../../img/settings-icon.png';
 import statisticsIcon from '../../img/statistics-icon.png';
@@ -35,6 +36,7 @@ export default function Toolbar({
   setDisableTimer,
   setGameover,
   setVictory,
+  setHardMode,
 }) {
   const [drawerType, handleDrawer] = useState(-1);
   const drawerAnimation = {
@@ -62,7 +64,7 @@ export default function Toolbar({
       </div>
       <div
         className="toolbar-item"
-        onClick={() => { drawerHandler(2); setDrawerOpened(true); }}
+        onClick={() => { drawerHandler(3); setDrawerOpened(true); }}
       >
         <img src={coffeeIcon} alt="donation icon" className="toolbar-icon-img" id="toolbar-icon-donation" />
       </div>
@@ -96,7 +98,14 @@ export default function Toolbar({
           <Statistics ciphers={ciphers} setReload={setReload} />
         )}
         {drawerType === 0 && (
-          <Settings setDisableTimer={setDisableTimer} setReload={setReload} />
+          <Settings
+            setDisableTimer={setDisableTimer}
+            setReload={setReload}
+            setHardMode={setHardMode}
+          />
+        )}
+        {drawerType === 3 && (
+          <Donate setDisableTimer={setDisableTimer} setReload={setReload} />
         )}
       </div>
     </motion.div>
@@ -124,4 +133,5 @@ Toolbar.propTypes = {
   setGameover: propTypes.func.isRequired,
   setSkipped: propTypes.func.isRequired,
   setDisableTimer: propTypes.func.isRequired,
+  setHardMode: propTypes.func.isRequired,
 };
