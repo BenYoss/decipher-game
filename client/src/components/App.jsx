@@ -1,6 +1,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-restricted-syntax */
-import React, { useState, useEffect } from 'react';
+import React, {
+  useState, useEffect, lazy, Suspense,
+} from 'react';
+
 import axios from 'axios';
 import Cipher from './Cipher';
 import Input from './Input';
@@ -8,13 +11,6 @@ import Level from './Level';
 import {
   getCiphersFromDB, getCookies, getShareDownload,
 } from '../helpers/helpers';
-import Health from './Health';
-import Gameover from './modals/Gameover';
-import Victory from './modals/Victory';
-import Howtoplay from './modals/Howtoplay';
-import Timer from './Timer';
-import Attempts from './Attempts';
-import Toolbar from './toolbar/Toolbar';
 
 import '../styles/app.scss';
 import '../styles/endgameStats.scss';
@@ -25,6 +21,14 @@ import '../styles/statistics.scss';
 import '../styles/levelSelection.scss';
 import '../styles/donate.scss';
 import 'regenerator-runtime/runtime';
+
+const Health = lazy(() => import('./Health'));
+const Gameover = lazy(() => import('./modals/Gameover'));
+const Victory = lazy(() => import('./modals/Victory'));
+const Howtoplay = lazy(() => import('./modals/Howtoplay'));
+const Timer = lazy(() => import('./Timer'));
+const Attempts = lazy(() => import('./Attempts'));
+const Toolbar = lazy(() => import('./toolbar/Toolbar'));
 
 let cipherCookies;
 
@@ -139,20 +143,31 @@ export default function App() {
       <div id="nav-body">
         <div id="timer-bo">
           {skipped ? (
-            <Timer
-              setFinalTime={setFinalTime}
-              gameover={gameover}
-              victory={victory}
-              drawerOpened={drawerOpened}
-              levelSwapped={levelSwapped}
-              setLevelSwapped={setLevelSwapped}
-              disableTimer={disableTimer}
-            />
+            <Suspense fallback={(
+              <div />
+                      )}
+            >
+
+              <Timer
+                setFinalTime={setFinalTime}
+                gameover={gameover}
+                victory={victory}
+                drawerOpened={drawerOpened}
+                levelSwapped={levelSwapped}
+                setLevelSwapped={setLevelSwapped}
+                disableTimer={disableTimer}
+              />
+            </Suspense>
           ) : null}
         </div>
         <div id="health-body">
+          <Suspense fallback={(
+            <div />
+          )}
+          >
+            <Health healthbar={health} />
 
-          <Health healthbar={health} />
+          </Suspense>
         </div>
 
       </div>
@@ -160,23 +175,34 @@ export default function App() {
         <h4 id="header">Lacipher</h4>
         <div>
           {text && (
+          <Suspense fallback={(
+            <div />
+                      )}
+          >
             <Level level={level} />
+          </Suspense>
           )}
         </div>
       </div>
       {(!skipped && text && level > 0) && !levelSwapped ? (
         <>
-          <Howtoplay
-            setSkipped={setSkipped}
-            cookieData={cookies}
-            played={played}
-            setPlayed={setPlayed}
-            text={text}
-            downloadURL={downloadURL}
-            level={level}
-            setReload={setReload}
-            date={date}
-          />
+          <Suspense fallback={(
+            <div />
+          )}
+          >
+
+            <Howtoplay
+              setSkipped={setSkipped}
+              cookieData={cookies}
+              played={played}
+              setPlayed={setPlayed}
+              text={text}
+              downloadURL={downloadURL}
+              level={level}
+              setReload={setReload}
+              date={date}
+            />
+          </Suspense>
           {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
           <div
             id="htp-bg"
@@ -201,17 +227,23 @@ export default function App() {
 
       {levelSwapped ? (
         <>
-          <Howtoplay
-            setSkipped={setSkipped}
-            cookieData={cookies}
-            played={played}
-            setPlayed={setPlayed}
-            text={text}
-            downloadURL={downloadURL}
-            level={level}
-            setReload={setReload}
-            date={date}
-          />
+          <Suspense fallback={(
+            <div />
+          )}
+          >
+
+            <Howtoplay
+              setSkipped={setSkipped}
+              cookieData={cookies}
+              played={played}
+              setPlayed={setPlayed}
+              text={text}
+              downloadURL={downloadURL}
+              level={level}
+              setReload={setReload}
+              date={date}
+            />
+          </Suspense>
           {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
           <div
             id="htp-bg"
@@ -235,102 +267,138 @@ export default function App() {
       ) : null}
       {gameover && finalTime && (
       <>
-        <Gameover
-          level={level}
-          percent={percent}
-          finalTime={finalTime}
-          text={text}
-          health={health}
-          attempts={attempts}
-          date={date}
-          cookies={cookies}
-          id="gameover"
-        />
+        <Suspense fallback={(
+          <div />
+          )}
+        >
+          <Gameover
+            level={level}
+            percent={percent}
+            finalTime={finalTime}
+            text={text}
+            health={health}
+            attempts={attempts}
+            date={date}
+            cookies={cookies}
+            id="gameover"
+          />
+
+        </Suspense>
         <div className="modal-bg" id="finish-modal-bg" />
       </>
       )}
       {victory && finalTime && (
       <>
-        <Victory
-          level={level}
-          percent={percent}
-          time={finalTime}
-          health={health}
-          attempts={attempts}
-          date={date}
-          cookies={cookies}
-        />
+        <Suspense fallback={(
+          <div />
+          )}
+        >
+
+          <Victory
+            level={level}
+            percent={percent}
+            time={finalTime}
+            health={health}
+            attempts={attempts}
+            date={date}
+            cookies={cookies}
+          />
+        </Suspense>
         <div id="modal-bg" />
       </>
       )}
-      <Toolbar
-        setDrawerOpened={setDrawerOpened}
-        ciphers={cipherCookies && cipherCookies}
-        setReload={setReload}
-        thisWeeksCiphers={thisWeeksCiphers}
-        setText={setText}
-        setLevel={setLevel}
-        setMutation={setMutation}
-        setLevelSwapped={setLevelSwapped}
-        setDate={setDate}
-        setPlayed={setPlayed}
-        date={date}
-        setHealth={setHealth}
-        setAttempts={setAttempts}
-        skipped={skipped}
-        setDownloadURL={setDownloadURL}
-        downloadURL={downloadURL}
-        setSkipped={setSkipped}
-        setDisableTimer={setDisableTimer}
-        setGameover={setGameover}
-        setVictory={setVictory}
-        setHardMode={setHardMode}
-      />
+      <Suspense fallback={(
+        <div />
+          )}
+      >
+
+        <Toolbar
+          setDrawerOpened={setDrawerOpened}
+          ciphers={cipherCookies && cipherCookies}
+          setReload={setReload}
+          thisWeeksCiphers={thisWeeksCiphers}
+          setText={setText}
+          setLevel={setLevel}
+          setMutation={setMutation}
+          setLevelSwapped={setLevelSwapped}
+          setDate={setDate}
+          setPlayed={setPlayed}
+          date={date}
+          setHealth={setHealth}
+          setAttempts={setAttempts}
+          skipped={skipped}
+          setDownloadURL={setDownloadURL}
+          downloadURL={downloadURL}
+          setSkipped={setSkipped}
+          setDisableTimer={setDisableTimer}
+          setGameover={setGameover}
+          setVictory={setVictory}
+          setHardMode={setHardMode}
+        />
+      </Suspense>
       <div id="body-container-pc">
         <div id={window.innerWidth > 750 ? 'ciphered-body' : 'ciphered-body-mobile'}>
           {skipped && (
           <>
             {
               !hardMode && attempts.map((attempt, index) => (
-                <Attempts
-                  attempt={attempt}
-                  margin={index * 5}
-                  text={text}
-                  index={attempts.length - index}
-                  opened={drawerOpened}
-                  ciphertext={ciphertext}
-                />
+                <Suspense fallback={(
+                  <div />
+                )}
+                >
+
+                  <Attempts
+                    attempt={attempt}
+                    margin={index * 5}
+                    text={text}
+                    index={attempts.length - index}
+                    opened={drawerOpened}
+                    ciphertext={ciphertext}
+                  />
+                </Suspense>
               ))
             }
             <div>
-              <Cipher
-                text={text}
-                gameover={gameover}
-                level={level}
-                mutation={mutation}
-                setMutationCiphers={setMutationCiphers}
-                mutationCiphers={mutationCiphers}
-                opened={drawerOpened}
-                setCiphertext={setCiphertext}
-              />
+              <Suspense fallback={(
+                <div />
+          )}
+              >
+
+                <Cipher
+                  text={text}
+                  gameover={gameover}
+                  level={level}
+                  mutation={mutation}
+                  setMutationCiphers={setMutationCiphers}
+                  mutationCiphers={mutationCiphers}
+                  opened={drawerOpened}
+                  setCiphertext={setCiphertext}
+                />
+              </Suspense>
             </div>
           </>
           )}
         </div>
         <div id="input-body">
-          <Input
-            text={text}
-            setLevel={setLevel}
-            level={level}
-            health={health}
-            setHealth={setHealth}
-            setGameover={setGameover}
-            setVictory={setVictory}
-            setPercent={setPercent}
-            percent={percent}
-            attempts={attempts}
-            setAttempts={setAttempts}
-          />
+          <Suspense fallback={(
+            <div />
+          )}
+          >
+
+            <Input
+              text={text}
+              setLevel={setLevel}
+              level={level}
+              health={health}
+              setHealth={setHealth}
+              setGameover={setGameover}
+              setVictory={setVictory}
+              setPercent={setPercent}
+              percent={percent}
+              attempts={attempts}
+              setAttempts={setAttempts}
+            />
+          </Suspense>
         </div>
       </div>
     </div>

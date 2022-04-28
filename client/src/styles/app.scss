@@ -585,6 +585,389 @@ hr {
     @include cipher-style();
     background-color: gray;
     color: gray;
+    margin-top: 4.5vw;
+    margin-right: 1vw;
+  }
+  
+  [data-theme="dark"] .cipher-word-attempt-true,
+[data-theme="light"] .cipher-word-attempt-true {
+    @include cipher-style();
+    background-color: var(--color-correct);
+    color: var(--color-correct);
+    margin-top: 4.5vw;
+    margin-right: 1vw;
+  }
+  
+  #played-modal-cipher {
+    @include cipher-style();
+    transform: scale(0.5);
+    margin-top: -1vh;
+    margin-bottom: -0.6vh;
+    padding: 0px 0px 0px 0px;
+  }
+  
+  [data-theme="dark"] #cipher-input-container, [data-theme="light"] #cipher-input-container {
+    position: absolute;
+    bottom: 0;
+    left: 70%;
+    padding-left: 20px;
+    padding-top: 20px;
+    right: 0;
+    top: 23%;
+    background-color: var(--primary-inner-color);
+  }
+  // ---------------------------( TESTING )----------------------------------------------
+  #test {
+    background-color: white;
+    color: black;
+    position: absolute;
+    margin-top: 5%;
+    left: 0;
+    right: 0;
+  }
+  // -----------------------------------------------------------------------------------
+  #assign-header {
+    margin-left: 30%;
+    font-size: large;
+  }
+  
+  // Standard button styles
+  #standard-btn {
+    padding: 1vw 2vw 1vw 2vw;
+    border-radius: 2vw 2vw 2vw 2vw;
+    border: none;
+    font-size: 1.3vw;
+    font-weight: bold;
+    width: 200px;
+    height: 70px;
+    background-color: black;
+    font-family: sans-serif;
+    cursor:pointer;
+  }
+
+  #standard-btn-small {
+    background-color: black;
+    padding: 0.7vw 1vw 0.7vw 1.6vw;
+    border-radius: 2vw 2vw 2vw 2vw;
+    position: absolute;
+    bottom: 0%;
+    border: none;
+    font-size: 0.75vw;
+    font-weight: bold;
+    vertical-align: middle;
+    width: 6vw;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    font-family: sans-serif;
+    cursor:pointer;
+  }
+
+  span {
+    margin-right: 5px;
+  }
+
+  #download-btn-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  #input-btn-container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    left: 0%;
+    top: 85%;
+    margin-top: 10%;
+    transform: scale(1);
+  }
+  
+  #standard-btn:hover {
+    background-color: black;
+    color: white;
+    padding: 1vw 2vw 1vw 2vw;
+    border-radius: 2vw 2vw 2vw 2vw;
+    border: none;
+    font-size: 1.5vw;
+    font-weight: bold;
+    font-family: sans-serif;
+    -webkit-box-shadow: 0 8px 6px -6px black;
+    -moz-box-shadow: 0 8px 6px -6px black;
+    box-shadow: 0 8px 6px -6px black;
+  }
+  
+  // Level selectors & styles.
+  
+  @mixin levelModel() {
+    position: absolute;
+    column-gap: 0.6vw;
+    padding: 0 2vw 0 2vw;
+    margin-left: 20vw;
+    gap: 0.2vw 0.2vw 0.2vw;
+    height: 12vw;
+  }
+  
+  #level-container-normal {
+    background: radial-gradient(rgb(179, 213, 27) 60%, rgb(133, 159, 18));
+    @include levelModel
+  }
+  #level-container-difficult {
+    background: radial-gradient(rgb(224, 143, 21) 60%, rgb(179, 120, 31));
+    @include levelModel
+  }
+  #level-container-hard {
+    background: radial-gradient(rgb(224, 51, 21) 60%, rgb(142, 33, 13));;
+    @include levelModel
+  }
+  #level-container {
+    background: radial-gradient(rgb(3, 135, 3) 60%, rgb(0, 79, 0));
+    @include levelModel
+  }
+  
+  @mixin crease() {
+    background-color: var(--background-green);
+    width: 8vw;
+    height: 9vw;
+    transform: rotate(45deg);
+    position: absolute;
+  }
+  
+  [data-theme="dark"] #level-crease, [data-theme="light"] #level-crease {
+    @include crease;
+    right: 1%;
+    top: 80%;
+  }
+  
+  #level-text {
+    font-size: large;
+    color: white;
+  }
+  
+  #level {
+    font-size: 30px;
+    color: white;
+    margin-left: 10px;
+  }
+  
+  #no-cipher {
+    font-weight: bold;
+    font-size: 60px;
+    color: #136f38;
+    text-align: center;
+  }
+  
+  #health-container {
+    position: relative;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-left: 18vw;
+    margin-top: 0;
+    row-gap: 20px;
+    width: 12%;
+    transform: scale(1);
+  }
+  
+  .slot {
+    min-width: 3vw;
+    min-height: 3vw;
+    border: 2px solid rgb(79, 79, 79);
+  }
+  
+  .used {
+    background-color: rgb(40, 44, 52);
+  }
+  
+  .full {
+    background-color: rgb(34, 133, 41);
+  }
+
+  .cipher-cluster-attempt {
+    margin-top: 120px;
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 15%;
+    user-select: none;
+    overflow: hidden;
+    max-height: 60%;
+    z-index: 0;
+  }
+  
+  [data-theme="dark"] #gameover-container, [data-theme="light"] #gameover-container {
+    position: absolute;
+    left: 40%;
+    top: 30%;
+    text-align: center;
+    vertical-align: middle;
+    width: 20vw;
+    height: 18vw;
+    background-color: var(--secondary-background-color);
+    color: var(--primary-text-color);
+    transform: scale(2);
+    border-radius: 0.5vw 0.5vw 0.5vw 0.5vw;
+    box-shadow: gray;
+    z-index: 6;
+    -webkit-box-shadow: 0 8px 6px -6px black;
+    -moz-box-shadow: 0 8px 6px -6px black;
+    box-shadow: 0 8px 6px -6px black;
+    overflow-y: scroll;
+  }
+
+  #gameover-time {
+    margin-bottom: 0;
+  }
+  
+  #timer-bo {
+    position: absolute;
+    top: -2vh;
+  }
+  #gameover-header {
+    display: flex;
+    justify-content: center;
+  }
+  
+  [data-theme="dark"] #gameover-text, [data-theme="light"] #gameover-text {
+    color: var(--primary-text-color);
+    font-size: 0.8vw;
+  }
+
+  [data-theme="dark"] #gameover-metrics-container, [data-theme="light"] #gameover-metrics-container { 
+    display: flex;  
+    flex-direction: row;
+    justify-content: center;
+    position: absolute;
+    top: 28%;
+  }
+
+  #gameover-metric {
+    border: 1px solid rgb(187, 187, 187);
+    text-align: center;
+    padding-bottom: -20px;
+    min-width: 47%;
+  }
+  
+  #htp-bg {
+    background-color: rgb(44, 44, 44);
+  }
+  
+  #modal-bg {
+    background-color: rgb(0, 0, 0);
+    opacity: 30%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+  }
+  
+  #timer-container {
+    position: absolute;
+    top: -3.9%;
+  }
+  
+  #time {
+    color:rgb(88, 88, 88);
+    font-weight: bolder;
+    font-size: 2vw;
+  }
+}
+
+@media only screen and (min-width: 1500px) {
+
+  body {
+    background: border-box $bkgColor2;
+    background-repeat: no-repeat;
+    background-size: 100vw 100vh;
+    padding: 0px 4vw 0px 4vw;
+  }
+  
+  [data-theme="dark"] textarea, [data-theme="light"] textarea {
+    border: none;
+    margin: 5vw 3vw 1vw 3vw;
+    height: 200px;
+    min-width: auto;
+    background-color: var(--secondary-inner-color);
+    color: var(--primary-text-color);
+    font-size: 2vw;
+  }
+  
+  form {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  // Core containers (from parent components)
+  
+  #body-container-pc {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  
+  [data-theme="dark"] #header-container, [data-theme="light"] #header-container {
+    display: flex;
+    justify-content: center;
+    background-color: var(--primary-background-color);
+    color: var(--primary-text-color);
+    position: absolute;
+    max-height: 70px;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    box-shadow: 0px 8px 2px 3px $bkgColor;
+  }
+  
+  #header {
+    font-size: large;
+    font-family: sans-serif;
+  }
+  
+  // selectors for the component "Cipher".
+  
+  .cipher-cluster {
+    margin-top: 80px;
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow: hidden;
+    max-height: none;
+  }
+  
+  @mixin cipher-style() {
+    background-color: var(--secondary-background-color);
+    color: var(--primary-text-color);
+    border: 2px solid var(--secondary-undertone-color);
+    border-radius: 3vh 3vh 3vh 3vh;
+    padding: 2px 2.5vh 2px 2.5vh;
+    font-size: 3vh;
+    font-family: sans-serif;
+    user-select: none;
+  }
+  
+  [data-theme="dark"] #cipher-word, [data-theme="light"] #cipher-word {
+    @include cipher-style();
+    margin-top: 5vw;
+    margin-right: 1vw;
+  }
+
+  [data-theme="dark"] .cipher-word-attempt-false,
+[data-theme="light"] .cipher-word-attempt-false {
+    @include cipher-style();
+    background-color: gray;
+    color: gray;
     margin-top: 5vw;
     margin-right: 1vw;
   }

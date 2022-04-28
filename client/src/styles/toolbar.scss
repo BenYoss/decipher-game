@@ -154,8 +154,90 @@ input:checked + .slider:before {
     filter: none;
 }
 
-
 @media only screen and (min-width: 750px) {    
+    #drawer-title {
+        font-size: 1.5vw;
+        font-weight: bold;
+    }
+    [data-theme="dark"] #toolbar-container, [data-theme="light"] #toolbar-container {
+        position: absolute;
+        z-index: 11;
+        left: -2vw;
+        top: 40vh;
+        background-color: var(--secondary-background-color);
+        color: var(--primary-text-color);
+        vertical-align: center;
+        padding: 25px 20px 25px 50px;
+        display: flex;
+        flex-direction: column;
+        max-width: 2vw;
+        border-radius: 30px;
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+        // margin-left: 10px;
+        transform: scale(1);
+        margin: 10px 10px 10px 10px;
+    }
+    [data-theme="dark"] .toolbar-icon-img
+    {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        filter: invert(1);
+    }
+    
+    [data-theme="light"] .toolbar-icon-img {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        filter: none;
+    }
+    [data-theme="dark"] #toolbar-drawer, [data-theme="light"] #toolbar-drawer  {
+        position: absolute;
+        width: 30vw;
+        padding: 0px 0px 0px 1vw;
+        height: 100vh;
+        top: -40vh;
+        left: -30vw;
+        background-color: var(--secondary-background-color);
+        color: var(--primary-text-color);
+    }
+    #drawer-title {
+        font-size: 2vh;
+        font-weight: bold;
+    }
+    
+    #settings-header {
+        display: flex;
+        justify-content: center;
+    }
+    
+    #settings-title {
+        font-size: 1.2vw;
+    }
+
+    .btn-exit {
+        background-color: var(--secondary-background-color);
+        color: var(--primary-text-color);
+        font-weight: 900;
+        font-size: 2vw;
+        border: none;
+        cursor: pointer;
+    }
+    
+    #exit-btn-container {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+
+@media only screen and (min-width: 1500px) {    
     #drawer-title {
         font-size: 1.5vw;
         font-weight: bold;
@@ -236,3 +318,4 @@ input:checked + .slider:before {
         justify-content: flex-end;
     }
 }
+
