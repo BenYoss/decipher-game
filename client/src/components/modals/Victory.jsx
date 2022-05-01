@@ -4,27 +4,39 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import propTypes from 'prop-types';
 import { updateCookies, getAttemptCount } from '../../helpers/helpers';
+import downloadIcon from '../../img/download.png';
+import EndgameStats from './EndgameStats';
 
 const modalAnimation = {
   scale: 2,
   opacity: '100%',
 };
 
+const hoverAnimation = {
+  scale: 1.1,
+  boxShadow: '0px 0px 8px hsl(120, 61%, 50%)',
+};
+
+const leaveAnimation = {
+  scale: 1.0,
+  boxShadow: '0px 0px 0px hsl(120, 61%, 50%)',
+};
+
 export default function Victory({
-  percent, time, health, attempts, date, cookies,
+  time, health, attempts, date, cookies, setReload, downloadURL, text, level,
 }) {
-  let text = '';
+  let finishedText = '';
   const times = time.split(':');
   const sec = Number(times[2]);
   const min = Number(times[1]);
   if (sec < 30) {
-    text = 'Wow! Inhuman solving speed!';
+    finishedText = 'Wow! Inhuman solving speed!';
   } else if (min < 2) {
-    text = 'Pretty fast!';
+    finishedText = 'Pretty fast!';
   } else if (min < 5) {
-    text = 'Average time!';
+    finishedText = 'Average time!';
   } else if (min < 10) {
-    text = 'Pretty slow';
+    finishedText = 'Pretty slow';
   }
 
   const attemptCount = getAttemptCount(health);
@@ -44,33 +56,72 @@ export default function Victory({
       </div>
       <hr />
       <div id="gameover-body">
-        <span id="gameover-text">{text}</span>
-        <div id="gameover-metrics-container">
-          <section id="gameover-metric">
-            <b id="gameover-time">Time:</b>
-            <p id="gameover-time">
-              <b>{time && time}</b>
-            </p>
+        <span id="gameover-text">{finishedText}</span>
+        <div id="gameover-body">
+          <section>
+            <div>
+              <div id="gameover-metrics-container">
+                <section id="gameover-metric">
+                  <b id="gameover-time">Time:</b>
+                  <p id="gameover-time">
+                    <b>{time}</b>
+                  </p>
+                </section>
+                <section id="gameover-metric">
+                  <b id="gameover-time">Attempts:</b>
+                  <p id="gameover-time">
+                    <b>{attemptCount}</b>
+                  </p>
+                </section>
+                <hr />
+              </div>
+              <div id="download-margin" />
+              <div id="download-container">
+                <div id="download-header">
+                  <p id="download-header-container">
+                    <span>{`La-Cipher ${date} - ${level}`}</span>
+                  </p>
+                  <p id="download-header-time">
+                    <span>{time}</span>
+                  </p>
+                </div>
+                <EndgameStats cipher={text.split(' ')} cookies={{ cipherAttempts: attempts }} />
+              </div>
+            </div>
           </section>
-          <section id="gameover-metric">
-            <b id="gameover-time">Attempts:</b>
-            <p id="gameover-time">
-              <b>{attemptCount + 1}</b>
-            </p>
+          <p id="gameover-text">
+            Wait until tomorrow for the next cipher!
+          </p>
+          <section>
+            <div id="download-btn-container">
+              {downloadURL ? (
+                <motion.a
+                  className="button"
+                  whileHover={hoverAnimation}
+                  animate={leaveAnimation}
+                  transition={{ duration: 0.18 }}
+                  onClick={() => {
+                    // setTimeout(() => {
+                    //   setReload([]);
+                    // }, 50);
+                  }}
+                  id="standard-btn-small"
+                  href={downloadURL}
+                  download={`decipher_${new Date().toDateString()}.png`}
+                >
+                  <span id="save-stats">Save Stats</span>
+                  <img src={downloadIcon} alt="download icon" style={{ filter: 'invert()' }} width="15" height="15" />
+                </motion.a>
+              ) : setTimeout(() => setReload([]), 1000)}
+            </div>
           </section>
         </div>
-        <span id="gameover-text">
-          Compared to other users, you are in the top
-          {` ${percent}`}
-          % in this challenge.
-        </span>
       </div>
     </motion.div>
   );
 }
 
 Victory.propTypes = {
-  percent: propTypes.number.isRequired,
   time: propTypes.string.isRequired,
   attempts: [
     {

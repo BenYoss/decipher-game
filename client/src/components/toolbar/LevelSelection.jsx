@@ -35,6 +35,7 @@ export default function LevelSelection({
     setMutation(cipher.mutation);
     setDate(cipher.date_issued);
     setLevelSwapped(true);
+    document.getElementsByTagName('textarea')[0].value = '';
     setTimeout(() => {
       setLevelSwapped(false);
     }, 1);

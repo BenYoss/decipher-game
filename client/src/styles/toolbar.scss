@@ -23,6 +23,14 @@ $bkgColor1: #12EE1B;
     flex-direction: column;
 }
 
+#email {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 28px;
+    margin-top: 1.0rem;
+    font-size: 2vh;
+}
+
 .settings-feat {
     display: flex;
     flex-direction: row;
@@ -121,6 +129,17 @@ input:checked + .slider:before {
 #settings-header {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+}
+
+#settings-header-title {
+    display: flex;
+    justify-content: center;
+}
+
+.settings-description {
+    margin-top: -20px;
+    color: #888787;
 }
 
 #settings-title {

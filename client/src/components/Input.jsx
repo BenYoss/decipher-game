@@ -54,6 +54,11 @@ export default function Input({
                   .then((data) => {
                     setAttempts([...attempts, data]);
                   });
+                setTimeout(() => {
+                  document.getElementsByTagName('textarea')[0].style.color = initialColor;
+                  document.getElementsByTagName('textarea')[0].style.border = initialColor;
+                  document.getElementsByTagName('textarea')[0].value = '';
+                }, 1000);
                 const updatedHealth = health.map((slot) => {
                   if (slot.open && !hasTakenSlot) {
                     hasTakenSlot = true;
@@ -70,11 +75,6 @@ export default function Input({
                   }
                 });
                 setHealth(updatedHealth);
-                setTimeout(() => {
-                  document.getElementsByTagName('textarea')[0].style.color = initialColor;
-                  document.getElementsByTagName('textarea')[0].style.border = initialColor;
-                  document.getElementsByTagName('textarea')[0].value = '';
-                }, 1000);
               }
             }}
           >

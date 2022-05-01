@@ -281,6 +281,8 @@ export default function App() {
             date={date}
             cookies={cookies}
             id="gameover"
+            setReload={setReload}
+            downloadURL={downloadURL}
           />
 
         </Suspense>
@@ -302,6 +304,9 @@ export default function App() {
             attempts={attempts}
             date={date}
             cookies={cookies}
+            setReload={setReload}
+            downloadURL={downloadURL}
+            text={text}
           />
         </Suspense>
         <div id="modal-bg" />
