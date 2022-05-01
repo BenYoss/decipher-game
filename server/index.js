@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 /**
  *  Server listener to start server.
  */
-const PORT = process.env.PORT || '4040';
+const PORT = process.env.PORT || '8080';
 app.listen(PORT, () => {
   console.log(`Server has successfully connected! 🚀🚀 \nhttp://localhost:${PORT}`);
 });
