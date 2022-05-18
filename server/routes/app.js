@@ -140,7 +140,7 @@ const saveCipher = async (cipher, dbCiphers) => {
 
   // For checking if the text already exists in cipher.json
   for (let i = 0; i < seeded.length; i += 1) {
-    if (seeded[i].text === cipher.text) {
+    if (seeded[i].text === cipher.text || seeded[i].date_issued === cipher.dateIssued) {
       bool = false;
     }
   }
