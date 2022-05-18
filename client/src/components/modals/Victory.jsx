@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import propTypes from 'prop-types';
-import { updateCookies, getAttemptCount } from '../../helpers/helpers';
+import { updateCookies, getAttemptCount, clearCount } from '../../helpers/helpers';
 import downloadIcon from '../../img/download.png';
 import EndgameStats from './EndgameStats';
 
@@ -25,20 +25,7 @@ const leaveAnimation = {
 export default function Victory({
   time, health, attempts, date, cookies, setReload, downloadURL, text, level,
 }) {
-  let finishedText = '';
-  const times = time.split(':');
-  const sec = Number(times[2]);
-  const min = Number(times[1]);
-  if (sec < 30) {
-    finishedText = 'Wow! Inhuman solving speed!';
-  } else if (min < 2) {
-    finishedText = 'Pretty fast!';
-  } else if (min < 5) {
-    finishedText = 'Average time!';
-  } else if (min < 10) {
-    finishedText = 'Pretty slow';
-  }
-
+  clearCount();
   const attemptCount = getAttemptCount(health);
   let isDuplicate = false;
   cookies && cookies.timeHistory.forEach((cookie) => {
@@ -50,13 +37,18 @@ export default function Victory({
     updateCookies(date, time, attemptCount, true, attempts);
   }
   return (
-    <motion.div id="gameover-container" animate={modalAnimation} initial={{ opacity: '0%' }} transition={{ duration: 0.5 }}>
+    <motion.div id="gameover-container" animate={modalAnimation} initial={{ opacity: '0%' }} transition={{ duration: 0.5, delay: 0.9 }}>
       <div id="gameover-header">
         <h2 id="gameover-text">Correct!</h2>
       </div>
       <hr />
       <div id="gameover-body">
-        <span id="gameover-text">{finishedText}</span>
+        {/* <span id="gameover-text">{finishedText}</span> */}
+        <div id="gameover-cipher-container">
+          <p id="played-modal-cipher">
+            <b>{text}</b>
+          </p>
+        </div>
         <div id="gameover-body">
           <section>
             <div>
@@ -70,7 +62,7 @@ export default function Victory({
                 <section id="gameover-metric">
                   <b id="gameover-time">Attempts:</b>
                   <p id="gameover-time">
-                    <b>{attemptCount}</b>
+                    <b>{attemptCount < 1 ? attemptCount + 1 : attemptCount}</b>
                   </p>
                 </section>
                 <hr />
@@ -79,7 +71,7 @@ export default function Victory({
               <div id="download-container">
                 <div id="download-header">
                   <p id="download-header-container">
-                    <span>{`La-Cipher ${date} - ${level}`}</span>
+                    <span>{`Ciphrase ${date} - ${level}`}</span>
                   </p>
                   <p id="download-header-time">
                     <span>{time}</span>
@@ -107,12 +99,12 @@ export default function Victory({
                   }}
                   id="standard-btn-small"
                   href={downloadURL}
-                  download={`decipher_${new Date().toDateString()}.png`}
+                  download={`ciphrase_${new Date().toDateString()}.png`}
                 >
                   <span id="save-stats">Save Stats</span>
                   <img src={downloadIcon} alt="download icon" style={{ filter: 'invert()' }} width="15" height="15" />
                 </motion.a>
-              ) : setTimeout(() => setReload([]), 1000)}
+              ) : setTimeout(() => setReload([]), 500)}
             </div>
           </section>
         </div>
@@ -133,4 +125,8 @@ Victory.propTypes = {
   cookies: {
     timeHistory: propTypes.element.isRequired,
   },
+  setReload: propTypes.func.isRequired,
+  downloadURL: propTypes.string.isRequired,
+  text: propTypes.string.isRequired,
+  level: propTypes.string.isRequired,
 };
