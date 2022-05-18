@@ -21,7 +21,7 @@ export default function Statistics({ ciphers, setReload }) {
 
   return (
     <div id="settings-container">
-      <div id="settings-header">
+      <div id="settings-header-title">
         <p id="drawer-title">Statistics</p>
       </div>
       <hr />

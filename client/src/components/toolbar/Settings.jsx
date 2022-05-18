@@ -19,14 +19,16 @@ export default function Settings({ setDisableTimer, setReload, setHardMode }) {
 
   return (
     <div id="settings-container">
-      <div id="settings-header">
+      <div id="settings-header-title">
         <p id="drawer-title">Settings</p>
       </div>
       <hr />
       <div id="settings-body">
         <div className="settings-feat">
 
-          <div id="settings-header"><p id="settings-title">Enable dark mode</p></div>
+          <div id="settings-header">
+            <p id="settings-title">Enable dark theme</p>
+          </div>
           <div id="dark-mode-slider">
             <label className="switch">
               <input
@@ -43,8 +45,12 @@ export default function Settings({ setDisableTimer, setReload, setHardMode }) {
             </label>
           </div>
         </div>
+        <hr />
         <div className="settings-feat">
-          <div id="settings-header"><p id="settings-title">Disable Timer</p></div>
+          <div id="settings-header">
+            <p id="settings-title">Disable Timer</p>
+            <span className="settings-description">For less time-sensative gameplay.</span>
+          </div>
           <div id="dark-mode-slider">
             <label className="switch">
               <input
@@ -63,9 +69,13 @@ export default function Settings({ setDisableTimer, setReload, setHardMode }) {
           </div>
 
         </div>
+        <hr />
         <div className="settings-feat">
 
-          <div id="settings-header"><p id="settings-title">Hard Mode</p></div>
+          <div id="settings-header">
+            <p id="settings-title">Hard Mode</p>
+            <span className="settings-description">Attempts will not display correct words.</span>
+          </div>
           <div id="dark-mode-slider">
             <label className="switch">
               <input
@@ -84,13 +94,12 @@ export default function Settings({ setDisableTimer, setReload, setHardMode }) {
           </div>
         </div>
       </div>
+      <hr />
       <div className="settings-feat">
 
-        <div className="settings-feat">
-          <div id="settings-header"><p id="settings-title">Feedback</p></div>
-          <div id="dark-mode-slider">
-            <a type="email" href="benyoss4@gmail.com">Email</a>
-          </div>
+        <div id="settings-header"><p id="settings-title">Contact Me</p></div>
+        <div id="email">
+          <a id="email-text" href="mailto:ben@ciphrase.com">Email</a>
         </div>
       </div>
     </div>

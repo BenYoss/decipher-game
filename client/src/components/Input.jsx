@@ -30,7 +30,11 @@ export default function Input({
             id="standard-btn"
             type="button"
             onClick={() => {
-              if (val === text) {
+              let value = val;
+              if (value.includes('‘')) {
+                value = value.replace('‘', "'");
+              }
+              if (value === text) {
                 const initialColor = document.getElementsByTagName('textarea')[0].style.color;
                 document.getElementsByTagName('textarea')[0].style.color = 'lime';
                 document.getElementsByTagName('textarea')[0].style.border = 'lime';
@@ -40,7 +44,7 @@ export default function Input({
                   document.getElementsByTagName('textarea')[0].style.border = initialColor;
                   document.getElementsByTagName('textarea')[0].value = '';
                 }, 1000);
-                updateAttempts(val, text).then((data) => {
+                updateAttempts(value, text).then((data) => {
                   setAttempts([...attempts, data]);
                   setVictory(true);
                 });
@@ -50,10 +54,15 @@ export default function Input({
                 document.getElementsByTagName('textarea')[0].style.border = 'red';
                 let hasTakenSlot = false;
                 let tally = 0;
-                updateAttempts(val, text)
+                updateAttempts(value, text)
                   .then((data) => {
                     setAttempts([...attempts, data]);
                   });
+                setTimeout(() => {
+                  document.getElementsByTagName('textarea')[0].style.color = initialColor;
+                  document.getElementsByTagName('textarea')[0].style.border = initialColor;
+                  document.getElementsByTagName('textarea')[0].value = '';
+                }, 1000);
                 const updatedHealth = health.map((slot) => {
                   if (slot.open && !hasTakenSlot) {
                     hasTakenSlot = true;
@@ -70,11 +79,6 @@ export default function Input({
                   }
                 });
                 setHealth(updatedHealth);
-                setTimeout(() => {
-                  document.getElementsByTagName('textarea')[0].style.color = initialColor;
-                  document.getElementsByTagName('textarea')[0].style.border = initialColor;
-                  document.getElementsByTagName('textarea')[0].value = '';
-                }, 1000);
               }
             }}
           >

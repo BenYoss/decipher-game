@@ -35,6 +35,7 @@ export default function LevelSelection({
     setMutation(cipher.mutation);
     setDate(cipher.date_issued);
     setLevelSwapped(true);
+    document.getElementsByTagName('textarea')[0].value = '';
     setTimeout(() => {
       setLevelSwapped(false);
     }, 1);
@@ -53,7 +54,7 @@ export default function LevelSelection({
 
   return (
     <div id="settings-container">
-      <div id="settings-header">
+      <div id="settings-header-title">
         <p id="drawer-title">Level Selection</p>
       </div>
       <hr />

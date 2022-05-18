@@ -6,7 +6,7 @@ import coffeeIcon from './coffee-glowing.svg';
 export default function Donate() {
   return (
     <div id="settings-container">
-      <div id="settings-header">
+      <div id="settings-header-title">
         <p id="drawer-title">Donate</p>
       </div>
       <hr />

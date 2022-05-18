@@ -1,10 +1,16 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect } from 'react';
 import Chart from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import propTypes from 'prop-types';
+
+const Legend = Chart.defaults.plugins.legend;
+
+Chart.register(ChartDataLabels);
 
 let counter = 0;
 let chart;
@@ -20,6 +26,7 @@ export default function Graph({ ciphers, dataType }) {
   };
   const dates = ciphers.map((cipher) => cipher.gameDate).sort((a, b) => dateTimes[a.slice(0, 3)]
    - dateTimes[b.slice(0, 3)]);
+  let formatter;
   const selectData = () => {
     let resolverArr = [];
     if (dataType === 'attempts') {
@@ -28,17 +35,44 @@ export default function Graph({ ciphers, dataType }) {
           return attempt;
         }
       }).length);
+      formatter = (value) => `${value} Attempts`;
     } if (dataType === 'wins') {
       resolverArr = ciphers.map((cipher) => cipher.isWin);
+      formatter = function (value) {
+        switch (value) {
+          case false:
+            return 'Loss';
+          case true:
+            return 'Win';
+          default:
+            return null;
+        }
+      };
     } if (dataType === 'times') {
+      let times;
+      let mil;
+      let sec;
+      let min;
+      let hr;
       resolverArr = ciphers.map((cipher) => {
-        const times = cipher.time.split(':');
-        const mil = Number(times[times.length - 1]) * 10;
-        const sec = Number(times[times.length - 2]) * 100;
-        const min = Number(times[1]) * 1000;
-        const hr = Number(times[0]) * 10000;
+        times = cipher.time.split(':');
+        mil = Number(times[times.length - 1]) * 1;
+        sec = Number(times[times.length - 2]) * 100;
+        min = Number(times[1]) * 10000;
+        hr = Number(times[0]) * 1000000;
         return mil + sec + min + hr;
       });
+
+      formatter = function (value, index) {
+        const stringified = String(value);
+        let result = stringified;
+        for (let i = 2; i < result.length; i += 3) {
+          const splitted = result.split('');
+          splitted.splice(i, 0, ':');
+          result = splitted.join('');
+        }
+        return result;
+      };
     }
 
     if (document.getElementById('stats-chart')) {
@@ -65,9 +99,26 @@ export default function Graph({ ciphers, dataType }) {
         type: 'bar',
         data,
         options: {
+          responsive: true,
           scales: {
             y: {
-              stacked: true,
+              ticks: {
+                display: false,
+              },
+            },
+          },
+          plugins: {
+            legend: {
+              display: false,
+            },
+            datalabels: {
+              color: 'white',
+              anchor: 'end',
+              align: 'bottom',
+              font: {
+                size: 20,
+              },
+              formatter,
             },
           },
         },

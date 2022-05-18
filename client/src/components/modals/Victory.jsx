@@ -3,30 +3,29 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import propTypes from 'prop-types';
-import { updateCookies, getAttemptCount } from '../../helpers/helpers';
+import { updateCookies, getAttemptCount, clearCount } from '../../helpers/helpers';
+import downloadIcon from '../../img/download.png';
+import EndgameStats from './EndgameStats';
 
 const modalAnimation = {
   scale: 2,
   opacity: '100%',
 };
 
-export default function Victory({
-  percent, time, health, attempts, date, cookies,
-}) {
-  let text = '';
-  const times = time.split(':');
-  const sec = Number(times[2]);
-  const min = Number(times[1]);
-  if (sec < 30) {
-    text = 'Wow! Inhuman solving speed!';
-  } else if (min < 2) {
-    text = 'Pretty fast!';
-  } else if (min < 5) {
-    text = 'Average time!';
-  } else if (min < 10) {
-    text = 'Pretty slow';
-  }
+const hoverAnimation = {
+  scale: 1.1,
+  boxShadow: '0px 0px 8px hsl(120, 61%, 50%)',
+};
 
+const leaveAnimation = {
+  scale: 1.0,
+  boxShadow: '0px 0px 0px hsl(120, 61%, 50%)',
+};
+
+export default function Victory({
+  time, health, attempts, date, cookies, setReload, downloadURL, text, level,
+}) {
+  clearCount();
   const attemptCount = getAttemptCount(health);
   let isDuplicate = false;
   cookies && cookies.timeHistory.forEach((cookie) => {
@@ -38,39 +37,83 @@ export default function Victory({
     updateCookies(date, time, attemptCount, true, attempts);
   }
   return (
-    <motion.div id="gameover-container" animate={modalAnimation} initial={{ opacity: '0%' }} transition={{ duration: 0.5 }}>
+    <motion.div id="gameover-container" animate={modalAnimation} initial={{ opacity: '0%' }} transition={{ duration: 0.5, delay: 0.9 }}>
       <div id="gameover-header">
         <h2 id="gameover-text">Correct!</h2>
       </div>
       <hr />
       <div id="gameover-body">
-        <span id="gameover-text">{text}</span>
-        <div id="gameover-metrics-container">
-          <section id="gameover-metric">
-            <b id="gameover-time">Time:</b>
-            <p id="gameover-time">
-              <b>{time && time}</b>
-            </p>
+        {/* <span id="gameover-text">{finishedText}</span> */}
+        <div id="gameover-cipher-container">
+          <p id="played-modal-cipher">
+            <b>{text}</b>
+          </p>
+        </div>
+        <div id="gameover-body">
+          <section>
+            <div>
+              <div id="gameover-metrics-container">
+                <section id="gameover-metric">
+                  <b id="gameover-time">Time:</b>
+                  <p id="gameover-time">
+                    <b>{time}</b>
+                  </p>
+                </section>
+                <section id="gameover-metric">
+                  <b id="gameover-time">Attempts:</b>
+                  <p id="gameover-time">
+                    <b>{attemptCount < 1 ? attemptCount + 1 : attemptCount}</b>
+                  </p>
+                </section>
+                <hr />
+              </div>
+              <div id="download-margin" />
+              <div id="download-container">
+                <div id="download-header">
+                  <p id="download-header-container">
+                    <span>{`Ciphrase ${date} - ${level}`}</span>
+                  </p>
+                  <p id="download-header-time">
+                    <span>{time}</span>
+                  </p>
+                </div>
+                <EndgameStats cipher={text.split(' ')} cookies={{ cipherAttempts: attempts }} />
+              </div>
+            </div>
           </section>
-          <section id="gameover-metric">
-            <b id="gameover-time">Attempts:</b>
-            <p id="gameover-time">
-              <b>{attemptCount + 1}</b>
-            </p>
+          <p id="gameover-text">
+            Wait until tomorrow for the next cipher!
+          </p>
+          <section>
+            <div id="download-btn-container">
+              {downloadURL ? (
+                <motion.a
+                  className="button"
+                  whileHover={hoverAnimation}
+                  animate={leaveAnimation}
+                  transition={{ duration: 0.18 }}
+                  onClick={() => {
+                    // setTimeout(() => {
+                    //   setReload([]);
+                    // }, 50);
+                  }}
+                  id="standard-btn-small"
+                  href={downloadURL}
+                  download={`ciphrase_${new Date().toDateString()}.png`}
+                >
+                  <span id="save-stats">Save Stats</span>
+                  <img src={downloadIcon} alt="download icon" style={{ filter: 'invert()' }} width="15" height="15" />
+                </motion.a>
+              ) : setTimeout(() => setReload([]), 500)}
+            </div>
           </section>
         </div>
-        <span id="gameover-text">
-          Compared to other users, you are in the top
-          {` ${percent}`}
-          % in this challenge.
-        </span>
       </div>
     </motion.div>
   );
 }
 
 Victory.propTypes = {
-  percent: propTypes.number.isRequired,
   time: propTypes.string.isRequired,
   attempts: [
     {
@@ -82,4 +125,8 @@ Victory.propTypes = {
   cookies: {
     timeHistory: propTypes.element.isRequired,
   },
+  setReload: propTypes.func.isRequired,
+  downloadURL: propTypes.string.isRequired,
+  text: propTypes.string.isRequired,
+  level: propTypes.string.isRequired,
 };

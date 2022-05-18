@@ -51,7 +51,7 @@ export default function Howtoplay({
       className={!played ? '' : 'gameover-container-pc'}
       animate={modalAnimation}
       initial={{ opacity: '0%' }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5, delay: 0.9 }}
     >
       {!played ? (
         <>
@@ -131,7 +131,9 @@ export default function Howtoplay({
                 animate={leaveAnimation}
                 initial="hidden"
                 transition={{ duration: 0.18 }}
-                onClick={() => setSkipped(true)}
+                onClick={() => {
+                  setSkipped(true);
+                }}
               >
                 Continue
 
@@ -167,7 +169,14 @@ export default function Howtoplay({
                  <section id="gameover-metric">
                    <b id="gameover-time">Attempts:</b>
                    <p id="gameover-time">
-                     <b>{currentGame.attempts}</b>
+
+                     <b>
+                       {
+                        (currentGame.attempts + 1) > 4
+                          ? currentGame.attempts : currentGame.attempts + 1
+                      }
+
+                     </b>
                    </p>
                  </section>
                  <hr />
@@ -176,7 +185,7 @@ export default function Howtoplay({
                <div id="download-container">
                  <div id="download-header">
                    <p id="download-header-container">
-                     <span>{`La-Cipher ${date} - ${level}`}</span>
+                     <span>{`Ciphrase ${date} - ${level}`}</span>
                    </p>
                    <p id="download-header-time">
                      <span>{currentGame.time}</span>
@@ -202,16 +211,18 @@ export default function Howtoplay({
                     onClick={() => {
                       // setTimeout(() => {
                       //   setReload([]);
-                      // }, 50);
+                      // }, 500);
                     }}
                     id="standard-btn-small"
                     href={downloadURL}
-                    download={`decipher_${new Date().toDateString()}.png`}
+                    download={`ciphrase_${new Date().toDateString()}.png`}
                   >
                     <span id="save-stats">Save Stats</span>
                     <img src={downloadIcon} alt="download icon" style={{ filter: 'invert()' }} width="15" height="15" />
                   </motion.a>
-                ) : setTimeout(() => setReload([]), 1000)}
+                ) : setTimeout(() => {
+                  setReload([]);
+                }, 600)}
               </div>
             </section>
           </div>
