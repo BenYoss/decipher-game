@@ -99,7 +99,7 @@ export default function Settings({ setDisableTimer, setReload, setHardMode }) {
 
         <div id="settings-header"><p id="settings-title">Contact Me</p></div>
         <div id="email">
-          <a href="mailto:ben@ciphrase.com">Email</a>
+          <a id="email-text" href="mailto:ben@ciphrase.com">Email</a>
         </div>
       </div>
     </div>
