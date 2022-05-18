@@ -16,9 +16,11 @@ export function flipLetters(text, letter, replacement) {
   let regexCase;
   let result;
   let caseChangedChar = '';
+  let replace = replacement;
   if (letter === letter.toUpperCase()) {
     regexCase = new RegExp(letter.toLowerCase(), 'g');
     caseChangedChar = replacement.toLowerCase();
+    replace = replacement.toUpperCase();
   } else {
     regexCase = new RegExp(letter.toUpperCase(), 'g');
     caseChangedChar = replacement.toUpperCase();
@@ -27,7 +29,7 @@ export function flipLetters(text, letter, replacement) {
   // Randomizes text ⬇⬇⬇
   // result = text.replace(regex, alphabet[Math.floor(Math.random()
   //   * alphabet.length - 1)].toUpperCase());
-  result = text.replace(regex, replacement);
+  result = text.replace(regex, replace);
   result = result.replace(regexCase, caseChangedChar);
   // Randomizes text ⬇⬇⬇
   // result = text.replace(regex, alphabet[Math.floor(Math.random() * alphabet.length - 1)]);
@@ -96,7 +98,7 @@ let counter;
  * counting up from miliseconds to hours.
  * @param {*} time stateful component method that updates the timer state in the App component.
  */
-export function countDown(time, opened, levelSwapped, setLevelSwapped) {
+export function countDown(time = '00:00:00:00', opened = false, levelSwapped = false, setLevelSwapped = () => {}) {
   if (levelSwapped) {
     hour = 0;
     min = 0;
@@ -141,6 +143,7 @@ export function clearCount() {
   sec = 0;
   mil = 0;
   clearInterval(counter);
+  counter = undefined;
 }
 
 export async function updateCookies(date, time, attempts, isWin, cipherAttempts) {
@@ -180,12 +183,11 @@ export async function getShareDownload() {
   return html2canvas(elt, { scale: 5 }).then((canvas) => {
     if (!document.getElementsByTagName('canvas').length) {
       document.body.appendChild(canvas);
-      canvases = document.getElementsByTagName('canvas');
     } else {
       canvases = document.getElementsByTagName('canvas');
       document.body.replaceChild(canvas, document.getElementsByTagName('canvas')[canvases.length - 1] || document.getElementsByTagName('canvas')[0]);
     }
-    const canvas2 = document.getElementsByTagName('canvas')[canvases.length - 1];
+    const canvas2 = canvases ? document.getElementsByTagName('canvas')[canvases.length - 1] : document.getElementsByTagName('canvas')[0];
     const dataURL = canvas2.toDataURL();
     count += 1;
     document.getElementById('viewport').setAttribute('content', 'width=device-width, initial-scale=1');
