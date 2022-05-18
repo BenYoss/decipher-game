@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Quantico:wght@700&display=swap');
 
 $bkgColor: #0f270d;
 $bkgColor2: #1b4a17;
@@ -113,6 +114,7 @@ canvas {
 
 #header {
   font-size: 3vh;
+  font-family: 'Quantico', sans-serif;
 }
 
 // selectors for the component "Cipher".
@@ -162,6 +164,12 @@ hr {
   border-top: 1px solid var(--primary-undertone-color);
   margin: 0.2em 0;
   padding: 0;
+}
+
+#loading-wheel {
+  position: absolute;
+  right: 40vw;
+  bottom: 50vh;
 }
 
 [data-theme="dark"] #cipher-word, [data-theme="light"] #cipher-word {
@@ -409,7 +417,7 @@ hr {
 }
 
 .gameover-container {
-  
+  // TODO: Leave blank for now.
 }
 
 .gameover-container-pc {
@@ -496,7 +504,11 @@ hr {
 // Core selectors (selectors impacting default markups)
 
 @media only screen and (min-width: 750px) {
-
+  #loading-wheel {
+    position: absolute;
+    right: 50vw;
+    bottom: 50vh;
+  }
   body {
     background: border-box $bkgColor2;
     background-repeat: no-repeat;
@@ -547,7 +559,7 @@ hr {
   
   #header {
     font-size: large;
-    font-family: sans-serif;
+    font-family: 'Quantico', sans-serif;
   }
   
   // selectors for the component "Cipher".
@@ -879,7 +891,11 @@ hr {
 }
 
 @media only screen and (min-width: 1500px) {
-
+  #loading-wheel {
+    position: absolute;
+    right: 50vw;
+    bottom: 50vh;
+  }
   body {
     background: border-box $bkgColor2;
     background-repeat: no-repeat;
@@ -929,8 +945,9 @@ hr {
   }
   
   #header {
-    font-size: large;
-    font-family: sans-serif;
+    margin-top: 1vw;
+    font-size: 1.2vw;
+    font-family: 'Quantico', sans-serif;
   }
   
   // selectors for the component "Cipher".

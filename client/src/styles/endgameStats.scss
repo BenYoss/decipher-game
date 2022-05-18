@@ -30,6 +30,7 @@ $word-wrong-color: #DADADA;
     border: 0.5px solid #BDBDBD;
     color: #666666;
     font-size: 2vw;
+    font-variant: normal;
     border-radius: 3vh 3vh 3vh 3vh;
     padding: 0px 0.6vh 0px 0.3vh;
     vertical-align: center;
@@ -44,6 +45,7 @@ $word-wrong-color: #DADADA;
 #download-header-time {
     color: #666666;
     font-size: 1.8vw;
+    font-variant: normal;
     font-weight: 2px;
 }
 .endgame-stat-cluster {
