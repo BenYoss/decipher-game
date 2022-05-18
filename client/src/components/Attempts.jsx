@@ -8,9 +8,14 @@ const modalAnimation = {
 };
 
 export default function Attempts({
-  attempt, margin, text, index, opened, ciphertext,
+  attempt, margin, text, index, opened, ciphertext, mutation,
 }) {
-  const bodyArray = ciphertext.split(' ');
+  let bodyArray = ciphertext.split(' ');
+  let comparisonText = text;
+  if (mutation.includes('r-')) {
+    bodyArray = ciphertext.split(' ').reverse();
+    comparisonText = text.reverse();
+  }
   const style = {
     left: `${margin / 2}%`,
     width: document.getElementsByClassName('cipher-cluster')[0].offsetWidth,
@@ -27,7 +32,7 @@ export default function Attempts({
     <motion.div
       className="cipher-cluster-attempt"
       whileHover={{
-        x: text.split(' ').length * -50,
+        x: comparisonText.split(' ').length * -50,
         scale: 1,
         transition: { ease: 'easeOut', duration: 0.7 },
       }}
@@ -52,4 +57,5 @@ Attempts.propTypes = {
   index: propTypes.number.isRequired,
   opened: propTypes.bool.isRequired,
   ciphertext: propTypes.string.isRequired,
+  mutation: propTypes.string.isRequired,
 };

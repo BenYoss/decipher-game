@@ -386,6 +386,7 @@ export default function App() {
                     index={attempts.length - index}
                     opened={drawerOpened}
                     ciphertext={ciphertext}
+                    mutation={mutation}
                   />
                 </Suspense>
               ))
