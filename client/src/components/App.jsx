@@ -21,6 +21,7 @@ import '../styles/statistics.scss';
 import '../styles/levelSelection.scss';
 import '../styles/donate.scss';
 import 'regenerator-runtime/runtime';
+import loading from '../img/loading.gif';
 
 const Health = lazy(() => import('./Health'));
 const Gameover = lazy(() => import('./modals/Gameover'));
@@ -31,6 +32,7 @@ const Attempts = lazy(() => import('./Attempts'));
 const Toolbar = lazy(() => import('./toolbar/Toolbar'));
 
 let cipherCookies;
+let safe = 0;
 
 document.documentElement.setAttribute('data-theme', localStorage.getItem('data-theme') || 'light');
 
@@ -47,7 +49,7 @@ export default function App() {
   const [finalTime, setFinalTime] = useState(false);
   const [cookies, setCookies] = useState(null);
   const [played, setPlayed] = useState(false);
-  const [downloadURL, setDownloadURL] = useState('');
+  const [downloadURL, setDownloadURL] = useState(null);
   const [mutationCiphers, setMutationCiphers] = useState([]);
   const [attempts, setAttempts] = useState([]);
   const [drawerOpened, setDrawerOpened] = useState(false);
@@ -81,15 +83,6 @@ export default function App() {
   if (!cipherCookies) {
     cipherCookies = cookies && getThisWeeksCiphers(cookies.timeHistory);
   }
-
-  if (!downloadURL) {
-    if (played || victory || gameover) {
-      getShareDownload().then((url) => {
-        setDownloadURL(url);
-      });
-    }
-  }
-
   const now = new Date(); const utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
 
   async function calculateText() {
@@ -137,6 +130,29 @@ export default function App() {
     }
     setLevelSwapped(false);
   }, [levelSwapped]);
+  if (!downloadURL && safe < 1) {
+    if (victory || gameover) {
+      setTimeout(() => {
+        if (document.getElementById('download-container')) {
+          getShareDownload().then((url) => {
+            safe = 0;
+            setDownloadURL(url);
+          });
+        }
+      }, 600);
+      safe += 1;
+    } else if (played) {
+      setTimeout(() => {
+        if (document.getElementById('download-container')) {
+          getShareDownload().then((url) => {
+            safe = 0;
+            setDownloadURL(url);
+          });
+        }
+      }, 600);
+      safe += 1;
+    }
+  }
 
   return (
     <div id="container">
@@ -147,7 +163,6 @@ export default function App() {
               <div />
                       )}
             >
-
               <Timer
                 setFinalTime={setFinalTime}
                 gameover={gameover}
@@ -172,7 +187,7 @@ export default function App() {
 
       </div>
       <div id="header-container">
-        <h4 id="header">Lacipher</h4>
+        <h4 id="header">Ciphrase</h4>
         <div>
           {text && (
           <Suspense fallback={(
@@ -215,12 +230,16 @@ export default function App() {
               tabIndex="0"
               label="modal"
               role="button"
-            />
+            >
+              <img src={loading} id="loading-wheel" alt="loading wheel" width="100px" height="100px" />
+            </div>
           ) : (
             <div
               className="modal-bg"
               id="finish-modal-bg"
-            />
+            >
+              <img src={loading} id="loading-wheel" alt="loading wheel" width="100px" height="100px" />
+            </div>
           )}
         </>
       ) : null}
@@ -252,16 +271,20 @@ export default function App() {
             <div
               className="modal-bg"
               id="modal-bg"
-              onClick={() => setSkipped(true)}
+              onClick={() => { setSkipped(true); }}
               tabIndex="0"
               label="modal"
               role="button"
-            />
+            >
+              <img src={loading} id="loading-wheel" alt="loading wheel" width="100px" height="100px" />
+            </div>
           ) : (
             <div
               className="modal-bg"
               id="finish-modal-bg"
-            />
+            >
+              <img src={loading} id="loading-wheel" alt="loading wheel" width="100px" height="100px" />
+            </div>
           )}
         </>
       ) : null}
@@ -286,7 +309,9 @@ export default function App() {
           />
 
         </Suspense>
-        <div className="modal-bg" id="finish-modal-bg" />
+        <div className="modal-bg" id="finish-modal-bg">
+          <img src={loading} id="loading-wheel" alt="loading wheel" width="100px" height="100px" />
+        </div>
       </>
       )}
       {victory && finalTime && (
@@ -309,7 +334,9 @@ export default function App() {
             text={text}
           />
         </Suspense>
-        <div id="modal-bg" />
+        <div id="modal-bg">
+          <img src={loading} id="loading-wheel" alt="loading wheel" width="100px" height="100px" />
+        </div>
       </>
       )}
       <Suspense fallback={(
