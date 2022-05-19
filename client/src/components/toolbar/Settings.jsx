@@ -5,7 +5,6 @@ import React from 'react';
 import propTypes from 'prop-types';
 
 const mode = [localStorage.getItem('data-theme') === 'dark', JSON.parse(localStorage.getItem('disable-timer')), JSON.parse(localStorage.getItem('hard-mode'))];
-
 export default function Settings({ setDisableTimer, setReload, setHardMode }) {
   const changeDarkLightModes = (scheme) => {
     let change = 'light';

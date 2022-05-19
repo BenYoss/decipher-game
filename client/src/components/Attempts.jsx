@@ -8,14 +8,10 @@ const modalAnimation = {
 };
 
 export default function Attempts({
-  attempt, margin, text, index, opened, ciphertext, mutation,
+  attempt, margin, text, index, opened, ciphertext,
 }) {
-  let bodyArray = ciphertext.split(' ');
-  let comparisonText = text;
-  if (mutation.includes('r-')) {
-    bodyArray = ciphertext.split(' ').reverse();
-    comparisonText = text.reverse();
-  }
+  const bodyArray = ciphertext.split(' ');
+  const comparisonText = text;
   const style = {
     left: `${margin / 2}%`,
     width: document.getElementsByClassName('cipher-cluster')[0].offsetWidth,

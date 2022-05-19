@@ -34,7 +34,11 @@ const Toolbar = lazy(() => import('./toolbar/Toolbar'));
 let cipherCookies;
 let safe = 0;
 
-document.documentElement.setAttribute('data-theme', localStorage.getItem('data-theme') || 'light');
+document.documentElement.setAttribute('data-theme', localStorage.getItem('data-theme') || 'dark');
+
+if (!localStorage.getItem('data-theme')) {
+  localStorage.setItem('data-theme', 'dark');
+}
 
 export default function App() {
   const [text, setText] = useState(null);

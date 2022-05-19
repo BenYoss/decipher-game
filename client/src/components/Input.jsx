@@ -31,8 +31,8 @@ export default function Input({
             type="button"
             onClick={() => {
               let value = val;
-              if (value.includes('’')) {
-                value = value.replace('’', "'");
+              if (value.includes('‘')) {
+                value = value.replace('‘', "'");
               }
               if (value === text) {
                 const initialColor = document.getElementsByTagName('textarea')[0].style.color;
