@@ -779,13 +779,13 @@ hr {
     margin-top: 0;
     row-gap: 20px;
     width: 12%;
-    transform: scale(1);
+    transform: scale(0.7);
   }
   
   .slot {
     min-width: 3vw;
     min-height: 3vw;
-    border: 2px solid rgb(79, 79, 79);
+    border: 4px solid rgb(79, 79, 79);
   }
   
   .used {
@@ -1167,13 +1167,13 @@ hr {
     margin-top: 0;
     row-gap: 20px;
     width: 12%;
-    transform: scale(1);
+    transform: scale(0.5);
   }
   
   .slot {
     min-width: 3vw;
     min-height: 3vw;
-    border: 2px solid rgb(79, 79, 79);
+    border: 4px solid rgb(79, 79, 79);
   }
   
   .used {
