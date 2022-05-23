@@ -41,22 +41,25 @@ const makeMutationPrint = (text, level, mutation = '') => {
         return makeMutationPrint(text, level, mutation);
       }
       let randomChar;
+      // Populates with the random char.
       while (!randomChar) {
         const searchedChar = alphabet[Math.floor(Math.random() * alphabet.length)];
         if (!text.includes(searchedChar)) {
           randomChar = searchedChar;
         }
       }
+      // Makes uppercase replacement to upper letters.
       if (randomText === randomText.toUpperCase()) {
         randomChar = randomChar.toUpperCase();
       }
       resultStr = resultStr.concat(randomText + randomChar);
-      alphabet.splice(randomChar, 1);
+      alphabet.splice(alphabet.indexOf(randomChar.toLowerCase()), 1);
+    // * If the mutation is for multiple characters.
     } else {
       const randomAmount = Math.floor(Math.random() * 3) || 1;
       const randomChar = alphabet[Math.floor(Math.random() * alphabet.length)];
       resultStr = resultStr.concat(`${randomText}${randomAmount}${randomChar}`);
-      alphabet.splice(randomChar, 1);
+      alphabet.splice(alphabet.indexOf(randomChar.toLowerCase()), 1);
     }
   } else {
     return makeMutationPrint(text, level, mutation);
@@ -104,7 +107,6 @@ const buildCipherEntry = (textData, dbCiphers) => {
       let j = 1;
       const words = entryObject.text.split(' ');
       while (j < Math.floor(entryObject.levelType / 2 + words.length / 2)) {
-        console.log(entryObject.mutation);
         entryObject.mutation += `|${makeMutationPrint(entryObject.text, entryObject.levelType, entryObject.mutation)}`;
         j += 1;
       }
@@ -173,6 +175,7 @@ const readFile = async (file, dbCiphers) => fsPromise.readFile(file, 'utf-8', (e
   return null;
 });
 
+// * Adds a new cipher into the database.
 app.get('/addcipher', (req, res) => {
   getCipher('', true)
     .then((ciphers) => {
@@ -181,7 +184,7 @@ app.get('/addcipher', (req, res) => {
       });
     });
 });
-
+// * Gets a cipher from the database
 app.get('/getcipher', (req, res) => {
   if (req.query.dateIssued) {
     getCipher(req.query.dateIssued)
