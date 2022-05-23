@@ -66,7 +66,7 @@ export default function Toolbar({
         className="toolbar-item"
         onClick={() => { drawerHandler(3); setDrawerOpened(true); }}
       >
-        <img src={coffeeIcon} alt="donation icon" className="toolbar-icon-img" id="toolbar-icon-donation" />
+        <img src={coffeeIcon} alt="donation icon" style={{ marginLeft: '4px' }} className="toolbar-icon-img" id="toolbar-icon-donation" />
       </div>
       <div id="toolbar-drawer">
         <div id="exit-btn-container">

@@ -64,6 +64,7 @@ export default function Graph({ ciphers, dataType }) {
       });
 
       formatter = function (value, index) {
+        const def = '00:00:00:00';
         const stringified = String(value);
         let result = stringified;
         for (let i = 2; i < result.length; i += 3) {
@@ -71,7 +72,15 @@ export default function Graph({ ciphers, dataType }) {
           splitted.splice(i, 0, ':');
           result = splitted.join('');
         }
-        return result;
+        const splitter = def.split('');
+        for(let i = 1; i < def.length; i+=1) {
+          if (result[result.length - (i)]) {
+            splitter[i - 1] = result[result.length - (i)];
+          } else {
+            break;
+          }
+        }
+        return splitter.reverse().join('');
       };
     }
 
