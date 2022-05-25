@@ -73,7 +73,7 @@ export default function Graph({ ciphers, dataType }) {
           result = splitted.join('');
         }
         const splitter = def.split('');
-        for(let i = 1; i < def.length; i+=1) {
+        for (let i = 1; i < def.length; i+=1) {
           if (result[result.length - (i)]) {
             splitter[i - 1] = result[result.length - (i)];
           } else {
