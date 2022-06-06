@@ -62,7 +62,7 @@ export default function Victory({
                 <section id="gameover-metric">
                   <b id="gameover-time">Attempts:</b>
                   <p id="gameover-time">
-                    <b>{attemptCount < 1 ? attemptCount + 1 : attemptCount}</b>
+                    <b>{attemptCount < 1 && attemptCount < 4 ? attemptCount + 1 : attemptCount}</b>
                   </p>
                 </section>
                 <hr />

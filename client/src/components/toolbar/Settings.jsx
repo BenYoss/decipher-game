@@ -48,7 +48,7 @@ export default function Settings({ setDisableTimer, setReload, setHardMode }) {
         <div className="settings-feat">
           <div id="settings-header">
             <p id="settings-title">Disable Timer</p>
-            <span className="settings-description">For less time-sensative gameplay.</span>
+            <span className="settings-description">For less time-sensitive gameplay.</span>
           </div>
           <div id="dark-mode-slider">
             <label className="switch">

@@ -50,7 +50,7 @@ export default function Input({
                   document.getElementsByTagName('textarea')[0].style.border = initialColor;
                   document.getElementsByTagName('textarea')[0].value = '';
                 }, 1000);
-                updateAttempts(value, text).then((data) => {
+                updateAttempts(newValue, newText).then((data) => {
                   setAttempts([...attempts, data]);
                   setVictory(true);
                 });
@@ -61,7 +61,7 @@ export default function Input({
                 document.getElementsByTagName('textarea')[0].style.border = 'red';
                 let hasTakenSlot = false;
                 let tally = 0;
-                updateAttempts(value, text)
+                updateAttempts(newValue, newText)
                   .then((data) => {
                     setAttempts([...attempts, data]);
                   });
