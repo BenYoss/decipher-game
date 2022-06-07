@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-case-declarations */
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
@@ -27,17 +28,29 @@ export default function Graph({ ciphers, dataType }) {
   const dates = ciphers.map((cipher) => cipher.gameDate).sort((a, b) => dateTimes[a.slice(0, 3)]
    - dateTimes[b.slice(0, 3)]);
   let formatter;
+  const orderByDate = (arr) => {
+    const order = arr.map((v) => {
+      v.gameDate = v.gameDate.slice(0, 3);
+      return v;
+    });
+    const result = [...dates];
+    order.forEach((value) => {
+      result[result.indexOf(value.gameDate)] = value;
+    });
+    return result;
+  };
+  const cipherValues = orderByDate(ciphers);
   const selectData = () => {
     let resolverArr = [];
     if (dataType === 'attempts') {
-      resolverArr = ciphers.map((cipher) => cipher.cipherAttempts.filter((attempt) => {
+      resolverArr = cipherValues.map((cipher) => cipher.cipherAttempts.filter((attempt) => {
         if (attempt) {
           return attempt;
         }
       }).length);
       formatter = (value) => `${value} Attempts`;
     } if (dataType === 'wins') {
-      resolverArr = ciphers.map((cipher) => cipher.isWin);
+      resolverArr = cipherValues.map((cipher) => cipher.isWin);
       formatter = function (value) {
         switch (value) {
           case false:
@@ -54,7 +67,7 @@ export default function Graph({ ciphers, dataType }) {
       let sec;
       let min;
       let hr;
-      resolverArr = ciphers.map((cipher) => {
+      resolverArr = cipherValues.map((cipher) => {
         times = cipher.time.split(':');
         mil = Number(times[times.length - 1]) * 1;
         sec = Number(times[times.length - 2]) * 100;
@@ -73,7 +86,7 @@ export default function Graph({ ciphers, dataType }) {
           result = splitted.join('');
         }
         const splitter = def.split('');
-        for (let i = 1; i < def.length; i+=1) {
+        for (let i = 1; i < def.length; i += 1) {
           if (result[result.length - (i)]) {
             splitter[i - 1] = result[result.length - (i)];
           } else {
