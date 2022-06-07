@@ -48,7 +48,7 @@ export default function Graph({ ciphers, dataType }) {
           return attempt;
         }
       }).length);
-      formatter = (value) => `${value} Attempts`;
+      formatter = (value) => `${value}`;
     } if (dataType === 'wins') {
       resolverArr = cipherValues.map((cipher) => cipher.isWin);
       formatter = function (value) {
