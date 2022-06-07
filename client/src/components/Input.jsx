@@ -1,3 +1,4 @@
+/* eslint-disable prefer-regex-literals */
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import propTypes from 'prop-types';
@@ -7,6 +8,7 @@ export default function Input({
   text, level, health, setHealth, setGameover, setPercent,
   percent, setVictory, setAttempts, attempts,
 }) {
+  // Animation objects.
   const hoverAnimation = {
     scale: 1.1,
     boxShadow: '0px 0px 8px hsl(120, 61%, 50%)',
@@ -15,8 +17,10 @@ export default function Input({
     scale: 1.0,
     boxShadow: '0px 0px 0px hsl(120, 61%, 50%)',
   };
+  // Stateful components.
   const [hover, onHover] = useState(false);
   const [val, useVal] = useState('');
+
   return (
     <div id="cipher-input-container">
       <form>
@@ -30,11 +34,13 @@ export default function Input({
             id="standard-btn"
             type="button"
             onClick={() => {
-              let value = val;
-              if (value.includes('‘')) {
-                value = value.replace('‘', "'");
-              }
-              if (value === text) {
+              const value = val;
+              // Removes all symbols from input text and answer text for comparison.
+              const regexLower = new RegExp(/[a-z]|[A-Z]| /i, 'g');
+              const newText = text.match(regexLower).join('');
+              const newValue = value.match(regexLower).join('');
+              // If text is right, the text will display it's correct.
+              if (newValue === newText) {
                 const initialColor = document.getElementsByTagName('textarea')[0].style.color;
                 document.getElementsByTagName('textarea')[0].style.color = 'lime';
                 document.getElementsByTagName('textarea')[0].style.border = 'lime';
@@ -44,17 +50,18 @@ export default function Input({
                   document.getElementsByTagName('textarea')[0].style.border = initialColor;
                   document.getElementsByTagName('textarea')[0].value = '';
                 }, 1000);
-                updateAttempts(value, text).then((data) => {
+                updateAttempts(newValue, newText).then((data) => {
                   setAttempts([...attempts, data]);
                   setVictory(true);
                 });
               } else {
+                // If the input text is wrong, the input box will flash red with a used attempt.
                 const initialColor = document.getElementsByTagName('textarea')[0].style.color;
                 document.getElementsByTagName('textarea')[0].style.color = 'red';
                 document.getElementsByTagName('textarea')[0].style.border = 'red';
                 let hasTakenSlot = false;
                 let tally = 0;
-                updateAttempts(value, text)
+                updateAttempts(newValue, newText)
                   .then((data) => {
                     setAttempts([...attempts, data]);
                   });
@@ -74,6 +81,7 @@ export default function Input({
                   if (!slot.open) {
                     tally += 1;
                   }
+                  // If all 4 attempts are used... GAMEOVER.
                   if (tally === 4) {
                     setGameover(true);
                   }

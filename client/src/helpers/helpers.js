@@ -46,14 +46,30 @@ export function reverseText(text) {
 }
 
 export function addMoreText(text, letter, amount, replacement) {
-  const regex = new RegExp(letter, 'g');
-  const scrambler = [];
+  let regexCase;
+  let result;
+  let caseChangedChar = '';
+  let replace = replacement;
+  let scrambler = [];
   for (let i = 0; i < amount; i += 1) {
     // Randomizes the text ⬇⬇⬇
     // scrambler.push(alphabet[Math.floor(Math.random() * alphabet.length - 1)]);
     scrambler.push(replacement);
   }
-  return text.replace(regex, scrambler.join(''));
+  scrambler = scrambler.join('');
+  if (letter === letter.toUpperCase()) {
+    regexCase = new RegExp(letter.toLowerCase(), 'g');
+    caseChangedChar = scrambler.toLowerCase();
+    replace = scrambler.toUpperCase();
+  } else {
+    regexCase = new RegExp(letter.toUpperCase(), 'g');
+    caseChangedChar = scrambler.toUpperCase();
+    replace = scrambler;
+  }
+  const regex = new RegExp(letter, 'g');
+  result = text.replace(regex, replace);
+  result = result.replace(regexCase, caseChangedChar);
+  return result;
 }
 
 /**
