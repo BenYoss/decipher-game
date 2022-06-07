@@ -121,6 +121,7 @@ export default function Graph({ ciphers, dataType }) {
         type: 'bar',
         data,
         options: {
+          events: [],
           responsive: true,
           scales: {
             y: {
@@ -144,6 +145,7 @@ export default function Graph({ ciphers, dataType }) {
             },
           },
         },
+        showTooltips: false,
       });
     }
     return null;
