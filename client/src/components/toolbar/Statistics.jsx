@@ -30,9 +30,9 @@ export default function Statistics({ ciphers, setReload }) {
           <p id="drawer-title">Select Type</p>
         </div>
         <div id="stats-datatype-selector">
-          <button style={{ color: 'white', fontWeight: 'bolder' }} type="button" onClick={() => handleDataTypes('down')} className="datatype-selector-btn">{'<'}</button>
+          <button id="standard-btn" style={{ transform: 'scale(0.5)' }} type="button" onClick={() => handleDataTypes('down')} className="datatype-selector-btn">{'<'}</button>
           <p id="drawer-title">{dataType.toUpperCase()}</p>
-          <button style={{ color: 'white', fontWeight: 'bolder' }} type="button" onClick={() => handleDataTypes('up')} className="datatype-selector-btn">{'>'}</button>
+          <button id="standard-btn" style={{ transform: 'scale(0.5)' }} type="button" onClick={() => handleDataTypes('up')} className="datatype-selector-btn">{'>'}</button>
         </div>
       </div>
       {ciphers ? (
