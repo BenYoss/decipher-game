@@ -37,6 +37,7 @@ export default function Toolbar({
   setGameover,
   setVictory,
   setHardMode,
+  setEncouragement,
 }) {
   const [drawerType, handleDrawer] = useState(-1);
   const drawerAnimation = {
@@ -92,6 +93,7 @@ export default function Toolbar({
             setSkipped={setSkipped}
             setGameover={setGameover}
             setVictory={setVictory}
+            setEncouragement={setEncouragement}
           />
         )}
         {drawerType === 1 && (
@@ -134,4 +136,5 @@ Toolbar.propTypes = {
   setSkipped: propTypes.func.isRequired,
   setDisableTimer: propTypes.func.isRequired,
   setHardMode: propTypes.func.isRequired,
+  setEncouragement: propTypes.func.isRequired,
 };

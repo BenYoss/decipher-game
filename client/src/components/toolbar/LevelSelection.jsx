@@ -22,7 +22,7 @@ export default function LevelSelection({
   thisWeeksCiphers, setText, setLevel,
   setMutation, setLevelSwapped, downloadURL,
   setDownloadURL, setGameover, setVictory,
-  ciphers, setDate, setPlayed, date, setHealth, setAttempts, setSkipped,
+  ciphers, setDate, setPlayed, date, setHealth, setAttempts, setSkipped, setEncouragement,
 }) {
   const weeklyCiphers = thisWeeksCiphers;
   const cookieCiphers = ciphers ? ciphers.map((cipher) => cipher.gameDate) : [];
@@ -50,6 +50,7 @@ export default function LevelSelection({
     setGameover(false);
     setVictory(false);
     clearCount();
+    setEncouragement(true);
   };
 
   return (
@@ -116,4 +117,5 @@ LevelSelection.propTypes = {
   setGameover: propTypes.func.isRequired,
   downloadURL: propTypes.string.isRequired,
   setSkipped: propTypes.func.isRequired,
+  setEncouragement: propTypes.func.isRequired,
 };

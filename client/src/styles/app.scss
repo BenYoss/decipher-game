@@ -160,6 +160,14 @@ canvas {
   user-select: none;
 }
 
+#encouraging-text-container {
+  @include cipher-style();
+  position: absolute;
+  left: 45vw;
+  top: 5vh;
+  z-index: 14;
+}
+
 hr {
   display: block;
   height: 1px;
