@@ -40,7 +40,7 @@ $bkgColor1: #12EE1B;
 #dark-mode-slider {
     display: flex;
     justify-content: center;
-    // margin-top: 5px;
+    margin-top: 1.4vw;
 }
 
 .slider {
@@ -122,8 +122,9 @@ input:checked + .slider:before {
 }
 
 #drawer-title {
-    font-size: 3.5vh;
+    font-size: 2vh;
     font-weight: bold;
+    vertical-align: top;
 }
 
 #settings-header {
@@ -178,6 +179,11 @@ input:checked + .slider:before {
     #drawer-title {
         font-size: 1.1vw;
         font-weight: bold;
+    }
+    #dark-mode-slider {
+        display: flex;
+        justify-content: center;
+        margin-top: 1.4vh;
     }
     [data-theme="dark"] #toolbar-container, [data-theme="light"] #toolbar-container {
         position: absolute;

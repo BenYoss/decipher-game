@@ -47,6 +47,9 @@ html[data-theme="dark"] {
   color-scheme: dark;
 }
 
+html, body {
+  overflow-x: hidden;
+}
 
 [data-theme="dark"] body, [data-theme="light"] body {
   background: border-box var(--background-green);
@@ -113,7 +116,7 @@ canvas {
 }
 
 #header {
-  font-size: 3vh;
+  font-size: 1.9vh;
   font-family: 'Quantico', sans-serif;
 }
 
@@ -350,7 +353,7 @@ hr {
 
 #health-container {
   position: absolute;
-  top: 59%;
+  top: 56vh;
   margin-left:10vw;
   margin-top: 6vw;
   row-gap: 20px;
@@ -436,10 +439,14 @@ hr {
   position: relative;
   left: -40%;
 }
-
+[data-theme="dark"] #gameover-text-header, [data-theme="light"] #gameover-text-header {
+  color: var(--primary-text-color);
+  font-size: 1.6vh;
+  margin-bottom: 2%;
+}
 [data-theme="dark"] #gameover-text, [data-theme="light"] #gameover-text {
   color: var(--primary-text-color);
-  font-size: 2vw;
+  font-size: 2.3vw;
   margin-bottom: 2%;
 }
 
@@ -842,7 +849,11 @@ hr {
     display: flex;
     justify-content: center;
   }
-  
+  [data-theme="dark"] #gameover-text-header, [data-theme="light"] #gameover-text-header {
+  color: var(--primary-text-color);
+  font-size: 0.8vw;
+  margin-bottom: 2%;
+}
   [data-theme="dark"] #gameover-text, [data-theme="light"] #gameover-text {
     color: var(--primary-text-color);
     font-size: 0.8vw;
@@ -1230,7 +1241,11 @@ hr {
     display: flex;
     justify-content: center;
   }
-  
+  [data-theme="dark"] #gameover-text-header, [data-theme="light"] #gameover-text-header {
+  color: var(--primary-text-color);
+  font-size: 0.8vw;
+  margin-bottom: 2%;
+}
   [data-theme="dark"] #gameover-text, [data-theme="light"] #gameover-text {
     color: var(--primary-text-color);
     font-size: 0.8vw;
@@ -1274,6 +1289,7 @@ hr {
   #time {
     color:rgb(88, 88, 88);
     font-weight: bolder;
-    font-size: 2vw;
+    font-size: 1.7vw;
+    transform: scale(1.1);
   }
 }

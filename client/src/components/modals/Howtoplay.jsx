@@ -56,7 +56,7 @@ export default function Howtoplay({
       {!played ? (
         <>
           <div id="gameover-header">
-            <h2 id="gameover-text">How to Play</h2>
+            <h2 id="gameover-text-header">How to Play</h2>
           </div>
           <hr />
           <div id="gameover-body">
