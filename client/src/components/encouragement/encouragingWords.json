@@ -1,0 +1,22 @@
+[
+    {
+        "attempts": 1,
+        "values": ["Impossible?!", "Lucky guess?", "Spectacular!", "😎", "Genius!", "Too easy!", "Incredible!", "Masterful!"]
+    },
+    {
+        "attempts": 2,
+        "values": ["Nailed it!", "Radical!", "Nice!", "Double-checking!", "Good one!", "Awesome!"]
+    },
+    {
+        "attempts": 3,
+        "values": ["3rd time's the charm!", "Triple sec!", "Not bad!", "Well done!"]
+    },
+    {
+        "attempts": 4,
+        "values": ["Close call!", "Nice catch!", "Whew!", "Saved!", "That was intense!", "Crisis averted!"]
+    },
+    {
+        "attempts": 5,
+        "values": ["Close!", "Nice try!", "Failure!", "Next time!"]
+    }
+]

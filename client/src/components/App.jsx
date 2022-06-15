@@ -22,6 +22,7 @@ import '../styles/levelSelection.scss';
 import '../styles/donate.scss';
 import 'regenerator-runtime/runtime';
 import loading from '../img/loading.gif';
+import RewardingEncouragement from './encouragement/RewardingEncouragement';
 
 const Health = lazy(() => import('./Health'));
 const Gameover = lazy(() => import('./modals/Gameover'));
@@ -64,6 +65,7 @@ export default function App() {
   const [disableTimer, setDisableTimer] = useState(JSON.parse(localStorage.getItem('disable-timer')));
   const [hardMode, setHardMode] = useState(JSON.parse(localStorage.getItem('hard-mode')));
   const [ciphertext, setCiphertext] = useState('');
+  const [encouragement, setEncouragement] = useState(true);
 
   function getThisWeeksCiphers(cipherss) {
     let days;
@@ -343,6 +345,19 @@ export default function App() {
         </div>
       </>
       )}
+      {(victory || gameover) && finalTime && (
+        <Suspense fallback={(
+          <div />
+          )}
+        >
+          <RewardingEncouragement
+            attempts={attempts}
+            gameover={gameover}
+            encouragement={encouragement}
+            setEncouragement={setEncouragement}
+          />
+        </Suspense>
+      )}
       <Suspense fallback={(
         <div />
           )}
@@ -370,6 +385,7 @@ export default function App() {
           setGameover={setGameover}
           setVictory={setVictory}
           setHardMode={setHardMode}
+          setEncouragement={setEncouragement}
         />
       </Suspense>
       <div id="body-container-pc">

@@ -56,7 +56,7 @@ export default function Howtoplay({
       {!played ? (
         <>
           <div id="gameover-header">
-            <h2 id="gameover-text">How to Play</h2>
+            <h2 id="gameover-text-header">How to Play</h2>
           </div>
           <hr />
           <div id="gameover-body">
@@ -150,7 +150,7 @@ export default function Howtoplay({
           <hr />
           <div id="gameover-cipher-container">
             <p id="played-modal-cipher">
-              <b>{text}</b>
+              <b style={{ paddingLeft: '10px', paddingRight: '10px' }}>{text}</b>
             </p>
           </div>
           <div id="gameover-body">

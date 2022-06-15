@@ -53,5 +53,4 @@ Attempts.propTypes = {
   index: propTypes.number.isRequired,
   opened: propTypes.bool.isRequired,
   ciphertext: propTypes.string.isRequired,
-  mutation: propTypes.string.isRequired,
 };

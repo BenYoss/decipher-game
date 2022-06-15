@@ -7,6 +7,9 @@ import dataTypes from './datatypes.json';
 
 export default function Statistics({ ciphers, setReload }) {
   const [dataType, setDataType] = useState('wins');
+
+  const buttonScaleSize = window.innerWidth > 750 ? 'scale(0.5)' : 'scale(1)';
+
   function handleDataTypes(direction) {
     if (direction === 'up') {
       const next = dataTypes.indexOf(dataType) + 1 < dataTypes.length
@@ -30,9 +33,9 @@ export default function Statistics({ ciphers, setReload }) {
           <p id="drawer-title">Select Type</p>
         </div>
         <div id="stats-datatype-selector">
-          <button style={{ color: 'white', fontWeight: 'bolder' }} type="button" onClick={() => handleDataTypes('down')} className="datatype-selector-btn">{'<'}</button>
+          <button id="standard-btn" style={{ transform: buttonScaleSize }} type="button" onClick={() => handleDataTypes('down')} className="datatype-selector-btn">{'<'}</button>
           <p id="drawer-title">{dataType.toUpperCase()}</p>
-          <button style={{ color: 'white', fontWeight: 'bolder' }} type="button" onClick={() => handleDataTypes('up')} className="datatype-selector-btn">{'>'}</button>
+          <button id="standard-btn" style={{ transform: buttonScaleSize }} type="button" onClick={() => handleDataTypes('up')} className="datatype-selector-btn">{'>'}</button>
         </div>
       </div>
       {ciphers ? (

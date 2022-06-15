@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-case-declarations */
 /* eslint-disable consistent-return */
@@ -29,8 +30,14 @@ export default function Graph({ ciphers, dataType }) {
    - dateTimes[b.slice(0, 3)]);
   let formatter;
   const orderByDate = (arr) => {
+    const initialGameDates = [];
     const order = arr.map((v) => {
+      initialGameDates.push(v.gameDate);
       v.gameDate = v.gameDate.slice(0, 3);
+      return v;
+    });
+    arr.forEach((v, i) => {
+      v.gameDate = initialGameDates[i];
       return v;
     });
     const result = [...dates];
@@ -48,7 +55,7 @@ export default function Graph({ ciphers, dataType }) {
           return attempt;
         }
       }).length);
-      formatter = (value) => `${value} Attempts`;
+      formatter = (value) => `${value}`;
     } if (dataType === 'wins') {
       resolverArr = cipherValues.map((cipher) => cipher.isWin);
       formatter = function (value) {
@@ -77,23 +84,14 @@ export default function Graph({ ciphers, dataType }) {
       });
 
       formatter = function (value, index) {
-        const def = '00:00:00:00';
-        const stringified = String(value);
-        let result = stringified;
-        for (let i = 2; i < result.length; i += 3) {
-          const splitted = result.split('');
-          splitted.splice(i, 0, ':');
-          result = splitted.join('');
-        }
-        const splitter = def.split('');
-        for (let i = 1; i < def.length; i += 1) {
-          if (result[result.length - (i)]) {
-            splitter[i - 1] = result[result.length - (i)];
-          } else {
-            break;
+        let def = '00:00:00:00';
+        cipherValues.forEach((cipher) => {
+          const timeInt = parseInt(cipher.time.split(':').join(''));
+          if (timeInt === value) {
+            def = cipher.time;
           }
-        }
-        return splitter.reverse().join('');
+        });
+        return def;
       };
     }
 
@@ -121,6 +119,7 @@ export default function Graph({ ciphers, dataType }) {
         type: 'bar',
         data,
         options: {
+          events: [],
           responsive: true,
           scales: {
             y: {
@@ -144,6 +143,7 @@ export default function Graph({ ciphers, dataType }) {
             },
           },
         },
+        showTooltips: false,
       });
     }
     return null;
