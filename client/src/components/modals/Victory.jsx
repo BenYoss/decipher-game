@@ -46,7 +46,7 @@ export default function Victory({
         {/* <span id="gameover-text">{finishedText}</span> */}
         <div id="gameover-cipher-container">
           <p id="played-modal-cipher">
-            <b>{text}</b>
+            <b style={{ paddingLeft: '10px', paddingRight: '10px' }}>{text}</b>
           </p>
         </div>
         <div id="gameover-body">

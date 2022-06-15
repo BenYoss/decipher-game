@@ -63,6 +63,7 @@ export default function LevelSelection({
         <div id="level-list">
           {
             weeklyCiphers.map((cipher, i) => {
+              console.log(cookieCiphers, cipher.date_issued);
               if (cookieCiphers.includes(cipher.date_issued)) {
                 return (
                   <div id={i + 1} className="level-list-entry">
