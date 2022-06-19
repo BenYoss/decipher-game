@@ -163,10 +163,15 @@ canvas {
 #encouraging-text-container {
   @include cipher-style();
   position: absolute;
-  left: 45vw;
+  left: 14vh;
   top: 5vh;
   z-index: 14;
 }
+
+// #encouraging-inner-div {
+//   position: relative;
+
+// }
 
 hr {
   display: block;
@@ -361,7 +366,7 @@ hr {
 
 #health-container {
   position: absolute;
-  top: 56vh;
+  top: 48vh;
   margin-left:10vw;
   margin-top: 6vw;
   row-gap: 20px;
@@ -519,6 +524,13 @@ hr {
 // Core selectors (selectors impacting default markups)
 
 @media only screen and (min-width: 750px) {
+  #encouraging-text-container {
+    @include cipher-style();
+    position: absolute;
+    left: 45vw;
+    top: 5vh;
+    z-index: 14;
+  }
   #loading-wheel {
     position: absolute;
     right: 50vw;
