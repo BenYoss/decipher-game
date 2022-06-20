@@ -75,9 +75,9 @@ export default function App() {
       days = cipherss.map((cipher) => cipher.gameDate.slice(0, 3));
       lastSevenDays = cipherss.slice(-7);
       startOfWeek = lastSevenDays.slice(lastSevenDays.length === 7 ? days.indexOf('Sun') : 0);
-      if (startOfWeek.slice(0, 1).includes('Sun')) {
-        lastSevenDays = lastSevenDays.slice(days.indexOf('Sun'));
-        startOfWeek = lastSevenDays.slice(lastSevenDays.length === 7 ? days.indexOf('Sun') : 0);
+      if (days.slice(0, 1).includes('Sun')) {
+        startOfWeek.splice(0, 1);
+        startOfWeek = startOfWeek.slice(days.indexOf('Sun'));
       }
     }
     if (cipherss[0].date_issued) {
@@ -85,9 +85,9 @@ export default function App() {
       lastSevenDays = cipherss.slice(-7);
       const sevenDays = days.slice(-7);
       startOfWeek = lastSevenDays.slice(lastSevenDays.length === 7 ? sevenDays.indexOf('Sun') : 0);
-      if (startOfWeek.slice(0, 1).includes('Sun')) {
-        lastSevenDays = lastSevenDays.slice(days.indexOf('Sun'));
-        startOfWeek = lastSevenDays.slice(lastSevenDays.length === 7 ? days.indexOf('Sun') : 0);
+      if (days.slice(0, 1).includes('Sun')) {
+        startOfWeek.splice(0, 1);
+        startOfWeek = startOfWeek.slice(days.indexOf('Sun'));
       }
       setThisWeeksCiphers(startOfWeek);
     }
