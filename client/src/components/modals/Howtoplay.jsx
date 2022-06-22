@@ -215,7 +215,7 @@ export default function Howtoplay({
                     }}
                     id="standard-btn-small"
                     href={downloadURL}
-                    download={`ciphrase_${new Date().toDateString()}.png`}
+                    download={`ciphrase_${date.toLowerCase().replace(' ', '_')}.png`}
                   >
                     <span id="save-stats">Save Stats</span>
                     <img src={downloadIcon} alt="download icon" style={{ filter: 'invert()' }} width="15" height="15" />
