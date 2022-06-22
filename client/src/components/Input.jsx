@@ -78,7 +78,6 @@ export default function Input({
                 setTimeout(() => {
                   document.getElementsByTagName('textarea')[0].style.color = initialColor;
                   document.getElementsByTagName('textarea')[0].style.border = initialColor;
-                  document.getElementsByTagName('textarea')[0].value = '';
                 }, 1000);
                 const updatedHealth = health.map((slot) => {
                   if (slot.open && !hasTakenSlot) {
@@ -95,6 +94,9 @@ export default function Input({
                   if (tally === 4) {
                     document.getElementById('standard-btn').style.pointerEvents = 'none';
                     document.getElementsByTagName('textarea')[0].value = '';
+                    document.getElementsByTagName('textarea')[0].style.color = initialColor;
+                    document.getElementsByTagName('textarea')[0].style.border = initialColor;
+                    useVal('');
                     setGameover(true);
                   }
                 });

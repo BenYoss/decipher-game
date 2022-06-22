@@ -76,14 +76,15 @@ export default function Graph({ ciphers, dataType }) {
       let hr;
       resolverArr = cipherValues.map((cipher) => {
         times = cipher.time.split(':');
-        mil = Number(times[times.length - 1]) / 1000;
+        mil = Number(times[times.length - 1]) / 10000;
         sec = Number(times[times.length - 2]) / 60;
         min = Number(times[1]);
-        hr = Number(times[0]) * 10;
+        hr = Number(times[0]) * 60;
         return Math.round(1000 * (mil + sec + min + hr)) / 1000;
       });
 
       formatter = function (value, index) {
+        // FOR DISPLAYING EXACT TIME (String)
         // let def = '00:00:00:00';
         // cipherValues.forEach((cipher) => {
         //   const timeInt = parseInt(cipher.time.split(':').join(''));
