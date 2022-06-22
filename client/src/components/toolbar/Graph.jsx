@@ -68,7 +68,7 @@ export default function Graph({ ciphers, dataType }) {
             return null;
         }
       };
-    } if (dataType === 'times') {
+    } if (dataType === 'time') {
       let times;
       let mil;
       let sec;
@@ -76,22 +76,22 @@ export default function Graph({ ciphers, dataType }) {
       let hr;
       resolverArr = cipherValues.map((cipher) => {
         times = cipher.time.split(':');
-        mil = Number(times[times.length - 1]) * 1;
-        sec = Number(times[times.length - 2]) * 100;
-        min = Number(times[1]) * 10000;
-        hr = Number(times[0]) * 1000000;
-        return mil + sec + min + hr;
+        mil = Number(times[times.length - 1]) / 1000;
+        sec = Number(times[times.length - 2]) / 60;
+        min = Number(times[1]);
+        hr = Number(times[0]) * 10;
+        return Math.round(1000 * (mil + sec + min + hr)) / 1000;
       });
 
       formatter = function (value, index) {
-        let def = '00:00:00:00';
-        cipherValues.forEach((cipher) => {
-          const timeInt = parseInt(cipher.time.split(':').join(''));
-          if (timeInt === value) {
-            def = cipher.time;
-          }
-        });
-        return def;
+        // let def = '00:00:00:00';
+        // cipherValues.forEach((cipher) => {
+        //   const timeInt = parseInt(cipher.time.split(':').join(''));
+        //   if (timeInt === value) {
+        //     def = cipher.time;
+        //   }
+        // });
+        return value;
       };
     }
 

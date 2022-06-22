@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import coffeeIcon from './coffee-glowing.svg';
+import paypalIcon from '../../img/button-PayPal-donate.png';
 
 export default function Donate() {
   return (
@@ -23,7 +24,7 @@ export default function Donate() {
             <input type="hidden" name="no_recurring" value="0" />
             <input type="hidden" name="item_name" value="Thanks for contributing to my website! Your funds will assist with my software projects and college tuition!" />
             <input type="hidden" name="currency_code" value="USD" />
-            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+            <input type="image" style={{ transform: 'scale(0.5)' }} src={paypalIcon} border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
             <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
           </form>
         </div>

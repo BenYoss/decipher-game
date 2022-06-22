@@ -24,7 +24,17 @@ export default function Input({
   return (
     <div id="cipher-input-container">
       <form>
-        <textarea onChange={(e) => useVal(e.target.value)} />
+        <textarea
+          onChange={(e) => {
+            const pattern = / /g;
+            const splitted = text.split(' ');
+            if (!e.target.value.match(pattern)
+            || e.target.value.match(pattern).length < splitted.length) {
+              useVal(e.target.value);
+            }
+          }}
+          value={val}
+        />
         <div id="input-btn-container">
           <motion.button
             onMouseOver={() => onHover(true)}
@@ -84,6 +94,7 @@ export default function Input({
                   // If all 4 attempts are used... GAMEOVER.
                   if (tally === 4) {
                     document.getElementById('standard-btn').style.pointerEvents = 'none';
+                    document.getElementsByTagName('textarea')[0].value = '';
                     setGameover(true);
                   }
                 });

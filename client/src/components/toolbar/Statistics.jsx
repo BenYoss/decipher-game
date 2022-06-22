@@ -34,7 +34,14 @@ export default function Statistics({ ciphers, setReload }) {
         </div>
         <div id="stats-datatype-selector">
           <button id="standard-btn" style={{ transform: buttonScaleSize }} type="button" onClick={() => handleDataTypes('down')} className="datatype-selector-btn">{'<'}</button>
-          <p id="drawer-title">{dataType.toUpperCase()}</p>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <p id="drawer-title">{dataType.toUpperCase()}</p>
+            {
+              dataType === 'time' && (
+                <p id="drawer-title" style={{ transform: 'scale(0.8)' }}>(minutes)</p>
+              )
+            }
+          </div>
           <button id="standard-btn" style={{ transform: buttonScaleSize }} type="button" onClick={() => handleDataTypes('up')} className="datatype-selector-btn">{'>'}</button>
         </div>
       </div>
