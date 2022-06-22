@@ -48,7 +48,7 @@ html[data-theme="dark"] {
 }
 
 html, body {
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 [data-theme="dark"] body, [data-theme="light"] body {
@@ -163,7 +163,7 @@ canvas {
 
 #encouraging-text-container {
   // @include cipher-style();
-  // position: fixed;
+  position: relative;
   // left: 40vw;
   // top: 5vh;
   // font-size: 1vh;
