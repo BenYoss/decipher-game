@@ -42,7 +42,9 @@ export default function RewardingEncouragement({
     <AnimatePresence>
       { encouragement && (
       <motion.div id="encouraging-text-container" initial={{ y: 0, opacity: '0%' }} exit={textAnimationOut} animate={textAnimationIn} transition={{ duration: (transitionDuration + 3) / 10 }}>
-        <span>{sentence}</span>
+        <div id="encouraging-inner-div">
+          <span>{sentence}</span>
+        </div>
       </motion.div>
       )}
     </AnimatePresence>

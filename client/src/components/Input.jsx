@@ -83,6 +83,7 @@ export default function Input({
                   }
                   // If all 4 attempts are used... GAMEOVER.
                   if (tally === 4) {
+                    document.getElementById('standard-btn').style.pointerEvents = 'none';
                     setGameover(true);
                   }
                 });
