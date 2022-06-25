@@ -41,7 +41,7 @@ export default function Toolbar({
 }) {
   const [drawerType, handleDrawer] = useState(-1);
   const drawerAnimation = {
-    x: window.innerWidth > 750 ? '21vw' : '105vw',
+    x: window.innerWidth > 950 ? '25.5rem' : '105vw',
   };
 
   const retractAnimation = {

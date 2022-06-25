@@ -8,9 +8,13 @@ const modalAnimation = {
 };
 
 export default function Attempts({
-  attempt, margin, text, index, opened, ciphertext,
+  attempt, margin, text, index, opened, ciphertext, mutation,
 }) {
-  const bodyArray = ciphertext.split(' ');
+  let bodyArray = ciphertext.split(' ');
+  let cipherAttempts = [...attempt];
+  if (mutation.includes('r-')) {
+    cipherAttempts = cipherAttempts.reverse();
+  }
   const comparisonText = text;
   const style = {
     left: `${margin / 2}%`,
@@ -36,7 +40,7 @@ export default function Attempts({
       style={style}
     >
       {bodyArray.map((word, i) => (
-        <motion.div className={attempt[i] ? 'cipher-word-attempt-true' : 'cipher-word-attempt-false'} id={i} initial={{ x: -200, opacity: '0%' }} animate={modalAnimation} transition={{ duration: (i + 3) / 10 }}>
+        <motion.div className={cipherAttempts[i] ? 'cipher-word-attempt-true' : 'cipher-word-attempt-false'} id={i} initial={{ x: -200, opacity: '0%' }} animate={modalAnimation} transition={{ duration: (i + 3) / 10 }}>
           <h4 id="cipher-text">
             {word}
           </h4>

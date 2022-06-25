@@ -320,6 +320,7 @@ export default function App() {
             id="gameover"
             setReload={setReload}
             downloadURL={downloadURL}
+            mutation={mutation}
           />
 
         </Suspense>
@@ -397,7 +398,7 @@ export default function App() {
         />
       </Suspense>
       <div id="body-container-pc">
-        <div id={window.innerWidth > 750 ? 'ciphered-body' : 'ciphered-body-mobile'}>
+        <div id={window.innerWidth > 850 ? 'ciphered-body' : 'ciphered-body-mobile'}>
           {skipped && (
           <>
             {

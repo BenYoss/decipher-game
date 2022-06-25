@@ -5,7 +5,7 @@ $bkgColor1: #12EE1B;
 [data-theme="dark"] #toolbar-container, [data-theme="light"] #toolbar-container {
     position: absolute;
     z-index: 11;
-    left: -12vw;
+    left: -3.1rem;
     top: 16vh;
     vertical-align: center;
     padding: 40px 30px 45px 50px;
@@ -160,6 +160,20 @@ input:checked + .slider:before {
     color: var(--primary-text-color);
 }
 
+@media only screen and (min-width: 750px) {
+    [data-theme="dark"] #toolbar-drawer, [data-theme="light"] #toolbar-drawer {
+        position: absolute;
+        width: 100vw;
+        padding: 0px 0px 0px 1vw;
+        height: 100vh;
+        overflow: hidden;
+        top: -16vh;
+        left: -47.8rem;
+        background-color: var(--secondary-background-color);
+        color: var(--primary-text-color);
+    }
+}
+
 [data-theme="dark"] .toolbar-icon-img
 {
     width: 30px;
@@ -175,7 +189,7 @@ input:checked + .slider:before {
     filter: none;
 }
 
-@media only screen and (min-width: 750px) {    
+@media only screen and (min-width: 850px) {    
     #drawer-title {
         font-size: 1.1vw;
         font-weight: bold;
