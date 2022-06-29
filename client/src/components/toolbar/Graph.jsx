@@ -36,10 +36,10 @@ export default function Graph({ ciphers, dataType }) {
       v.gameDate = v.gameDate.slice(0, 3);
       return v;
     });
-    // arr.forEach((v, i) => {
-    //   v.gameDate = initialGameDates[i];
-    //   return v;
-    // });
+    arr.forEach((v, i) => {
+      v.gameDate = initialGameDates[i];
+      return v;
+    });
     let result = [...dates];
     if (dates.slice(1).includes('sun')) {
       result = result.slice(1);
