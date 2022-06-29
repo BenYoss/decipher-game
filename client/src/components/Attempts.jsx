@@ -32,7 +32,7 @@ export default function Attempts({
     <motion.div
       className="cipher-cluster-attempt"
       whileHover={{
-        x: comparisonText.split(' ').length * -50,
+        y: '80%',
         scale: 1,
         transition: { ease: 'easeOut', duration: 0.7 },
       }}
