@@ -40,9 +40,15 @@ export default function Graph({ ciphers, dataType }) {
       v.gameDate = initialGameDates[i];
       return v;
     });
-    const result = [...dates];
+    let result = [...dates];
+    if (dates.slice(1).includes('sun')) {
+      result = result.slice(1);
+      result = result.slice(result.indexOf('sun'));
+    }
     order.forEach((value) => {
-      result[result.indexOf(value.gameDate)] = value;
+      if (result.includes(value.gameDate)) {
+        result[result.indexOf(value.gameDate)] = value;
+      }
     });
     return result;
   };
