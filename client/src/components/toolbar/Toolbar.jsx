@@ -97,7 +97,7 @@ export default function Toolbar({
           />
         )}
         {drawerType === 1 && (
-          <Statistics ciphers={ciphers} setReload={setReload} />
+          <Statistics ciphers={ciphers} setReload={setReload} thisWeeksCiphers={thisWeeksCiphers} />
         )}
         {drawerType === 0 && (
           <Settings

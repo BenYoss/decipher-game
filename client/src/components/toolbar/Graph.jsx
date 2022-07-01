@@ -16,7 +16,7 @@ Chart.register(ChartDataLabels);
 
 let counter = 0;
 let chart;
-export default function Graph({ ciphers, dataType }) {
+export default function Graph({ ciphers, dataType, thisWeeksCiphers }) {
   const dateTimes = {
     Sun: 1,
     Mon: 2,
@@ -40,7 +40,7 @@ export default function Graph({ ciphers, dataType }) {
       v.gameDate = initialGameDates[i];
       return v;
     });
-    let result = [...dates];
+    let result = [...thisWeeksCiphers];
     if (dates.slice(1).includes('sun')) {
       result = result.slice(1);
       result = result.slice(result.indexOf('sun'));
@@ -171,4 +171,5 @@ export default function Graph({ ciphers, dataType }) {
 Graph.propTypes = {
   ciphers: propTypes.element.isRequired,
   dataType: propTypes.string.isRequired,
+  thisWeeksCiphers: propTypes.element.isRequired,
 };
