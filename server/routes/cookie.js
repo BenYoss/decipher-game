@@ -42,4 +42,67 @@ app.put('/editcookie', (req, res) => {
   res.send(req.cookies);
 });
 
+app.get('/testcookies', (req, res) => {
+  if (!req.cookies.userData) {
+    req.cookies.userData = { timeHistory: [] };
+  }
+  const { timeHistory } = req.cookies.userData;
+
+  for (let i = 0; i < timeHistory.length; i += 1) {
+    if (timeHistory[i].gameDate === req.body.date) {
+      timeHistory.splice(i, 1);
+    }
+  }
+  timeHistory.push({
+    gameDate: 'Sun Jul 3 2022',
+    time: '00:00:03:72',
+    attempts: 4,
+    cipherAttempts: [
+      [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ],
+      [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ],
+      [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ],
+      [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ],
+    ],
+    isWin: false,
+  });
+  res.cookie('userData', req.cookies.userData);
+  res.send(timeHistory);
+});
+
 module.exports = app;

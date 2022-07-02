@@ -7,7 +7,7 @@ const mutations = require('./mutations.json');
 
 const app = Router();
 
-const usedChars = [];
+let usedChars = [];
 
 const findRandomCharInText = (text) => {
   const invalidChars = "1234567890,-' ";
@@ -27,6 +27,11 @@ const findRandomCharInText = (text) => {
 // Cipher builder for automatically creating ciphers each day.
 const alphabet = 'abcdefghijklmnopqrstuvwy'.split('');
 const makeMutationPrint = (text, level, mutation = '') => {
+  alphabet.forEach((char, i) => {
+    if (text.includes(char)) {
+      alphabet.splice(i, 1)
+    }
+  })
   let resultStr = '';
   // For categorizing mutations based on level.
   const i = Math.floor(Math.random() * 3);
