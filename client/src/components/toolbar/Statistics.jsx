@@ -30,7 +30,7 @@ export default function Statistics({ ciphers, setReload, thisWeeksCiphers }) {
       <hr />
       <div id="stats-datatype-head">
         <div id="stats-datatype-header">
-          <p id="drawer-title">Select Type</p>
+          <p id="drawer-title">Choose Type</p>
         </div>
         <div id="stats-datatype-selector">
           <button id="standard-btn" style={{ transform: buttonScaleSize }} type="button" onClick={() => handleDataTypes('down')} className="datatype-selector-btn">{'<'}</button>
