@@ -40,7 +40,7 @@ export default function Graph({ ciphers, dataType, thisWeeksCiphers }) {
       v.gameDate = initialGameDates[i];
       return v;
     });
-    let result = [...thisWeeksCiphers];
+    let result = thisWeeksCiphers.map((value) => value.date_issued);
     if (dates.slice(1).includes('sun')) {
       result = result.slice(1);
       result = result.slice(result.indexOf('sun'));
@@ -50,6 +50,7 @@ export default function Graph({ ciphers, dataType, thisWeeksCiphers }) {
         result[result.indexOf(value.gameDate)] = value;
       }
     });
+    result = result.filter((value) => typeof value !== 'string');
     return result;
   };
   const cipherValues = orderByDate(ciphers);
