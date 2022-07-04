@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 import axios from 'axios';
@@ -224,4 +225,22 @@ export async function updateAttempts(attempt, text) {
     }
   });
   return attemptResults;
+}
+
+// * Copies the user stats image for sharing.
+export async function copyToClipboard(downloadURL) {
+  // Clipboard permissions to allow for copy.
+  const { state } = await navigator.permissions.query({ name: 'clipboard-write' });
+  // If status === granted, copy image to clipboard.
+  if (state === 'granted') {
+    const response = await fetch(downloadURL);
+    const blob = await response.blob();
+    // Copies image blob to clipboard.
+    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+    // Shares image blob.
+    await navigator.share(blob);
+    return true;
+  }
+  console.error('Error: Clipboard did not copy!');
+  return false;
 }

@@ -294,6 +294,7 @@ hr {
   font-size: 1.5vh;
   font-weight: bold;
   vertical-align: middle;
+  justify-content: center;
   width: 90px;
   text-decoration: none;
   background-color: black;
@@ -763,13 +764,14 @@ hr {
 
   #standard-btn-small {
     background-color: black;
-    padding: 0.7vw 1vw 0.7vw 1.6vw;
+    padding: 0.7vw 1vw 0.7vw 1vw;
     border-radius: 2vw 2vw 2vw 2vw;
     position: absolute;
     bottom: 0%;
     border: none;
     font-size: 0.75vw;
     font-weight: bold;
+    justify-content: center;
     vertical-align: middle;
     width: 6vw;
     background-color: black;
@@ -1155,7 +1157,7 @@ hr {
 
   #standard-btn-small {
     background-color: black;
-    padding: 0.8vw 1vw 0.8vw 1.6vw;
+    padding: 0.8vw 1vw 0.8vw 1vw;
     border-radius: 2vw 2vw 2vw 2vw;
     position: absolute;
     bottom: 5%;
@@ -1163,6 +1165,7 @@ hr {
     font-size: 0.7vw;
     font-weight: bold;
     vertical-align: middle;
+    justify-content: center;
     width: 5vw;
     background-color: black;
     color: white;

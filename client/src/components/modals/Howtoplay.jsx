@@ -1,10 +1,11 @@
 /* eslint-disable react/require-default-props */
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import propTypes from 'prop-types';
 
 import downloadIcon from '../../img/download.png';
 import EndgameStats from './EndgameStats';
+import { copyToClipboard } from '../../helpers/helpers';
 
 const modalAnimation = {
   scale: 2,
@@ -16,11 +17,6 @@ const hoverAnimation = {
   boxShadow: '0px 0px 8px hsl(120, 61%, 50%)',
 };
 
-const leaveAnimation = {
-  scale: 1.0,
-  boxShadow: '0px 0px 0px hsl(120, 61%, 50%)',
-};
-
 /**
  * @func Howtoplay is a react component for the Howtoplay modal.
  * @param {*} setSkipped props for skip state in parent component.
@@ -29,6 +25,12 @@ let currentGame;
 export default function Howtoplay({
   setSkipped, cookieData, played, setPlayed, text, downloadURL, level, setReload, date,
 }) {
+  const [share, setShare] = useState(false);
+  const leaveAnimation = {
+    scale: 1.0,
+    boxShadow: '0px 0px 0px hsl(120, 61%, 50%)',
+    backgroundColor: share ? '#08890c' : 'black',
+  };
   let cipherSectionMargins = ['-1.5vh', '-8.5vh'];
   if (window.innerWidth < 750) {
     cipherSectionMargins = ['-1.5vh', '-11.2vh'];
@@ -209,15 +211,16 @@ export default function Howtoplay({
                     animate={leaveAnimation}
                     transition={{ duration: 0.18 }}
                     onClick={() => {
-                      // setTimeout(() => {
-                      //   setReload([]);
-                      // }, 500);
+                      if (copyToClipboard(downloadURL)) {
+                        setShare(true);
+                        setTimeout(() => setShare(false), 1000);
+                      }
                     }}
                     id="standard-btn-small"
-                    href={downloadURL}
-                    download={`ciphrase_${date.toLowerCase().replace(' ', '_')}.png`}
                   >
-                    <span id="save-stats">Save Stats</span>
+                    <span id="save-stats">
+                      {share ? 'Copied!' : 'Share'}
+                    </span>
                     <img src={downloadIcon} alt="download icon" style={{ filter: 'invert()' }} width="15" height="15" />
                   </motion.a>
                 ) : setTimeout(() => {

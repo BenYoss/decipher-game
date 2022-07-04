@@ -1,8 +1,10 @@
 /* eslint-disable react/require-default-props */
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import propTypes from 'prop-types';
-import { updateCookies, getAttemptCount, clearCount } from '../../helpers/helpers';
+import {
+  updateCookies, getAttemptCount, clearCount, copyToClipboard,
+} from '../../helpers/helpers';
 import downloadIcon from '../../img/download.png';
 import EndgameStats from './EndgameStats';
 
@@ -16,14 +18,15 @@ const hoverAnimation = {
   boxShadow: '0px 0px 8px hsl(120, 61%, 50%)',
 };
 
-const leaveAnimation = {
-  scale: 1.0,
-  boxShadow: '0px 0px 0px hsl(120, 61%, 50%)',
-};
-
 export default function Gameover({
   finalTime, health, attempts, date, setReload, downloadURL, text, level,
 }) {
+  const [share, setShare] = useState(false);
+  const leaveAnimation = {
+    scale: 1.0,
+    boxShadow: '0px 0px 0px hsl(120, 61%, 50%)',
+    backgroundColor: share ? '#08890c' : 'black',
+  };
   const attemptCount = getAttemptCount(health);
   updateCookies(date, finalTime, attemptCount, false, attempts);
   clearCount();
@@ -83,13 +86,16 @@ export default function Gameover({
                   animate={leaveAnimation}
                   transition={{ duration: 0.18 }}
                   onClick={() => {
-                    setReload([]);
+                    if (copyToClipboard(downloadURL)) {
+                      setShare(true);
+                      setTimeout(() => setShare(false), 1000);
+                    }
                   }}
                   id="standard-btn-small"
-                  href={downloadURL}
-                  download={`ciphrase_${new Date().toDateString()}.png`}
                 >
-                  <span id="save-stats">Save Stats</span>
+                  <span id="save-stats">
+                    {share ? 'Copied!' : 'Share'}
+                  </span>
                   <img src={downloadIcon} alt="download icon" style={{ filter: 'invert()' }} width="15" height="15" />
                 </motion.a>
               ) : setTimeout(() => setReload([]), 300)}
