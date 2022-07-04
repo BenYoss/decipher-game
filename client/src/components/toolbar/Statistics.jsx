@@ -5,7 +5,12 @@ import propTypes from 'prop-types';
 import Graph from './Graph';
 import dataTypes from './datatypes.json';
 
-export default function Statistics({ ciphers, setReload, thisWeeksCiphers }) {
+export default function Statistics({
+  ciphers,
+  setReload,
+  thisWeeksCiphers,
+  thisWeeksCookieCiphers
+}) {
   const [dataType, setDataType] = useState('wins');
 
   const buttonScaleSize = window.innerWidth > 750 ? 'scale(0.5)' : 'scale(1)';
@@ -52,6 +57,7 @@ export default function Statistics({ ciphers, setReload, thisWeeksCiphers }) {
             dataType={dataType}
             setReload={setReload}
             thisWeeksCiphers={thisWeeksCiphers}
+            thisWeeksCookieCiphers={thisWeeksCookieCiphers}
           />
         </div>
       ) : (

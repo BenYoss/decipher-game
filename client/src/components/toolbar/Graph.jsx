@@ -16,7 +16,7 @@ Chart.register(ChartDataLabels);
 
 let counter = 0;
 let chart;
-export default function Graph({ ciphers, dataType, thisWeeksCiphers }) {
+export default function Graph({ ciphers, dataType, thisWeeksCiphers, thisWeeksCookieCiphers }) {
   const dateTimes = {
     Sun: 1,
     Mon: 2,
@@ -28,7 +28,6 @@ export default function Graph({ ciphers, dataType, thisWeeksCiphers }) {
   };
   let dates = ciphers.map((cipher) => cipher.gameDate).sort((a, b) => dateTimes[a.slice(0, 3)]
    - dateTimes[b.slice(0, 3)]);
-   console.log(ciphers);
   let formatter;
   const orderByDate = (arr) => {
     const initialGameDates = [];

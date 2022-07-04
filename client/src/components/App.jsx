@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-restricted-syntax */
 import React, {
@@ -60,6 +61,7 @@ export default function App() {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [, setReload] = useState([]);
   const [thisWeeksCiphers, setThisWeeksCiphers] = useState([]);
+  const [thisWeeksCookieCiphers, setThisWeeksCookieCiphers] = useState([]);
   const [levelSwapped, setLevelSwapped] = useState(false);
   const [date, setDate] = useState();
   const [disableTimer, setDisableTimer] = useState(JSON.parse(localStorage.getItem('disable-timer')));
@@ -67,28 +69,46 @@ export default function App() {
   const [ciphertext, setCiphertext] = useState('');
   const [encouragement, setEncouragement] = useState(true);
   function getThisWeeksCiphers(cipherss) {
+    console.log(thisWeeksCookieCiphers);
     let days;
     let lastSevenDays;
     let startOfWeek;
     if (cipherss[0].gameDate) {
-      days = cipherss.map((cipher) => cipher.gameDate.slice(0, 3)).slice(-7);
+      const dateTimes = {
+        Sun: 1,
+        Mon: 2,
+        Tue: 3,
+        Wed: 4,
+        Thu: 5,
+        Fri: 6,
+        Sat: 7,
+      };
+      days = cipherss.map((cipher) => cipher.gameDate.slice(0, 3)).slice(-7).sort((a, b) => dateTimes[a.slice(0, 3)]
+      - dateTimes[b.slice(0, 3)]);
       lastSevenDays = cipherss.slice(-7);
       const sevenDays = days.slice(-7);
       startOfWeek = lastSevenDays.slice(lastSevenDays.length > 7 ? sevenDays.indexOf('Sun') : 0);
       if (days.slice(days.indexOf('Sun') + 1).includes('Sun')) {
         // startOfWeek.splice(days.indexOf('Sun'), 1);
-        startOfWeek = startOfWeek.slice(sevenDays.indexOf('Sun'));
+        startOfWeek = startOfWeek.slice(days.indexOf('Sun'));
       }
+      // setThisWeeksCookieCiphers(startOfWeek);
     }
     if (cipherss[0].date_issued) {
+      console.log('second');
       days = cipherss.map((cipher) => cipher.date_issued.slice(0, 3)).slice(-7);
       lastSevenDays = cipherss.slice(-7);
       const sevenDays = days.slice(-7);
       startOfWeek = lastSevenDays.slice(lastSevenDays.length > 7 ? sevenDays.indexOf('Sun') : 0);
-      if (days.slice(days.indexOf('Sun') + 1).includes('Sun')) {
+      if (days.slice(days.indexOf('Sun')).includes('Sun')) {
         // startOfWeek.splice(days.indexOf('Sun'), 1);
-        startOfWeek = startOfWeek.slice(sevenDays.indexOf('Sun'));
+        startOfWeek = startOfWeek.slice(days.indexOf('Sun'));
       }
+      let result = thisWeeksCookieCiphers.filter((cipher, i) => {
+        console.log(cipher.gameDate, startOfWeek[i].date_issued, 'AHFUFI');
+        return cipher.gameDate === startOfWeek[i].date_issued;
+      });
+      setThisWeeksCookieCiphers(result);
       setThisWeeksCiphers(startOfWeek);
     }
     return startOfWeek;
@@ -395,6 +415,7 @@ export default function App() {
           setVictory={setVictory}
           setHardMode={setHardMode}
           setEncouragement={setEncouragement}
+          thisWeeksCookieCiphers={thisWeeksCookieCiphers}
         />
       </Suspense>
       <div id="body-container-pc">

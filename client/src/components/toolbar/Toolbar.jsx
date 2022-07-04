@@ -38,6 +38,7 @@ export default function Toolbar({
   setVictory,
   setHardMode,
   setEncouragement,
+  thisWeeksCookieCiphers,
 }) {
   const [drawerType, handleDrawer] = useState(-1);
   const drawerAnimation = {
@@ -94,10 +95,11 @@ export default function Toolbar({
             setGameover={setGameover}
             setVictory={setVictory}
             setEncouragement={setEncouragement}
+            thisWeeksCookieCiphers={thisWeeksCookieCiphers}
           />
         )}
         {drawerType === 1 && (
-          <Statistics ciphers={ciphers} setReload={setReload} thisWeeksCiphers={thisWeeksCiphers} />
+          <Statistics ciphers={ciphers} setReload={setReload} thisWeeksCiphers={thisWeeksCiphers} thisWeeksCookieCiphers={thisWeeksCookieCiphers} />
         )}
         {drawerType === 0 && (
           <Settings
@@ -137,4 +139,5 @@ Toolbar.propTypes = {
   setDisableTimer: propTypes.func.isRequired,
   setHardMode: propTypes.func.isRequired,
   setEncouragement: propTypes.func.isRequired,
+  thisWeeksCookieCiphers: propTypes.element.isRequired,
 };
