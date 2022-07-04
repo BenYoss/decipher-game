@@ -66,7 +66,6 @@ export default function App() {
   const [hardMode, setHardMode] = useState(JSON.parse(localStorage.getItem('hard-mode')));
   const [ciphertext, setCiphertext] = useState('');
   const [encouragement, setEncouragement] = useState(true);
-
   function getThisWeeksCiphers(cipherss) {
     let days;
     let lastSevenDays;
@@ -74,10 +73,11 @@ export default function App() {
     if (cipherss[0].gameDate) {
       days = cipherss.map((cipher) => cipher.gameDate.slice(0, 3)).slice(-7);
       lastSevenDays = cipherss.slice(-7);
-      startOfWeek = lastSevenDays.slice(lastSevenDays.length > 7 ? days.indexOf('Sun') : 0);
-      if (days.slice(days.indexOf('Sun') || 1).includes('Sun')) {
-        startOfWeek.splice(days.indexOf('Sun'), 1);
-        startOfWeek = startOfWeek.slice(days.indexOf('Sun'));
+      const sevenDays = days.slice(-7);
+      startOfWeek = lastSevenDays.slice(lastSevenDays.length > 7 ? sevenDays.indexOf('Sun') : 0);
+      if (days.slice(days.indexOf('Sun') + 1).includes('Sun')) {
+        // startOfWeek.splice(days.indexOf('Sun'), 1);
+        startOfWeek = startOfWeek.slice(sevenDays.indexOf('Sun'));
       }
     }
     if (cipherss[0].date_issued) {
@@ -85,9 +85,9 @@ export default function App() {
       lastSevenDays = cipherss.slice(-7);
       const sevenDays = days.slice(-7);
       startOfWeek = lastSevenDays.slice(lastSevenDays.length > 7 ? sevenDays.indexOf('Sun') : 0);
-      if (days.slice(days.indexOf('Sun') || 1).includes('Sun')) {
-        startOfWeek.splice(days.indexOf('Sun'), 1);
-        startOfWeek = startOfWeek.slice(days.indexOf('Sun'));
+      if (days.slice(days.indexOf('Sun') + 1).includes('Sun')) {
+        // startOfWeek.splice(days.indexOf('Sun'), 1);
+        startOfWeek = startOfWeek.slice(sevenDays.indexOf('Sun'));
       }
       setThisWeeksCiphers(startOfWeek);
     }

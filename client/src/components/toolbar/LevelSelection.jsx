@@ -25,6 +25,7 @@ export default function LevelSelection({
   ciphers, setDate, setPlayed, date, setHealth, setAttempts, setSkipped, setEncouragement,
 }) {
   const weeklyCiphers = thisWeeksCiphers;
+  console.log(thisWeeksCiphers);
   const cookieCiphers = ciphers ? ciphers.map((cipher) => cipher.gameDate) : [];
   for (let i = weeklyCiphers.length; i < 7; i += 1) {
     weeklyCiphers.push({ level_type: 'locked' });

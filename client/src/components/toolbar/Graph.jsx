@@ -26,8 +26,9 @@ export default function Graph({ ciphers, dataType, thisWeeksCiphers }) {
     Fri: 6,
     Sat: 7,
   };
-  const dates = ciphers.map((cipher) => cipher.gameDate).sort((a, b) => dateTimes[a.slice(0, 3)]
+  let dates = ciphers.map((cipher) => cipher.gameDate).sort((a, b) => dateTimes[a.slice(0, 3)]
    - dateTimes[b.slice(0, 3)]);
+   console.log(ciphers);
   let formatter;
   const orderByDate = (arr) => {
     const initialGameDates = [];
@@ -40,7 +41,10 @@ export default function Graph({ ciphers, dataType, thisWeeksCiphers }) {
       v.gameDate = initialGameDates[i];
       return v;
     });
-    let result = thisWeeksCiphers.map((value) => value.date_issued);
+    let result = thisWeeksCiphers.filter((value) => dates.includes(value.date_issued))
+      .map((value) => value.date_issued);
+    dates = [...result];
+    console.log(dates);
     if (dates.slice(1).includes('sun')) {
       result = result.slice(1);
       result = result.slice(result.indexOf('sun'));
@@ -50,7 +54,7 @@ export default function Graph({ ciphers, dataType, thisWeeksCiphers }) {
         result[result.indexOf(value.gameDate)] = value;
       }
     });
-    result = result.filter((value) => typeof value !== 'string');
+    result = result.filter((value) => value && typeof value !== 'string');
     return result;
   };
   const cipherValues = orderByDate(ciphers);
@@ -108,7 +112,11 @@ export default function Graph({ ciphers, dataType, thisWeeksCiphers }) {
         chart.destroy();
       }
       const data = {
-        labels: dates,
+        labels: dates.map((date) => {
+          if (date) {
+            return date.slice(0, 3);
+          }
+        }),
         datasets: [{
           axis: 'y',
           label: 'My First Dataset',
@@ -145,7 +153,7 @@ export default function Graph({ ciphers, dataType, thisWeeksCiphers }) {
               anchor: 'end',
               align: 'bottom',
               font: {
-                size: 20,
+                size: 18,
               },
               formatter,
             },
