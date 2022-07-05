@@ -242,8 +242,7 @@ export function copyToClipboard(downloadURL) {
     navigator.clipboard.write([image]);
     // Share feature
     navigator.share({
-      title: 'Ciphrase Stats',
-      file: [image],
+      files: [image],
     });
     return true;
   }
