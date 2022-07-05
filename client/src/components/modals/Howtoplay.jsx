@@ -5,7 +5,7 @@ import propTypes from 'prop-types';
 
 import downloadIcon from '../../img/download.png';
 import EndgameStats from './EndgameStats';
-import { copyToClipboard } from '../../helpers/helpers';
+import { copyToClipboard, startTimer } from '../../helpers/helpers';
 
 const modalAnimation = {
   scale: 2,
@@ -25,6 +25,16 @@ let currentGame;
 export default function Howtoplay({
   setSkipped, cookieData, played, setPlayed, text, downloadURL, level, setReload, date,
 }) {
+  // Timers for the count down until the next cipher.
+  const now = new Date(); const utc = new Date(now.getTime());
+  const nowTime = new Date(-Math.abs(utc - new Date(1458619200000)));
+  // Initializing the absolute time.
+  const absoluteTime = nowTime.toTimeString().slice(0, 8);
+
+  if (played && document.querySelector('#time')) {
+    const display = document.querySelector('#time');
+    startTimer(absoluteTime, display);
+  }
   const [share, setShare] = useState(false);
   const leaveAnimation = {
     scale: 1.0,
@@ -200,8 +210,9 @@ export default function Howtoplay({
               }
             </section>
             <p id="gameover-text">
-              Wait until tomorrow for the next cipher!
+              Time until next cipher:
             </p>
+            <span id="time" style={{ fontSize: '1.9vh' }}>{` ${absoluteTime}`}</span>
             <section>
               <div id="download-btn-container">
                 {downloadURL ? (

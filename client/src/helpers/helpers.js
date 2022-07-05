@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-plusplus */
 /* eslint-disable no-return-await */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
@@ -151,6 +153,38 @@ export function countDown(time = '00:00:00:00', opened = false, levelSwapped = f
   }
 }
 
+// Timer starter for the countdown until next cipher
+let nextCipherTime;
+export function startTimer(duration, display) {
+  // If there is no interval initialized a new one will be made
+  if (!nextCipherTime) {
+    const timer = duration.split(':'); let minutes; let
+      seconds; let hours;
+    hours = parseInt(timer[0], 10);
+    minutes = parseInt(timer[1], 10);
+    seconds = parseInt(timer[2], 10);
+    nextCipherTime = setInterval(() => {
+      hours = hours < 10 ? `0${hours}` : hours;
+      minutes = minutes < 10 ? `0${minutes}` : minutes;
+      seconds = seconds < 10 ? `0${seconds}` : seconds;
+      display.textContent = `${hours}:${minutes}:${seconds}`;
+      if (seconds >= 0) {
+        seconds -= 1;
+      }
+      if (seconds < 0 && minutes > 0) {
+        minutes -= 1;
+        seconds = 59;
+      }
+      if (minutes < 0 && hours > 0) {
+        hours -= 1;
+        minutes = 59;
+      }
+      hours = parseInt(hours, 10);
+      minutes = parseInt(minutes, 10);
+      seconds = parseInt(seconds, 10);
+    }, 1000);
+  }
+}
 export function stopCount() {
   clearInterval(counter);
 }
@@ -161,6 +195,9 @@ export function clearCount() {
   sec = 0;
   mil = 0;
   clearInterval(counter);
+  clearInterval(nextCipherTime);
+  clearInterval(nextCipherTime);
+  nextCipherTime = undefined;
   counter = undefined;
 }
 
@@ -227,7 +264,6 @@ export async function updateAttempts(attempt, text) {
   });
   return attemptResults;
 }
-
 // * Copies the user stats image for sharing.
 export function copyToClipboard(downloadURL) {
   // Clipboard permissions to allow for copy.
