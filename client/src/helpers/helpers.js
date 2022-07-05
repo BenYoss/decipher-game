@@ -1,3 +1,4 @@
+/* eslint-disable no-return-await */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
@@ -228,17 +229,22 @@ export async function updateAttempts(attempt, text) {
 }
 
 // * Copies the user stats image for sharing.
+function isOS() {
+  return navigator.userAgent.match(/ipad|iphone/i);
+}
 export async function copyToClipboard(downloadURL) {
   // Clipboard permissions to allow for copy.
   const { state } = await navigator.permissions.query({ name: 'clipboard-write' });
   // If status === granted, copy image to clipboard.
   if (state === 'granted') {
-    const response = await fetch(downloadURL);
-    const blob = await response.blob();
+    const makeImagePromise = async () => {
+      const response = await fetch(downloadURL);
+      return await response.blob();
+    };
     // Copies image blob to clipboard.
-    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+    await navigator.clipboard.write([new ClipboardItem({ 'image/png': makeImagePromise() })]);
     // Shares image blob.
-    await navigator.share({ file: blob });
+    await navigator.share({ file: makeImagePromise() });
     return true;
   }
   console.error('Error: Clipboard did not copy!');
