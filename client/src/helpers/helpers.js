@@ -229,32 +229,23 @@ export async function updateAttempts(attempt, text) {
 }
 
 // * Copies the user stats image for sharing.
-function isOS() {
-  return navigator.userAgent.match(/ipad|iphone/i);
-}
 export function copyToClipboard(downloadURL) {
   // Clipboard permissions to allow for copy.
+  // Conditional checks to see if clipboard components exist during the state.
   if (typeof ClipboardItem && navigator.clipboard.write) {
+    // Invoke and initialize clipboard item.
     const image = new ClipboardItem({
       'image/png': fetch(downloadURL)
         .then((response) => response.blob()),
     });
+    // Clipboard copy
     navigator.clipboard.write([image]);
-    navigator.clipboard.share({ file: image });
+    // Share feature
+    navigator.share({
+      title: 'Ciphrase Stats',
+      file: [image],
+    });
+    return true;
   }
-  // const { state } = await navigator.permissions.query({ name: 'clipboard-write' });
-  // // If status === granted, copy image to clipboard.
-  // if (state === 'granted') {
-  //   const makeImagePromise = async () => {
-  //     const response = await fetch(downloadURL);
-  //     return await response.blob();
-  //   };
-  //   // Copies image blob to clipboard.
-  //   navigator.clipboard.write([new ClipboardItem({ 'image/png': makeImagePromise() })]);
-  //   // Shares image blob.
-  //   navigator.share({ file: makeImagePromise() });
-  //   return true;
-  // }
-  // console.error('Error: Clipboard did not copy!');
-  // return false;
+  return false;
 }
