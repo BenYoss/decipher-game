@@ -232,21 +232,29 @@ export async function updateAttempts(attempt, text) {
 function isOS() {
   return navigator.userAgent.match(/ipad|iphone/i);
 }
-export async function copyToClipboard(downloadURL) {
+export function copyToClipboard(downloadURL) {
   // Clipboard permissions to allow for copy.
-  const { state } = await navigator.permissions.query({ name: 'clipboard-write' });
-  // If status === granted, copy image to clipboard.
-  if (state === 'granted') {
-    const makeImagePromise = async () => {
-      const response = await fetch(downloadURL);
-      return await response.blob();
-    };
-    // Copies image blob to clipboard.
-    navigator.clipboard.write([new ClipboardItem({ 'image/png': makeImagePromise() })]);
-    // Shares image blob.
-    navigator.share({ file: makeImagePromise() });
-    return true;
+  if (typeof Clipboarditem && navigator.clipboard.write) {
+    const image = new ClipboardItem({
+      'image/png': fetch(downloadURL)
+        .then((response) => response.blob()),
+    });
+    navigator.clipboard.write([image]);
+    navigator.clipboard.share({ file: image });
   }
-  console.error('Error: Clipboard did not copy!');
-  return false;
+  // const { state } = await navigator.permissions.query({ name: 'clipboard-write' });
+  // // If status === granted, copy image to clipboard.
+  // if (state === 'granted') {
+  //   const makeImagePromise = async () => {
+  //     const response = await fetch(downloadURL);
+  //     return await response.blob();
+  //   };
+  //   // Copies image blob to clipboard.
+  //   navigator.clipboard.write([new ClipboardItem({ 'image/png': makeImagePromise() })]);
+  //   // Shares image blob.
+  //   navigator.share({ file: makeImagePromise() });
+  //   return true;
+  // }
+  // console.error('Error: Clipboard did not copy!');
+  // return false;
 }
