@@ -242,9 +242,9 @@ export async function copyToClipboard(downloadURL) {
       return await response.blob();
     };
     // Copies image blob to clipboard.
-    await navigator.clipboard.write([new ClipboardItem({ 'image/png': makeImagePromise() })]);
+    navigator.clipboard.write([new ClipboardItem({ 'image/png': makeImagePromise() })]);
     // Shares image blob.
-    await navigator.share({ file: makeImagePromise() });
+    navigator.share({ file: makeImagePromise() });
     return true;
   }
   console.error('Error: Clipboard did not copy!');
