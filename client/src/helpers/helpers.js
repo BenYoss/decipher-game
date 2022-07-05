@@ -234,7 +234,7 @@ function isOS() {
 }
 export function copyToClipboard(downloadURL) {
   // Clipboard permissions to allow for copy.
-  if (typeof Clipboarditem && navigator.clipboard.write) {
+  if (typeof ClipboardItem && navigator.clipboard.write) {
     const image = new ClipboardItem({
       'image/png': fetch(downloadURL)
         .then((response) => response.blob()),
