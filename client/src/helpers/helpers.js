@@ -238,7 +238,7 @@ export async function copyToClipboard(downloadURL) {
     // Copies image blob to clipboard.
     await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
     // Shares image blob.
-    await navigator.share(blob);
+    await navigator.share({ file: blob });
     return true;
   }
   console.error('Error: Clipboard did not copy!');
