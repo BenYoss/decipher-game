@@ -276,11 +276,15 @@ export function copyToClipboard(downloadURL) {
     });
     // Clipboard copy
     navigator.clipboard.write([image]);
-    // Share feature
-    navigator.share({
-      files: [image],
-    });
-    return true;
+    // Share feature (Does not work at the moment)
+    return fetch(downloadURL)
+      .then((response) => response.blob())
+      .then((blob) => {
+        navigator.share({
+          files: [new File([blob], 'Ciphrase Stats.png', { type: 'image/png' })],
+        });
+        return true;
+      }).catch((err) => console.error(err));
   }
   return false;
 }
