@@ -118,7 +118,7 @@ let counter;
  * counting up from miliseconds to hours.
  * @param {*} time stateful component method that updates the timer state in the App component.
  */
-export function countDown(time = '00:00:00:00', opened = false, levelSwapped = false, setLevelSwapped = () => {}) {
+export function countDown(time = '00:00:00:00', opened = false, levelSwapped = false, setLevelSwapped = () => { }) {
   if (levelSwapped) {
     hour = 0;
     min = 0;
@@ -153,7 +153,7 @@ export function countDown(time = '00:00:00:00', opened = false, levelSwapped = f
   }
 }
 
-// Timer starter for the countdown until next cipher
+// Timer starter for the countdown until the next ciphrase
 let nextCipherTime;
 export function startTimer(duration, display) {
   // If there is no interval initialized a new one will be made

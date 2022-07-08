@@ -25,7 +25,7 @@ let currentGame;
 export default function Howtoplay({
   setSkipped, cookieData, played, setPlayed, text, downloadURL, level, setReload, date,
 }) {
-  // Timers for the count down until the next cipher.
+  // Timers for the count down until the next ciphrase.
   const now = new Date(); const utc = new Date(now.getTime());
   const nowTime = new Date(-Math.abs(utc - new Date(1458619200000)));
   // Initializing the absolute time.
@@ -72,10 +72,17 @@ export default function Howtoplay({
           </div>
           <hr />
           <div id="gameover-body">
-            <p id="gameover-text">Every day a new cipher will generate with increasing difficulty throughout the week.</p>
-            <p id="gameover-text">Ciphers reset at the end of each week.</p>
+            <p id="gameover-text">
+              Every day a new phrase will generate as a cipher
+              (encrypted pattern of text), making it what we like to call a
+              {' '}
+              <b>ciphrase</b>
+              !
+
+            </p>
+            <p id="gameover-text">Ciphrases have increasing difficulty throughout the week and reset at the end of each week.</p>
             <hr />
-            <p id="gameover-text">Ciphers include different encryption patterns. Such as:</p>
+            <p id="gameover-text">Ciphrases include different encryption patterns. Such as:</p>
             <div id="mutations-outter-container">
               <table id="mutations-desc-container">
                 <tr className="mutation-example">
@@ -133,7 +140,7 @@ export default function Howtoplay({
             </div>
             <hr />
             <b id="gameover-text">
-              Try to complete the cipher in 4 tries!
+              Try to complete the ciphrase in 4 tries!
             </b>
             <div id="modal-btn-container">
               <motion.button
@@ -157,7 +164,7 @@ export default function Howtoplay({
       ) : (
         <>
           <div id="gameover-header">
-            <h2 id="gameover-text">Cipher Completed!</h2>
+            <h2 id="gameover-text">Ciphrase Completed!</h2>
           </div>
           <hr />
           <div id="gameover-cipher-container">
@@ -210,7 +217,7 @@ export default function Howtoplay({
               }
             </section>
             <p id="gameover-text">
-              Time until next cipher:
+              Time until the next ciphrase:
             </p>
             <span id="time" style={{ fontSize: '1.9vh' }}>{` ${absoluteTime}`}</span>
             <section>

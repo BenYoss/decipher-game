@@ -75,7 +75,7 @@ export default function Gameover({
             </div>
           </section>
           <p id="gameover-text">
-            Wait until tomorrow for the next cipher!
+            Wait until tomorrow for the next ciphrase!
           </p>
           <section>
             <div id="download-btn-container">
