@@ -74,7 +74,7 @@ export default function Howtoplay({
           <div id="gameover-body">
             <p id="gameover-text">
               Every day a new phrase will generate as a cipher
-              (encrypted pattern of text), making it what we like to call a
+              (encrypted pattern of text), making what we like to call a
               {' '}
               <b>ciphrase</b>
               !
