@@ -69,7 +69,6 @@ export default function App() {
   const [ciphertext, setCiphertext] = useState('');
   const [encouragement, setEncouragement] = useState(true);
   function getThisWeeksCiphers(cipherss) {
-    console.log(thisWeeksCookieCiphers);
     let days;
     let lastSevenDays;
     let startOfWeek;
@@ -95,7 +94,6 @@ export default function App() {
       // setThisWeeksCookieCiphers(startOfWeek);
     }
     if (cipherss[0].date_issued) {
-      console.log('second');
       days = cipherss.map((cipher) => cipher.date_issued.slice(0, 3)).slice(-7);
       lastSevenDays = cipherss.slice(-7);
       const sevenDays = days.slice(-7);
@@ -104,10 +102,7 @@ export default function App() {
         // startOfWeek.splice(days.indexOf('Sun'), 1);
         startOfWeek = startOfWeek.slice(days.indexOf('Sun'));
       }
-      let result = thisWeeksCookieCiphers.filter((cipher, i) => {
-        console.log(cipher.gameDate, startOfWeek[i].date_issued, 'AHFUFI');
-        return cipher.gameDate === startOfWeek[i].date_issued;
-      });
+      const result = thisWeeksCookieCiphers.filter((cipher, i) => cipher.gameDate === startOfWeek[i].date_issued);
       setThisWeeksCookieCiphers(result);
       setThisWeeksCiphers(startOfWeek);
     }
@@ -335,7 +330,7 @@ export default function App() {
             text={text}
             health={health}
             attempts={attempts}
-            date={date}
+            date={date || utc.toDateString()}
             cookies={cookies}
             id="gameover"
             setReload={setReload}
@@ -362,7 +357,7 @@ export default function App() {
             time={finalTime}
             health={health}
             attempts={attempts}
-            date={date}
+            date={date || utc.toDateString()}
             cookies={cookies}
             setReload={setReload}
             downloadURL={downloadURL}

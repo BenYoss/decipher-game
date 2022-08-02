@@ -82,7 +82,14 @@ export default function Howtoplay({
             </p>
             <p id="gameover-text">Ciphrases have increasing difficulty throughout the week and reset at the end of each week.</p>
             <hr />
-            <p id="gameover-text">Ciphrases include different encryption patterns. Such as:</p>
+            <p id="gameover-text">Ciphrases include different encryption patterns.</p>
+            <p id="gameover-text">
+              For example, the phrase
+              {' '}
+              <b>Behind Bars</b>
+              {' '}
+              could have:
+            </p>
             <div id="mutations-outter-container">
               <table id="mutations-desc-container">
                 <tr className="mutation-example">
@@ -101,11 +108,11 @@ export default function Howtoplay({
             </div>
             <hr />
             <p id="gameover-text">
-              If a word is right, a
+              A
               {' '}
               <b>GREEN</b>
               {' '}
-              box will appear.
+              box will appear under a right word.
             </p>
             <div
               id="true-example"
@@ -120,11 +127,11 @@ export default function Howtoplay({
               />
             </div>
             <p id="gameover-text">
-              If a word is wrong, a
+              A
               {' '}
               <b>GRAY</b>
               {' '}
-              box will appear.
+              box will appear under a wrong word.
             </p>
             <div
               id="false-example"
@@ -140,7 +147,7 @@ export default function Howtoplay({
             </div>
             <hr />
             <b id="gameover-text">
-              Try to complete the ciphrase in 4 tries!
+              Complete the ciphrase in under 4 tries!
             </b>
             <div id="modal-btn-container">
               <motion.button
