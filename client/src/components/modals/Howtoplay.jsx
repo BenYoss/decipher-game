@@ -23,7 +23,9 @@ const hoverAnimation = {
  */
 let currentGame;
 export default function Howtoplay({
-  setSkipped, cookieData, played, setPlayed, text, downloadURL, level, setReload, date,
+  setSkipped, cookieData, played, setPlayed, text, downloadURL, level, setReload, date, 
+  skipped,
+  setHowToPlayButtonClick,
 }) {
   // Timers for the count down until the next ciphrase.
   const now = new Date(); const utc = new Date(now.getTime());
@@ -49,12 +51,17 @@ export default function Howtoplay({
   if (cookieData) {
     gamesPlayed = cookieData.timeHistory;
     if (!played) {
+      let gameExists = false;
       gamesPlayed.forEach((game) => {
         if (game.gameDate === date) {
           currentGame = game;
+          gameExists = true;
           setPlayed(true);
         }
       });
+      if (cookieData && cookieData.timeHistory.length && !skipped && !gameExists) {
+        setSkipped(true);
+      }
     }
   }
   return (
@@ -158,6 +165,7 @@ export default function Howtoplay({
                 initial="hidden"
                 transition={{ duration: 0.18 }}
                 onClick={() => {
+                  setHowToPlayButtonClick(false);
                   setSkipped(true);
                 }}
               >

@@ -54,6 +54,12 @@ $bkgColor1: #12EE1B;
     transition: 0.4s;
 }
 
+.toolbar-item-donate {
+    position: absolute;
+    left: 103vw;
+    top: 83vw;
+}
+
 .switch {
     position: relative;
     display: inline-block;
@@ -190,6 +196,11 @@ input:checked + .slider:before {
 }
 
 @media only screen and (min-width: 850px) {    
+    .toolbar-item-donate {
+        position: relative;
+        left: auto;
+        top: auto;
+    }
     #drawer-title {
         font-size: 1.1vw;
         font-weight: bold;

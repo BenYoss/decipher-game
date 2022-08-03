@@ -68,6 +68,8 @@ export default function App() {
   const [hardMode, setHardMode] = useState(JSON.parse(localStorage.getItem('hard-mode')));
   const [ciphertext, setCiphertext] = useState('');
   const [encouragement, setEncouragement] = useState(true);
+  const [howToPlayButtonClick, setHowToPlayButtonClick] = useState(false);
+
   function getThisWeeksCiphers(cipherss) {
     let days;
     let lastSevenDays;
@@ -138,6 +140,7 @@ export default function App() {
   }
 
   useEffect(() => {
+    console.log(played);
     if (!text && !level && !mutation) {
       calculateText();
       if (!cookies) {
@@ -197,6 +200,7 @@ export default function App() {
                 gameover={gameover}
                 victory={victory}
                 drawerOpened={drawerOpened}
+                howtoplaybuttonclick={howToPlayButtonClick}
                 levelSwapped={levelSwapped}
                 setLevelSwapped={setLevelSwapped}
                 disableTimer={disableTimer}
@@ -228,7 +232,7 @@ export default function App() {
           )}
         </div>
       </div>
-      {(!skipped && text && level > 0) && !levelSwapped ? (
+      {((!skipped && text && level > 0) && !levelSwapped) || howToPlayButtonClick ? (
         <>
           <Suspense fallback={(
             <div />
@@ -236,6 +240,7 @@ export default function App() {
           >
 
             <Howtoplay
+              setHowToPlayButtonClick={setHowToPlayButtonClick}
               setSkipped={setSkipped}
               cookieData={cookies}
               played={played}
@@ -243,7 +248,10 @@ export default function App() {
               text={text}
               downloadURL={downloadURL}
               level={level}
+              skipped={skipped}
               setReload={setReload}
+              disableTimer={disableTimer}
+              setDisableTimer={setDisableTimer}
               date={date}
             />
           </Suspense>
@@ -255,7 +263,7 @@ export default function App() {
             <div
               className="modal-bg"
               id="modal-bg"
-              onClick={() => setSkipped(true)}
+              onClick={() => { setSkipped(true); setHowToPlayButtonClick(false); }}
               tabIndex="0"
               label="modal"
               role="button"
@@ -272,7 +280,6 @@ export default function App() {
           )}
         </>
       ) : null}
-
       {levelSwapped ? (
         <>
           <Suspense fallback={(
@@ -286,6 +293,7 @@ export default function App() {
               played={played}
               setPlayed={setPlayed}
               text={text}
+              skipped={skipped}
               downloadURL={downloadURL}
               level={level}
               setReload={setReload}
@@ -300,7 +308,12 @@ export default function App() {
             <div
               className="modal-bg"
               id="modal-bg"
-              onClick={() => { setSkipped(true); }}
+              onClick={() => {
+                setSkipped(true);
+                if (howToPlayButtonClick) {
+                  setHowToPlayButtonClick(false);
+                }
+              }}
               tabIndex="0"
               label="modal"
               role="button"
@@ -405,6 +418,7 @@ export default function App() {
           setDownloadURL={setDownloadURL}
           downloadURL={downloadURL}
           setSkipped={setSkipped}
+          setHowToPlayButtonClick={setHowToPlayButtonClick}
           setDisableTimer={setDisableTimer}
           setGameover={setGameover}
           setVictory={setVictory}

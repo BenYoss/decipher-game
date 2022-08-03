@@ -118,7 +118,7 @@ let counter;
  * counting up from miliseconds to hours.
  * @param {*} time stateful component method that updates the timer state in the App component.
  */
-export function countDown(time = '00:00:00:00', opened = false, levelSwapped = false, setLevelSwapped = () => { }) {
+export function countDown(time = '00:00:00:00', opened = false, howtoplaybuttonclick = false, levelSwapped = false, setLevelSwapped = () => { }) {
   if (levelSwapped) {
     hour = 0;
     min = 0;
@@ -147,7 +147,7 @@ export function countDown(time = '00:00:00:00', opened = false, levelSwapped = f
       const milStr = mil > 9 ? mil : `0${mil}`;
       time(`${hourStr}:${minStr}:${secStr}:${milStr}`);
     }, 20);
-  } else if (opened) {
+  } else if (opened || howtoplaybuttonclick) {
     clearInterval(counter);
     counter = undefined;
   }
