@@ -13,7 +13,7 @@ const modalAnimation = {
   scale: 2,
   opacity: '100%',
 };
-T
+
 const hoverAnimation = {
   scale: 1.1,
   boxShadow: '0px 0px 8px hsl(120, 61%, 50%)',
