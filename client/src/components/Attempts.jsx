@@ -22,7 +22,7 @@ export default function Attempts({
     filter: opened ? 'blur(5px)' : null,
   };
 
-  if (window.innerWidth < 850) {
+  if (window.innerWidth < 850 || (window.innerHeight > 1300 && window.innerWidth > 1000)) {
     style.left = '0';
     style.top = `${(margin + 5)}%`;
     style.zIndex = index;

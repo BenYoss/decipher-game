@@ -428,7 +428,7 @@ export default function App() {
         />
       </Suspense>
       <div id="body-container-pc">
-        <div id={window.innerWidth > 850 ? 'ciphered-body' : 'ciphered-body-mobile'}>
+        <div id={window.innerWidth > 850 && Math.floor(window.innerWidth / window.innerHeight) > 1 ? 'ciphered-body' : 'ciphered-body-mobile'}>
           {skipped && (
           <>
             {
@@ -437,7 +437,6 @@ export default function App() {
                   <div />
                 )}
                 >
-
                   <Attempts
                     attempt={attempt}
                     margin={index * 5}
