@@ -24,6 +24,7 @@ import '../styles/donate.scss';
 import 'regenerator-runtime/runtime';
 import loading from '../img/loading.gif';
 import RewardingEncouragement from './encouragement/RewardingEncouragement';
+import NoInputTextModal from './errors/NoInputTextModal';
 
 const Health = lazy(() => import('./Health'));
 const Gameover = lazy(() => import('./modals/Gameover'));
@@ -69,7 +70,7 @@ export default function App() {
   const [ciphertext, setCiphertext] = useState('');
   const [encouragement, setEncouragement] = useState(true);
   const [howToPlayButtonClick, setHowToPlayButtonClick] = useState(false);
-
+  const [error, setError] = useState({ type: '' });
   function getThisWeeksCiphers(cipherss) {
     let days;
     let lastSevenDays;
@@ -382,6 +383,14 @@ export default function App() {
         </div>
       </>
       )}
+      {error.type === 'no input text' && (
+      <Suspense fallback={(
+        <div />
+          )}
+      >
+        <NoInputTextModal setError={setError} />
+      </Suspense>
+      )}
       {(victory || gameover) && finalTime && (
         <Suspense fallback={(
           <div />
@@ -488,6 +497,7 @@ export default function App() {
               percent={percent}
               attempts={attempts}
               setAttempts={setAttempts}
+              setError={setError}
             />
           </Suspense>
         </div>

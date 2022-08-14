@@ -6,7 +6,7 @@ import { updateAttempts } from '../helpers/helpers';
 
 export default function Input({
   text, level, health, setHealth, setGameover, setPercent,
-  percent, setVictory, setAttempts, attempts,
+  percent, setVictory, setAttempts, attempts, setError,
 }) {
   // Animation objects.
   const hoverAnimation = {
@@ -45,6 +45,11 @@ export default function Input({
             type="button"
             onClick={() => {
               const value = val;
+              // Checks if text was entered into the response. If not, an error will return.
+              if (value.length < 1) {
+                setError({ type: 'no input text' });
+                return;
+              }
               // Removes all symbols from input text and answer text for comparison.
               const regexLower = new RegExp(/[a-z]|[A-Z]| /i, 'g');
               const newText = text.match(regexLower).join('');
