@@ -5,7 +5,12 @@ import propTypes from 'prop-types';
 import Graph from './Graph';
 import dataTypes from './datatypes.json';
 
-export default function Statistics({ ciphers, setReload }) {
+export default function Statistics({
+  ciphers,
+  setReload,
+  thisWeeksCiphers,
+  thisWeeksCookieCiphers
+}) {
   const [dataType, setDataType] = useState('wins');
 
   const buttonScaleSize = window.innerWidth > 750 ? 'scale(0.5)' : 'scale(1)';
@@ -30,17 +35,30 @@ export default function Statistics({ ciphers, setReload }) {
       <hr />
       <div id="stats-datatype-head">
         <div id="stats-datatype-header">
-          <p id="drawer-title">Select Type</p>
+          <p id="drawer-title">Choose Type</p>
         </div>
         <div id="stats-datatype-selector">
           <button id="standard-btn" style={{ transform: buttonScaleSize }} type="button" onClick={() => handleDataTypes('down')} className="datatype-selector-btn">{'<'}</button>
-          <p id="drawer-title">{dataType.toUpperCase()}</p>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <p id="drawer-title">{dataType.toUpperCase()}</p>
+            {
+              dataType === 'time' && (
+                <p id="drawer-title" style={{ transform: 'scale(0.8)' }}>(minutes)</p>
+              )
+            }
+          </div>
           <button id="standard-btn" style={{ transform: buttonScaleSize }} type="button" onClick={() => handleDataTypes('up')} className="datatype-selector-btn">{'>'}</button>
         </div>
       </div>
       {ciphers ? (
         <div id="chart-container">
-          <Graph ciphers={ciphers} dataType={dataType} setReload={setReload} />
+          <Graph
+            ciphers={ciphers}
+            dataType={dataType}
+            setReload={setReload}
+            thisWeeksCiphers={thisWeeksCiphers}
+            thisWeeksCookieCiphers={thisWeeksCookieCiphers}
+          />
         </div>
       ) : (
         <div id="stats-chart">

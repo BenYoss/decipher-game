@@ -6,7 +6,7 @@ import { updateAttempts } from '../helpers/helpers';
 
 export default function Input({
   text, level, health, setHealth, setGameover, setPercent,
-  percent, setVictory, setAttempts, attempts,
+  percent, setVictory, setAttempts, attempts, setError,
 }) {
   // Animation objects.
   const hoverAnimation = {
@@ -24,7 +24,17 @@ export default function Input({
   return (
     <div id="cipher-input-container">
       <form>
-        <textarea onChange={(e) => useVal(e.target.value)} />
+        <textarea
+          onChange={(e) => {
+            const pattern = / /g;
+            const splitted = text.split(' ');
+            if (!e.target.value.match(pattern)
+            || e.target.value.match(pattern).length < splitted.length) {
+              useVal(e.target.value);
+            }
+          }}
+          value={val}
+        />
         <div id="input-btn-container">
           <motion.button
             onMouseOver={() => onHover(true)}
@@ -35,6 +45,11 @@ export default function Input({
             type="button"
             onClick={() => {
               const value = val;
+              // Checks if text was entered into the response. If not, an error will return.
+              if (value.length < 1) {
+                setError({ type: 'no input text' });
+                return;
+              }
               // Removes all symbols from input text and answer text for comparison.
               const regexLower = new RegExp(/[a-z]|[A-Z]| /i, 'g');
               const newText = text.match(regexLower).join('');
@@ -68,7 +83,6 @@ export default function Input({
                 setTimeout(() => {
                   document.getElementsByTagName('textarea')[0].style.color = initialColor;
                   document.getElementsByTagName('textarea')[0].style.border = initialColor;
-                  document.getElementsByTagName('textarea')[0].value = '';
                 }, 1000);
                 const updatedHealth = health.map((slot) => {
                   if (slot.open && !hasTakenSlot) {
@@ -84,6 +98,10 @@ export default function Input({
                   // If all 4 attempts are used... GAMEOVER.
                   if (tally === 4) {
                     document.getElementById('standard-btn').style.pointerEvents = 'none';
+                    document.getElementsByTagName('textarea')[0].value = '';
+                    document.getElementsByTagName('textarea')[0].style.color = initialColor;
+                    document.getElementsByTagName('textarea')[0].style.border = initialColor;
+                    useVal('');
                     setGameover(true);
                   }
                 });

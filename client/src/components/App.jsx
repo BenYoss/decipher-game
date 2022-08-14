@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-restricted-syntax */
 import React, {
@@ -23,6 +24,7 @@ import '../styles/donate.scss';
 import 'regenerator-runtime/runtime';
 import loading from '../img/loading.gif';
 import RewardingEncouragement from './encouragement/RewardingEncouragement';
+import NoInputTextModal from './errors/NoInputTextModal';
 
 const Health = lazy(() => import('./Health'));
 const Gameover = lazy(() => import('./modals/Gameover'));
@@ -60,35 +62,51 @@ export default function App() {
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [, setReload] = useState([]);
   const [thisWeeksCiphers, setThisWeeksCiphers] = useState([]);
+  const [thisWeeksCookieCiphers, setThisWeeksCookieCiphers] = useState([]);
   const [levelSwapped, setLevelSwapped] = useState(false);
   const [date, setDate] = useState();
   const [disableTimer, setDisableTimer] = useState(JSON.parse(localStorage.getItem('disable-timer')));
   const [hardMode, setHardMode] = useState(JSON.parse(localStorage.getItem('hard-mode')));
   const [ciphertext, setCiphertext] = useState('');
   const [encouragement, setEncouragement] = useState(true);
-
+  const [howToPlayButtonClick, setHowToPlayButtonClick] = useState(false);
+  const [error, setError] = useState({ type: '' });
   function getThisWeeksCiphers(cipherss) {
     let days;
     let lastSevenDays;
     let startOfWeek;
     if (cipherss[0].gameDate) {
-      days = cipherss.map((cipher) => cipher.gameDate.slice(0, 3));
-      lastSevenDays = cipherss.slice(-7);
-      startOfWeek = lastSevenDays.slice(lastSevenDays.length === 7 ? days.indexOf('Sun') : 0);
-      if (days.slice(0, 1).includes('Sun')) {
-        startOfWeek.splice(0, 1);
-        startOfWeek = startOfWeek.slice(days.indexOf('Sun'));
-      }
-    }
-    if (cipherss[0].date_issued) {
-      days = cipherss.map((cipher) => cipher.date_issued.slice(0, 3));
+      const dateTimes = {
+        Sun: 1,
+        Mon: 2,
+        Tue: 3,
+        Wed: 4,
+        Thu: 5,
+        Fri: 6,
+        Sat: 7,
+      };
+      days = cipherss.map((cipher) => cipher.gameDate.slice(0, 3)).slice(-7).sort((a, b) => dateTimes[a.slice(0, 3)]
+      - dateTimes[b.slice(0, 3)]);
       lastSevenDays = cipherss.slice(-7);
       const sevenDays = days.slice(-7);
-      startOfWeek = lastSevenDays.slice(lastSevenDays.length === 7 ? sevenDays.indexOf('Sun') : 0);
-      if (days.slice(0, 1).includes('Sun')) {
-        startOfWeek.splice(0, 1);
+      startOfWeek = lastSevenDays.slice(lastSevenDays.length > 7 ? sevenDays.indexOf('Sun') : 0);
+      if (days.slice(days.indexOf('Sun') + 1).includes('Sun')) {
+        // startOfWeek.splice(days.indexOf('Sun'), 1);
         startOfWeek = startOfWeek.slice(days.indexOf('Sun'));
       }
+      // setThisWeeksCookieCiphers(startOfWeek);
+    }
+    if (cipherss[0].date_issued) {
+      days = cipherss.map((cipher) => cipher.date_issued.slice(0, 3)).slice(-7);
+      lastSevenDays = cipherss.slice(-7);
+      const sevenDays = days.slice(-7);
+      startOfWeek = lastSevenDays.slice(lastSevenDays.length > 7 ? sevenDays.indexOf('Sun') : 0);
+      if (days.slice(days.indexOf('Sun')).includes('Sun')) {
+        // startOfWeek.splice(days.indexOf('Sun'), 1);
+        startOfWeek = startOfWeek.slice(days.indexOf('Sun'));
+      }
+      const result = thisWeeksCookieCiphers.filter((cipher, i) => cipher.gameDate === startOfWeek[i].date_issued);
+      setThisWeeksCookieCiphers(result);
       setThisWeeksCiphers(startOfWeek);
     }
     return startOfWeek;
@@ -123,6 +141,7 @@ export default function App() {
   }
 
   useEffect(() => {
+    console.log(played);
     if (!text && !level && !mutation) {
       calculateText();
       if (!cookies) {
@@ -182,6 +201,7 @@ export default function App() {
                 gameover={gameover}
                 victory={victory}
                 drawerOpened={drawerOpened}
+                howtoplaybuttonclick={howToPlayButtonClick}
                 levelSwapped={levelSwapped}
                 setLevelSwapped={setLevelSwapped}
                 disableTimer={disableTimer}
@@ -213,7 +233,7 @@ export default function App() {
           )}
         </div>
       </div>
-      {(!skipped && text && level > 0) && !levelSwapped ? (
+      {((!skipped && text && level > 0) && !levelSwapped) || howToPlayButtonClick ? (
         <>
           <Suspense fallback={(
             <div />
@@ -221,6 +241,7 @@ export default function App() {
           >
 
             <Howtoplay
+              setHowToPlayButtonClick={setHowToPlayButtonClick}
               setSkipped={setSkipped}
               cookieData={cookies}
               played={played}
@@ -228,7 +249,10 @@ export default function App() {
               text={text}
               downloadURL={downloadURL}
               level={level}
+              skipped={skipped}
               setReload={setReload}
+              disableTimer={disableTimer}
+              setDisableTimer={setDisableTimer}
               date={date}
             />
           </Suspense>
@@ -240,7 +264,7 @@ export default function App() {
             <div
               className="modal-bg"
               id="modal-bg"
-              onClick={() => setSkipped(true)}
+              onClick={() => { setSkipped(true); setHowToPlayButtonClick(false); }}
               tabIndex="0"
               label="modal"
               role="button"
@@ -257,7 +281,6 @@ export default function App() {
           )}
         </>
       ) : null}
-
       {levelSwapped ? (
         <>
           <Suspense fallback={(
@@ -271,6 +294,7 @@ export default function App() {
               played={played}
               setPlayed={setPlayed}
               text={text}
+              skipped={skipped}
               downloadURL={downloadURL}
               level={level}
               setReload={setReload}
@@ -285,7 +309,12 @@ export default function App() {
             <div
               className="modal-bg"
               id="modal-bg"
-              onClick={() => { setSkipped(true); }}
+              onClick={() => {
+                setSkipped(true);
+                if (howToPlayButtonClick) {
+                  setHowToPlayButtonClick(false);
+                }
+              }}
               tabIndex="0"
               label="modal"
               role="button"
@@ -315,11 +344,12 @@ export default function App() {
             text={text}
             health={health}
             attempts={attempts}
-            date={date}
+            date={date || utc.toDateString()}
             cookies={cookies}
             id="gameover"
             setReload={setReload}
             downloadURL={downloadURL}
+            mutation={mutation}
           />
 
         </Suspense>
@@ -341,7 +371,7 @@ export default function App() {
             time={finalTime}
             health={health}
             attempts={attempts}
-            date={date}
+            date={date || utc.toDateString()}
             cookies={cookies}
             setReload={setReload}
             downloadURL={downloadURL}
@@ -352,6 +382,14 @@ export default function App() {
           <img src={loading} id="loading-wheel" alt="loading wheel" width="100px" height="100px" />
         </div>
       </>
+      )}
+      {error.type === 'no input text' && (
+      <Suspense fallback={(
+        <div />
+          )}
+      >
+        <NoInputTextModal setError={setError} />
+      </Suspense>
       )}
       {(victory || gameover) && finalTime && (
         <Suspense fallback={(
@@ -389,15 +427,17 @@ export default function App() {
           setDownloadURL={setDownloadURL}
           downloadURL={downloadURL}
           setSkipped={setSkipped}
+          setHowToPlayButtonClick={setHowToPlayButtonClick}
           setDisableTimer={setDisableTimer}
           setGameover={setGameover}
           setVictory={setVictory}
           setHardMode={setHardMode}
           setEncouragement={setEncouragement}
+          thisWeeksCookieCiphers={thisWeeksCookieCiphers}
         />
       </Suspense>
       <div id="body-container-pc">
-        <div id={window.innerWidth > 750 ? 'ciphered-body' : 'ciphered-body-mobile'}>
+        <div id={window.innerWidth > 850 && Math.floor(window.innerWidth / window.innerHeight) > 1 ? 'ciphered-body' : 'ciphered-body-mobile'}>
           {skipped && (
           <>
             {
@@ -406,7 +446,6 @@ export default function App() {
                   <div />
                 )}
                 >
-
                   <Attempts
                     attempt={attempt}
                     margin={index * 5}
@@ -458,6 +497,7 @@ export default function App() {
               percent={percent}
               attempts={attempts}
               setAttempts={setAttempts}
+              setError={setError}
             />
           </Suspense>
         </div>

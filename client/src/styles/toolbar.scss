@@ -5,7 +5,7 @@ $bkgColor1: #12EE1B;
 [data-theme="dark"] #toolbar-container, [data-theme="light"] #toolbar-container {
     position: absolute;
     z-index: 11;
-    left: -12vw;
+    left: -3.1rem;
     top: 16vh;
     vertical-align: center;
     padding: 40px 30px 45px 50px;
@@ -52,6 +52,12 @@ $bkgColor1: #12EE1B;
     bottom: 0;
     background-color: #ccc;
     transition: 0.4s;
+}
+
+.toolbar-item-donate {
+    position: absolute;
+    left: 103vw;
+    top: 83vw;
 }
 
 .switch {
@@ -160,6 +166,25 @@ input:checked + .slider:before {
     color: var(--primary-text-color);
 }
 
+@media only screen and (min-width: 750px) {
+    [data-theme="dark"] #toolbar-drawer, [data-theme="light"] #toolbar-drawer {
+        position: absolute;
+        width: 100vw;
+        padding: 0px 0px 0px 1vw;
+        height: 100vh;
+        overflow: hidden;
+        top: -16vh;
+        left: -47.8rem;
+        background-color: var(--secondary-background-color);
+        color: var(--primary-text-color);
+    }
+    .toolbar-item-donate {
+        position: relative;
+        left: auto;
+        top: auto;
+    }
+}
+
 [data-theme="dark"] .toolbar-icon-img
 {
     width: 30px;
@@ -175,7 +200,12 @@ input:checked + .slider:before {
     filter: none;
 }
 
-@media only screen and (min-width: 750px) {    
+@media only screen and (min-width: 850px) and (max-height: 1000px) {    
+    .toolbar-item-donate {
+        position: relative;
+        left: auto;
+        top: auto;
+    }
     #drawer-title {
         font-size: 1.1vw;
         font-weight: bold;
@@ -261,7 +291,6 @@ input:checked + .slider:before {
         justify-content: flex-end;
     }
 }
-
 
 @media only screen and (min-width: 1500px) {    
     #drawer-title {
@@ -349,4 +378,27 @@ input:checked + .slider:before {
     background-color: var(--secondary-background-color);
     color: var(--primary-text-color);
     
+}
+
+@media only screen and (min-width: 1000px) and (min-height: 1300px) {
+    [data-theme="dark"] #toolbar-drawer, [data-theme="light"] #toolbar-drawer {
+        position: absolute;
+        width: 100vw;
+        padding: 0px 0px 0px 1vw;
+        height: 100vh;
+        overflow: hidden;
+        top: -16vh;
+        left: -62rem;
+        background-color: var(--secondary-background-color);
+        color: var(--primary-text-color);
+    }
+    .toolbar-item-donate {
+        position: relative;
+        left: auto;
+        top: auto;
+        transform: scale(1.2);
+    }
+    .toolbar-item {
+        transform: scale(1.2);
+    }
 }

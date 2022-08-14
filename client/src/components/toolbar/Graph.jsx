@@ -16,7 +16,7 @@ Chart.register(ChartDataLabels);
 
 let counter = 0;
 let chart;
-export default function Graph({ ciphers, dataType }) {
+export default function Graph({ ciphers, dataType, thisWeeksCiphers, thisWeeksCookieCiphers }) {
   const dateTimes = {
     Sun: 1,
     Mon: 2,
@@ -26,7 +26,7 @@ export default function Graph({ ciphers, dataType }) {
     Fri: 6,
     Sat: 7,
   };
-  const dates = ciphers.map((cipher) => cipher.gameDate).sort((a, b) => dateTimes[a.slice(0, 3)]
+  let dates = ciphers.map((cipher) => cipher.gameDate).sort((a, b) => dateTimes[a.slice(0, 3)]
    - dateTimes[b.slice(0, 3)]);
   let formatter;
   const orderByDate = (arr) => {
@@ -40,10 +40,20 @@ export default function Graph({ ciphers, dataType }) {
       v.gameDate = initialGameDates[i];
       return v;
     });
-    const result = [...dates];
+    let result = thisWeeksCiphers.filter((value) => dates.includes(value.date_issued))
+      .map((value) => value.date_issued);
+    dates = [...result];
+    console.log(dates);
+    if (dates.slice(1).includes('sun')) {
+      result = result.slice(1);
+      result = result.slice(result.indexOf('sun'));
+    }
     order.forEach((value) => {
-      result[result.indexOf(value.gameDate)] = value;
+      if (result.includes(value.gameDate)) {
+        result[result.indexOf(value.gameDate)] = value;
+      }
     });
+    result = result.filter((value) => value && typeof value !== 'string');
     return result;
   };
   const cipherValues = orderByDate(ciphers);
@@ -68,7 +78,7 @@ export default function Graph({ ciphers, dataType }) {
             return null;
         }
       };
-    } if (dataType === 'times') {
+    } if (dataType === 'time') {
       let times;
       let mil;
       let sec;
@@ -76,22 +86,23 @@ export default function Graph({ ciphers, dataType }) {
       let hr;
       resolverArr = cipherValues.map((cipher) => {
         times = cipher.time.split(':');
-        mil = Number(times[times.length - 1]) * 1;
-        sec = Number(times[times.length - 2]) * 100;
-        min = Number(times[1]) * 10000;
-        hr = Number(times[0]) * 1000000;
-        return mil + sec + min + hr;
+        mil = Number(times[times.length - 1]) / 10000;
+        sec = Number(times[times.length - 2]) / 60;
+        min = Number(times[1]);
+        hr = Number(times[0]) * 60;
+        return Math.round(1000 * (mil + sec + min + hr)) / 1000;
       });
 
       formatter = function (value, index) {
-        let def = '00:00:00:00';
-        cipherValues.forEach((cipher) => {
-          const timeInt = parseInt(cipher.time.split(':').join(''));
-          if (timeInt === value) {
-            def = cipher.time;
-          }
-        });
-        return def;
+        // FOR DISPLAYING EXACT TIME (String)
+        // let def = '00:00:00:00';
+        // cipherValues.forEach((cipher) => {
+        //   const timeInt = parseInt(cipher.time.split(':').join(''));
+        //   if (timeInt === value) {
+        //     def = cipher.time;
+        //   }
+        // });
+        return value;
       };
     }
 
@@ -100,7 +111,11 @@ export default function Graph({ ciphers, dataType }) {
         chart.destroy();
       }
       const data = {
-        labels: dates,
+        labels: dates.map((date) => {
+          if (date) {
+            return date.slice(0, 3);
+          }
+        }),
         datasets: [{
           axis: 'y',
           label: 'My First Dataset',
@@ -137,7 +152,7 @@ export default function Graph({ ciphers, dataType }) {
               anchor: 'end',
               align: 'bottom',
               font: {
-                size: 20,
+                size: 18,
               },
               formatter,
             },
@@ -164,4 +179,5 @@ export default function Graph({ ciphers, dataType }) {
 Graph.propTypes = {
   ciphers: propTypes.element.isRequired,
   dataType: propTypes.string.isRequired,
+  thisWeeksCiphers: propTypes.element.isRequired,
 };

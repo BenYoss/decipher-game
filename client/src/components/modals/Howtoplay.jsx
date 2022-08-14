@@ -1,10 +1,11 @@
 /* eslint-disable react/require-default-props */
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import propTypes from 'prop-types';
 
 import downloadIcon from '../../img/download.png';
 import EndgameStats from './EndgameStats';
+import { copyToClipboard, startTimer } from '../../helpers/helpers';
 
 const modalAnimation = {
   scale: 2,
@@ -16,19 +17,32 @@ const hoverAnimation = {
   boxShadow: '0px 0px 8px hsl(120, 61%, 50%)',
 };
 
-const leaveAnimation = {
-  scale: 1.0,
-  boxShadow: '0px 0px 0px hsl(120, 61%, 50%)',
-};
-
 /**
  * @func Howtoplay is a react component for the Howtoplay modal.
  * @param {*} setSkipped props for skip state in parent component.
  */
 let currentGame;
 export default function Howtoplay({
-  setSkipped, cookieData, played, setPlayed, text, downloadURL, level, setReload, date,
+  setSkipped, cookieData, played, setPlayed, text, downloadURL, level, setReload, date, 
+  skipped,
+  setHowToPlayButtonClick,
 }) {
+  // Timers for the count down until the next ciphrase.
+  const now = new Date(); const utc = new Date(now.getTime());
+  const nowTime = new Date(-Math.abs(utc - new Date(1458619200000)));
+  // Initializing the absolute time.
+  const absoluteTime = nowTime.toTimeString().slice(0, 8);
+
+  if (played && document.querySelector('#time')) {
+    const display = document.querySelector('#time');
+    startTimer(absoluteTime, display);
+  }
+  const [share, setShare] = useState(false);
+  const leaveAnimation = {
+    scale: 1.0,
+    boxShadow: '0px 0px 0px hsl(120, 61%, 50%)',
+    backgroundColor: share ? '#08890c' : 'black',
+  };
   let cipherSectionMargins = ['-1.5vh', '-8.5vh'];
   if (window.innerWidth < 750) {
     cipherSectionMargins = ['-1.5vh', '-11.2vh'];
@@ -37,12 +51,17 @@ export default function Howtoplay({
   if (cookieData) {
     gamesPlayed = cookieData.timeHistory;
     if (!played) {
+      let gameExists = false;
       gamesPlayed.forEach((game) => {
         if (game.gameDate === date) {
           currentGame = game;
+          gameExists = true;
           setPlayed(true);
         }
       });
+      if (cookieData && cookieData.timeHistory.length && !skipped && !gameExists) {
+        setSkipped(true);
+      }
     }
   }
   return (
@@ -60,10 +79,24 @@ export default function Howtoplay({
           </div>
           <hr />
           <div id="gameover-body">
-            <p id="gameover-text">Every day a new cipher will generate with increasing difficulty throughout the week.</p>
-            <p id="gameover-text">Ciphers reset at the end of each week.</p>
+            <p id="gameover-text">
+              Every day a new phrase will generate as a cipher
+              (encrypted pattern of text), making what we like to call a
+              {' '}
+              <b>ciphrase</b>
+              !
+
+            </p>
+            <p id="gameover-text">Ciphrases have increasing difficulty throughout the week and reset at the end of each week.</p>
             <hr />
-            <p id="gameover-text">Ciphers include different encryption patterns. Such as:</p>
+            <p id="gameover-text">Ciphrases include different encryption patterns.</p>
+            <p id="gameover-text">
+              For example, the phrase
+              {' '}
+              <b>Behind Bars</b>
+              {' '}
+              could have:
+            </p>
             <div id="mutations-outter-container">
               <table id="mutations-desc-container">
                 <tr className="mutation-example">
@@ -82,11 +115,11 @@ export default function Howtoplay({
             </div>
             <hr />
             <p id="gameover-text">
-              If a word is right, a
+              A
               {' '}
               <b>GREEN</b>
               {' '}
-              box will appear.
+              box will appear under a right word.
             </p>
             <div
               id="true-example"
@@ -101,11 +134,11 @@ export default function Howtoplay({
               />
             </div>
             <p id="gameover-text">
-              If a word is wrong, a
+              A
               {' '}
               <b>GRAY</b>
               {' '}
-              box will appear.
+              box will appear under a wrong word.
             </p>
             <div
               id="false-example"
@@ -121,7 +154,7 @@ export default function Howtoplay({
             </div>
             <hr />
             <b id="gameover-text">
-              Try to complete the cipher in 4 tries!
+              Complete the ciphrase in under 4 tries!
             </b>
             <div id="modal-btn-container">
               <motion.button
@@ -132,6 +165,7 @@ export default function Howtoplay({
                 initial="hidden"
                 transition={{ duration: 0.18 }}
                 onClick={() => {
+                  setHowToPlayButtonClick(false);
                   setSkipped(true);
                 }}
               >
@@ -145,7 +179,7 @@ export default function Howtoplay({
       ) : (
         <>
           <div id="gameover-header">
-            <h2 id="gameover-text">Cipher Completed!</h2>
+            <h2 id="gameover-text">Ciphrase Completed!</h2>
           </div>
           <hr />
           <div id="gameover-cipher-container">
@@ -198,8 +232,9 @@ export default function Howtoplay({
               }
             </section>
             <p id="gameover-text">
-              Wait until tomorrow for the next cipher!
+              Time until the next ciphrase:
             </p>
+            <span id="time" style={{ fontSize: '1.9vh' }}>{` ${absoluteTime}`}</span>
             <section>
               <div id="download-btn-container">
                 {downloadURL ? (
@@ -209,15 +244,16 @@ export default function Howtoplay({
                     animate={leaveAnimation}
                     transition={{ duration: 0.18 }}
                     onClick={() => {
-                      // setTimeout(() => {
-                      //   setReload([]);
-                      // }, 500);
+                      if (copyToClipboard(downloadURL)) {
+                        setShare(true);
+                        setTimeout(() => setShare(false), 1000);
+                      }
                     }}
                     id="standard-btn-small"
-                    href={downloadURL}
-                    download={`ciphrase_${date.toLowerCase().replace(' ', '_')}.png`}
                   >
-                    <span id="save-stats">Save Stats</span>
+                    <span id="save-stats">
+                      {share ? 'Copied!' : 'Share'}
+                    </span>
                     <img src={downloadIcon} alt="download icon" style={{ filter: 'invert()' }} width="15" height="15" />
                   </motion.a>
                 ) : setTimeout(() => {

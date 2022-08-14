@@ -13,6 +13,7 @@ import Donate from './Donate';
 import settingsIcon from '../../img/settings-icon.png';
 import statisticsIcon from '../../img/statistics-icon.png';
 import cipherListIcon from './level-selection.svg';
+import howtoplayIcon from './how-to-play-icon.svg';
 import coffeeIcon from './coffee.svg';
 
 export default function Toolbar({
@@ -33,27 +34,40 @@ export default function Toolbar({
   downloadURL,
   setDownloadURL,
   setSkipped,
+  setHowToPlayButtonClick,
   setDisableTimer,
   setGameover,
   setVictory,
   setHardMode,
   setEncouragement,
+  thisWeeksCookieCiphers,
 }) {
   const [drawerType, handleDrawer] = useState(-1);
   const drawerAnimation = {
-    x: window.innerWidth > 750 ? '21vw' : '105vw',
+    x: window.innerWidth > 850 ? '25.5rem' : '105vw',
   };
+
+  if (window.innerWidth >= 1024 && window.innerHeight >= 1300) {
+    drawerAnimation.x = '101vw';
+  }
 
   const retractAnimation = {
     x: 0,
   };
 
   const drawerHandler = (index) => {
-    handleDrawer(index);
+    if (index === 4) {
+      setHowToPlayButtonClick(true);
+    } else {
+      handleDrawer(index);
+    }
   };
 
   return (
     <motion.div id="toolbar-container" animate={drawerType > -1 ? drawerAnimation : retractAnimation} transition={{ duration: 0.4, bounce: 10 }}>
+      <div className="toolbar-item" onClick={() => { drawerHandler(4); }}>
+        <img src={howtoplayIcon} alt="howtoplay icon" className="toolbar-icon-img" id="toolbar-icon-cipher-list" />
+      </div>
       <div className="toolbar-item" onClick={() => { drawerHandler(0); setDrawerOpened(true); }}>
         <img src={settingsIcon} alt="settings icon" className="toolbar-icon-img" id="toolbar-icon-settings" />
       </div>
@@ -64,7 +78,7 @@ export default function Toolbar({
         <img src={cipherListIcon} alt="cipher list icon" className="toolbar-icon-img" id="toolbar-icon-cipher-list" />
       </div>
       <div
-        className="toolbar-item"
+        className="toolbar-item-donate"
         onClick={() => { drawerHandler(3); setDrawerOpened(true); }}
       >
         <img src={coffeeIcon} alt="donation icon" style={{ marginLeft: '4px' }} className="toolbar-icon-img" id="toolbar-icon-donation" />
@@ -94,10 +108,11 @@ export default function Toolbar({
             setGameover={setGameover}
             setVictory={setVictory}
             setEncouragement={setEncouragement}
+            thisWeeksCookieCiphers={thisWeeksCookieCiphers}
           />
         )}
         {drawerType === 1 && (
-          <Statistics ciphers={ciphers} setReload={setReload} />
+          <Statistics ciphers={ciphers} setReload={setReload} thisWeeksCiphers={thisWeeksCiphers} thisWeeksCookieCiphers={thisWeeksCookieCiphers} />
         )}
         {drawerType === 0 && (
           <Settings
@@ -137,4 +152,5 @@ Toolbar.propTypes = {
   setDisableTimer: propTypes.func.isRequired,
   setHardMode: propTypes.func.isRequired,
   setEncouragement: propTypes.func.isRequired,
+  thisWeeksCookieCiphers: propTypes.element.isRequired,
 };

@@ -38,7 +38,7 @@ html[data-theme="dark"] {
   --primary-inner-color: rgb(26, 27, 29);
   --secondary-inner-color: rgb(40, 44, 52);
   --background-green: #133410;
-  --color-correct: #08890c;
+  --color-correct: #00aa06;
   --filter-type: "invert()";
   --download-color: rgb(49, 53, 59);
   --download-color2: #3e3e3e;
@@ -179,7 +179,7 @@ canvas {
   padding: 2px 1vh 2px 1vh;
   font-size: 1vh;
   font-weight: bold;
-  transform: scale(2);
+  transform: scale(3);
 }
 
 hr {
@@ -253,6 +253,16 @@ hr {
   margin-top: 10%;
   transform: scale(1.5);
 }
+@media only screen and (min-width: 750px) {
+  #input-btn-container {
+    position: absolute;
+    left: 20rem;
+    top: 85%;
+    margin-top: 10%;
+    transform: scale(1.5);
+  }
+}
+
 #standard-btn {
   background-color: black;
   cursor:pointer;
@@ -284,6 +294,7 @@ hr {
   font-size: 1.5vh;
   font-weight: bold;
   vertical-align: middle;
+  justify-content: center;
   width: 90px;
   text-decoration: none;
   background-color: black;
@@ -387,6 +398,22 @@ hr {
   z-index: 1;
 }
 
+@media only screen and (min-width: 750px) {
+  #health-container {
+    position: absolute;
+    top: 51vh;
+    margin-left:10vw;
+    margin-top: 6vw;
+    row-gap: 20px;
+    max-width: 14%;
+    display: flex;
+    flex-direction: row;
+    user-select: none;
+    transform: scale(2);
+    z-index: 1;
+  }
+}
+
 #timer-bo {
   position: absolute;
   top: 0;
@@ -441,6 +468,28 @@ hr {
   overflow-x: hidden;
 }
 
+@media only screen and (min-width: 750px) {
+  [data-theme="dark"] #gameover-container, [data-theme="light"] #gameover-container {
+    position: absolute;
+    left: 30%;
+    top: 25%;
+    text-align: center;
+    vertical-align: middle;
+    width: 40vw;
+    height: 23rem;
+    background-color: var(--secondary-background-color);
+    color: var(--primary-text-color);
+    transform: scale(2);
+    border-radius: 0.5vw 0.5vw 0.5vw 0.5vw;
+    box-shadow: gray;
+    z-index: 6;
+    -webkit-box-shadow: 0 8px 6px -6px black;
+    -moz-box-shadow: 0 8px 6px -6px black;
+    box-shadow: 0 8px 6px -6px black;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+}
 .gameover-container {
   // TODO: Leave blank for now.
 }
@@ -515,6 +564,13 @@ hr {
   top: -1.5vh;
 }
 
+@media only screen and (min-width: 750px) {
+  #timer-container {
+    position: absolute;
+    top: -5vh;
+  }
+}
+
 #time {
   color:rgb(88, 88, 88);
   font-weight: bolder;
@@ -524,7 +580,7 @@ hr {
   
 #ciphered-body-mobile {
   overflow-y: scroll;
-  height: 300px;
+  height: 20rem;
   width: 100%;
   margin-top: 10%;
   position: relative;
@@ -532,7 +588,7 @@ hr {
 
 // Core selectors (selectors impacting default markups)
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 850px) and (max-height: 1000px) {
   #encouraging-text-container {
     // @include cipher-style();
     // position: fixed;
@@ -708,13 +764,14 @@ hr {
 
   #standard-btn-small {
     background-color: black;
-    padding: 0.7vw 1vw 0.7vw 1.6vw;
+    padding: 0.7vw 1vw 0.7vw 1vw;
     border-radius: 2vw 2vw 2vw 2vw;
     position: absolute;
     bottom: 0%;
     border: none;
     font-size: 0.75vw;
     font-weight: bold;
+    justify-content: center;
     vertical-align: middle;
     width: 6vw;
     background-color: black;
@@ -943,7 +1000,7 @@ hr {
   }
 }
 
-@media only screen and (min-width: 1500px) {
+@media only screen and (min-width: 1500px) and (max-height: 1000px) {
   #loading-wheel {
     position: fixed;
     right: 48vw;
@@ -1100,7 +1157,7 @@ hr {
 
   #standard-btn-small {
     background-color: black;
-    padding: 0.8vw 1vw 0.8vw 1.6vw;
+    padding: 0.8vw 1vw 0.8vw 1vw;
     border-radius: 2vw 2vw 2vw 2vw;
     position: absolute;
     bottom: 5%;
@@ -1108,6 +1165,7 @@ hr {
     font-size: 0.7vw;
     font-weight: bold;
     vertical-align: middle;
+    justify-content: center;
     width: 5vw;
     background-color: black;
     color: white;
@@ -1333,5 +1391,32 @@ hr {
     font-weight: bolder;
     font-size: 1.7vw;
     transform: scale(1.1);
+  }
+}
+
+@media only screen and (min-width: 1000px) and (min-height: 1300px) {
+  #input-btn-container {
+    position: absolute;
+    display: flex;
+    left: 25rem;
+    top: 85%;
+    margin-top: 10%;
+    transform: scale(1.5);
+  }
+}
+
+@media only screen and (min-width: 1000px) and (min-height: 1300px) {
+  #health-container {
+    position: absolute;
+    top: 51vh;
+    margin-left:10vw;
+    margin-top: 6vw;
+    row-gap: 20px;
+    max-width: 14%;
+    display: flex;
+    flex-direction: row;
+    user-select: none;
+    transform: scale(2);
+    z-index: 1;
   }
 }

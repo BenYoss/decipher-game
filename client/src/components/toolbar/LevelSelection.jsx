@@ -51,6 +51,7 @@ export default function LevelSelection({
     setVictory(false);
     clearCount();
     setEncouragement(true);
+    document.getElementById('standard-btn').style.pointerEvents = 'auto';
   };
 
   return (
