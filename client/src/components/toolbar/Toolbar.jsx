@@ -47,7 +47,7 @@ export default function Toolbar({
     x: window.innerWidth > 850 ? '25.5rem' : '105vw',
   };
 
-  if (Math.floor(window.innerWidth / window.innerHeight) < 1) {
+  if (window.innerWidth >= 1024 && window.innerHeight >= 1300) {
     drawerAnimation.x = '101vw';
   }
 
